@@ -9,27 +9,63 @@
         /* CSS giữ nguyên như file trước */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
+            margin: 0;
             background: #f4ede7;
-            display: flex;
-            justify-content: center;
-            padding: 30px 20px;
             font-family: 'Quicksand', sans-serif;
             color: #3e2c20;
         }
-        .container {
-            max-width: 1100px;
-            width: 100%;
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 320px;
+            min-width: 320px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            background: #faf3ec;
+            border-right: 1px solid #e2d2c2;
+            padding: 28px 24px;
+        }
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .sidebar-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #4d3425;
+        }
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #4d3425;
+            padding: 4px 8px;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 40px 30px;
+            overflow-y: auto;
+        }
+        .a4-container {
+            width: 210mm;
+            max-width: 100%;
             background: #fffcf8;
             padding: 40px 50px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border-radius: 4px;
+            box-shadow: 0 2px 24px rgba(0,0,0,0.08);
         }
         .form-section {
-            background: #faf3ec;
-            padding: 25px 30px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            border: 1px solid #e8d9cc;
+            padding: 0;
         }
         .form-section h2 {
             font-size: 22px;
@@ -406,7 +442,9 @@
             @page { margin: 0.5in; }
             * { box-shadow: none !important; text-shadow: none !important; }
             body { background: #fff; padding: 0; font-size: 10pt; line-height: 1.4; color: #000; }
-            .container { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
+            .sidebar, .sidebar-backdrop { display: none !important; }
+            .main-content { padding: 0 !important; display: block !important; }
+            .a4-container { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
             .form-section { display: none !important; }
             .no-print { display: none !important; }
             .btn-group { display: none !important; }
@@ -806,78 +844,120 @@
             max-width: 100%;
             height: auto;
         }
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 998;
+        }
+        @media (max-width: 767px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -320px;
+                height: 100vh;
+                z-index: 999;
+                transition: left 0.3s ease;
+            }
+            .sidebar.open {
+                left: 0;
+            }
+            .sidebar-backdrop.open {
+                display: block;
+            }
+            .sidebar-toggle {
+                display: inline-block;
+            }
+            .main-content {
+                padding: 20px 12px;
+            }
+            .a4-container {
+                padding: 20px 16px;
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="container" id="app">
-
-    <div class="form-section no-print">
-        <h2>📝 Thông tin khách hàng</h2>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Họ</label>
-                <input type="text" id="lastName" value="Vũ">
+<div class="app-layout" id="app">
+    <aside class="sidebar no-print" id="sidebar">
+        <div class="sidebar-header">
+            <h2>📝 Thông tin khách hàng</h2>
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">✕</button>
+        </div>
+        <div class="form-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Họ</label>
+                    <input type="text" id="lastName" value="Vũ">
+                </div>
+                <div class="form-group">
+                    <label>Tên đệm</label>
+                    <input type="text" id="middleName" value="Hạnh Trâm">
+                </div>
+                <div class="form-group">
+                    <label>Tên</label>
+                    <input type="text" id="firstName" value="An">
+                </div>
             </div>
-            <div class="form-group">
-                <label>Tên đệm</label>
-                <input type="text" id="middleName" value="Hạnh Trâm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ngày sinh (DD)</label>
+                    <input type="number" id="day" min="1" max="31" value="29">
+                </div>
+                <div class="form-group">
+                    <label>Tháng sinh (MM)</label>
+                    <input type="number" id="month" min="1" max="12" value="5">
+                </div>
+                <div class="form-group">
+                    <label>Năm sinh (YYYY)</label>
+                    <input type="number" id="year" min="1900" max="2100" value="1997">
+                </div>
+                <div class="form-group">
+                    <label>Giới tính</label>
+                    <select id="gender">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ" selected>Nữ</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Tên</label>
-                <input type="text" id="firstName" value="An">
+            <div class="form-row">
+                <div class="form-group" style="flex:2;">
+                    <label>Số chủ đạo</label>
+                    <input type="text" id="lifePathDisplay" readonly>
+                </div>
+                <div class="form-group" style="flex:2;">
+                    <label>Năm cá nhân 2026</label>
+                    <input type="text" id="personalYearDisplay" readonly>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn" id="calculateBtn">🔄 Cập nhật hồ sơ</button>
+                <button class="btn btn-edit" id="editBtn">✏️ Chỉnh sửa nội dung</button>
+                <button class="btn btn-print" id="printBtn">📄 Xuất PDF</button>
+                <button class="btn btn-secondary" id="resetBtn">⟲ Đặt lại mẫu</button>
+            </div>
+            <p style="font-size:14px; color:#8f7b6a; margin-top:12px;">
+                * Nhập thông tin, bấm "Cập nhật hồ sơ" → "Chỉnh sửa nội dung" để thay đổi văn bản theo ý muốn.
+            </p>
+            <button class="btn no-print" id="eventTableBtn" style="margin-top:12px; display:none;">📊 Bảng sự kiện</button>
+            <button class="btn no-print" id="chartBtn" style="margin-top:12px; display:none;">📈 Biểu đồ</button>
+            <button class="btn no-print" id="pyramidBtn" style="margin-top:12px; display:none;">🔺 Kim tự tháp</button>
+        </div>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <main class="main-content">
+        <div class="a4-container">
+            <div class="result-section" id="resultSection">
+                <div class="profile" id="profileContent">
+                    <div class="loading">⏳ Đang tải dữ liệu...</div>
+                </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Ngày sinh (DD)</label>
-                <input type="number" id="day" min="1" max="31" value="29">
-            </div>
-            <div class="form-group">
-                <label>Tháng sinh (MM)</label>
-                <input type="number" id="month" min="1" max="12" value="5">
-            </div>
-            <div class="form-group">
-                <label>Năm sinh (YYYY)</label>
-                <input type="number" id="year" min="1900" max="2100" value="1997">
-            </div>
-            <div class="form-group">
-                <label>Giới tính</label>
-                <select id="gender">
-                    <option value="Nam">Nam</option>
-                    <option value="Nữ" selected>Nữ</option>
-                    <option value="Khác">Khác</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group" style="flex:2;">
-                <label>Số chủ đạo</label>
-                <input type="text" id="lifePathDisplay" readonly>
-            </div>
-            <div class="form-group" style="flex:2;">
-                <label>Năm cá nhân 2026</label>
-                <input type="text" id="personalYearDisplay" readonly>
-            </div>
-        </div>
-        <div class="btn-group">
-            <button class="btn" id="calculateBtn">🔄 Cập nhật hồ sơ</button>
-            <button class="btn btn-edit" id="editBtn">✏️ Chỉnh sửa nội dung</button>
-            <button class="btn btn-print" id="printBtn">📄 Xuất PDF</button>
-            <button class="btn btn-secondary" id="resetBtn">⟲ Đặt lại mẫu</button>
-        </div>
-        <p style="font-size:14px; color:#8f7b6a; margin-top:12px;">
-            * Nhập thông tin, bấm "Cập nhật hồ sơ" → "Chỉnh sửa nội dung" để thay đổi văn bản theo ý muốn.
-        </p>
-        <button class="btn no-print" id="eventTableBtn" style="margin-top:12px; display:none;">📊 Bảng sự kiện</button>
-        <button class="btn no-print" id="chartBtn" style="margin-top:12px; display:none;">📈 Biểu đồ</button>
-        <button class="btn no-print" id="pyramidBtn" style="margin-top:12px; display:none;">🔺 Kim tự tháp</button>
-    </div>
-
-    <div class="result-section" id="resultSection">
-        <div class="profile" id="profileContent">
-            <div class="loading">⏳ Đang tải dữ liệu...</div>
-        </div>
-    </div>
+    </main>
 </div>
 
 <div id="eventModal" class="modal-overlay no-print" style="display:none;">
@@ -2154,7 +2234,8 @@
             '<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">' +
             '<style>' + styleText + '</style>' +
             '<style>' +
-            '.container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important;background:white!important}' +
+            '.sidebar,.sidebar-backdrop{display:none!important}.main-content{padding:0!important;display:block!important}' +
+            '.a4-container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important;background:white!important}' +
             '.cover-page{display:flex!important}' +
             '.form-section,.btn-group,.no-print,#eventTableBtn,#chartBtn,#pyramidBtn{display:none!important}' +
             '.result-section{border-top:none;margin-top:0;padding-top:0}' +
@@ -2164,9 +2245,9 @@
             '@page{size:A4;margin:2.5cm 2cm;@bottom-center{content:counter(page);font-family:\'Quicksand\',sans-serif;font-size:9pt;color:#7c6352}@top-center{content:string(chapterTitle);font-family:\'Quicksand\',sans-serif;font-size:8pt;color:#b8956e;text-transform:uppercase;letter-spacing:2px}}' +
             '@page:first{margin:0;@top-center{content:none}@bottom-center{content:none}}' +
             '@page:blank{@top-center{content:none}@bottom-center{content:none}}' +
-            '@media print{@page{margin:0}body{background:white}.container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important}}' +
+            '@media print{@page{margin:0}body{background:white}.a4-container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important}}' +
             '</style></head>' +
-            '<body>' + profileHtml +
+            '<body><div class="a4-container">' + profileHtml + '</div>' +
             '<script>window.PagedConfig={before:function(){return document.fonts.ready}}' + cs +
             '<script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js">' + cs +
             '</body></html>'
@@ -2187,6 +2268,16 @@
         renderProfile();
     });
     editBtn.addEventListener('click', toggleEdit);
+
+    // Sidebar toggle
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('sidebarBackdrop').classList.toggle('open');
+    });
+    document.getElementById('sidebarBackdrop').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarBackdrop').classList.remove('open');
+    });
 
     const inputs = [lastInput, middleInput, firstInput, dayInput, monthInput, yearInput, genderSelect];
     inputs.forEach(inp => inp.addEventListener('input', updateDisplay));
