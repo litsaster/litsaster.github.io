@@ -17,7 +17,7 @@
         .app-layout {
             display: flex;
             align-items: flex-start;
-            gap: 30px;
+            gap: 16px;
             max-width: 1400px;
             margin: 30px auto;
             padding: 0 24px;
@@ -68,6 +68,23 @@
         .form-section {
             padding: 0;
         }
+        .section-divider {
+            border: none;
+            border-top: 1px solid #e0d4c8;
+            margin: 20px 0;
+        }
+        .result-inline {
+            margin-top: 14px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #4d3425;
+            background: #faf6f1;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid #e8dccc;
+            display: none;
+        }
+        .result-inline.visible { display: block; }
         .form-section h2 {
             font-size: 22px;
             font-weight: 700;
@@ -137,6 +154,42 @@
         .btn-edit { background: #7a9e7e; box-shadow: 0 4px 10px rgba(122, 158, 126, 0.25); }
         .btn-edit:hover { background: #5f8263; }
         .btn-edit.active { background: #b88a6b; }
+
+        .tab-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 52px;
+            min-width: 52px;
+            flex-shrink: 0;
+            background: #f5ebe3;
+            border-radius: 14px;
+            padding: 8px 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .tab-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 10px 4px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            color: #8f7b6a;
+            transition: 0.2s;
+        }
+        .tab-btn .tab-icon { font-size: 20px; line-height: 1; }
+        .tab-btn:hover { background: rgba(255,255,255,0.5); color: #4d3425; }
+        .tab-btn.active { background: #fff; color: #4d3425; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .sidebar-content { display: block; }
+        .sidebar-content.hidden { display: none; }
+
+        .babyname-form { }
 
         .result-section { margin-top: 10px; padding-top: 10px; border-top: 2px dashed #e2d2c2; }
         .profile { padding: 20px 0; }
@@ -279,6 +332,17 @@
                 visibility: visible;
                 opacity: 1;
             }
+        }
+        .baby-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px 8px;
+            font-size: 20px;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .baby-grid > div {
+            padding: 6px 0;
         }
         .print-list { display: none; }
 
@@ -848,6 +912,21 @@
         }
         @media (max-width: 767px) {
             .app-layout { display: block; margin: 0; padding: 0; }
+            .tab-bar {
+                flex-direction: row;
+                width: 100%;
+                min-width: 0;
+                justify-content: center;
+                border-radius: 0;
+                padding: 6px 12px;
+                gap: 8px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
             .sidebar-open-btn {
                 display: inline-block;
             }
@@ -899,11 +978,22 @@
 </head>
 <body>
 <div class="app-layout" id="app">
+    <div class="tab-bar no-print">
+        <button class="tab-btn active" data-tab="numer">
+            <span class="tab-icon">🔢</span>
+            <span class="tab-label">Numer</span>
+        </button>
+        <button class="tab-btn" data-tab="babyname">
+            <span class="tab-icon">👶</span>
+            <span class="tab-label">Baby</span>
+        </button>
+    </div>
     <aside class="sidebar no-print" id="sidebar">
         <div class="sidebar-header">
-            <h2>📝 Thông tin khách hàng</h2>
+            <h2 id="sidebarTitle">📝 Thông tin khách hàng</h2>
             <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">✕</button>
         </div>
+        <div class="sidebar-content" id="sidebarNumer">
         <div class="form-section">
             <div class="form-row">
                 <div class="form-group">
@@ -966,14 +1056,71 @@
             <button class="btn no-print" id="chartBtn" style="margin-top:12px; display:none;">📈 Biểu đồ</button>
             <button class="btn no-print" id="pyramidBtn" style="margin-top:12px; display:none;">🔺 Kim tự tháp</button>
         </div>
+        </div>
+        <div class="sidebar-content hidden" id="sidebarBabyname">
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Họ của bé</label>
+                        <input type="text" id="babySurname" value="Nguyễn">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Con số mong muốn</label>
+                        <select id="babyDesiredNumber">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="11">11</option>
+                            <option value="22">22</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <select id="babyGender">
+                            <option value="female">Nữ</option>
+                            <option value="">Không xác định</option>
+                            <option value="male">Nam</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" id="babyFindBtn">🔍 Baby</button>
+                </div>
+            </div>
+            <hr class="section-divider">
+            <div class="form-section">
+                <h3 style="font-size:17px;font-weight:700;color:#4d3425;margin:0 0 8px;">📖 Ý nghĩa tên Con số</h3>
+                <div id="numMeaningResult" class="result-inline"></div>
+            </div>
+            <hr class="section-divider">
+            <div class="form-section">
+                <h3 style="font-size:17px;font-weight:700;color:#4d3425;margin:0 0 8px;">🌱 Cách nuôi dạy Con số</h3>
+                <div id="numParentingResult" class="result-inline"></div>
+            </div>
+        </div>
     </aside>
     <button class="sidebar-open-btn no-print" id="sidebarOpenBtn" aria-label="Mở menu">☰</button>
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
     <main class="main-content">
-        <div class="a4-container">
+        <div class="a4-container" id="profileContainer">
             <div class="result-section" id="resultSection">
                 <div class="profile" id="profileContent">
                     <div class="loading">⏳ Đang tải dữ liệu...</div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-container" id="babyNameContainer" style="display:none;">
+            <div class="result-section">
+                <div class="profile" id="babyNameResult">
+                    <div class="loading">🔍 Nhập họ, chọn số mong muốn và bấm "Tìm tên"</div>
                 </div>
             </div>
         </div>
@@ -2351,6 +2498,208 @@
 
     const inputs = [lastInput, middleInput, firstInput, dayInput, monthInput, yearInput, genderSelect];
     inputs.forEach(inp => inp.addEventListener('input', updateDisplay));
+
+    // ========== TAB SWITCHING ==========
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const sidebarTitle = document.getElementById('sidebarTitle');
+    const sidebarNumer = document.getElementById('sidebarNumer');
+    const sidebarBabyname = document.getElementById('sidebarBabyname');
+    const profileContainer = document.getElementById('profileContainer');
+    const babyNameContainer = document.getElementById('babyNameContainer');
+
+    tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            tabBtns.forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            const tab = btn.getAttribute('data-tab');
+            if (tab === 'numer') {
+                sidebarTitle.textContent = '📝 Thông tin khách hàng';
+                sidebarNumer.classList.remove('hidden');
+                sidebarBabyname.classList.add('hidden');
+                profileContainer.style.display = '';
+                babyNameContainer.style.display = 'none';
+            } else {
+                sidebarTitle.textContent = '👶 Đặt tên con';
+                sidebarNumer.classList.add('hidden');
+                sidebarBabyname.classList.remove('hidden');
+                profileContainer.style.display = 'none';
+                babyNameContainer.style.display = '';
+            }
+        });
+    });
+
+    // ========== BABY NAME SEARCH ==========
+    var babyNamesData = [];
+    var babyMeanings = {};
+    fetch('data/babynames.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            babyNamesData = data;
+        })
+        .catch(function() {
+            console.warn('Không tải được data/babynames.json');
+        });
+    fetch('data/name_meanings.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            babyMeanings = data;
+        })
+        .catch(function() {});
+
+    function getPythagoreanSum(str) {
+        var map = { a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8,i:9,j:1,k:2,l:3,m:4,n:5,o:6,p:7,q:8,r:9,s:1,t:2,u:3,v:4,w:5,x:6,y:7,z:8 };
+        var cleaned = removeVietnameseAccents(str).replace(/\s/g, '').toLowerCase();
+        var sum = 0;
+        for (var ci = 0; ci < cleaned.length; ci++) {
+            sum += map[cleaned[ci]] || 0;
+        }
+        return sum;
+    }
+
+    document.getElementById('babyFindBtn').addEventListener('click', function() {
+        var surname = document.getElementById('babySurname').value.trim();
+        var desiredNum = parseInt(document.getElementById('babyDesiredNumber').value);
+        var gender = document.getElementById('babyGender').value;
+
+        if (!surname) { alert('Vui lòng nhập họ của bé.'); return; }
+        if (!desiredNum) { alert('Vui lòng chọn con số mong muốn.'); return; }
+
+        var surnameRaw = getPythagoreanSum(surname);
+        var resultDiv = document.getElementById('babyNameResult');
+
+        if (babyNamesData.length === 0) {
+            resultDiv.innerHTML = '<div class="loading">⏳ Dữ liệu tên đang được cập nhật. Vui lòng quay lại sau.</div>';
+            return;
+        }
+
+        var matches = [];
+        for (var ni = 0; ni < babyNamesData.length; ni++) {
+            var name = babyNamesData[ni];
+            if (gender && name.gender !== gender && name.gender !== 'unisex') continue;
+            var total = surnameRaw + name.raw_value;
+            var totalNum = reduceToMaster(total);
+            if (totalNum === desiredNum) {
+                matches.push(name);
+            }
+        }
+
+        if (matches.length === 0) {
+            resultDiv.innerHTML = '<div class="loading">😔 Không tìm thấy tên phù hợp. Thử thay đổi số mong muốn hoặc họ.</div>';
+            return;
+        }
+
+        const PER_PAGE = 30;
+        var totalPages = Math.ceil(matches.length / PER_PAGE);
+        var babyState = { page: 1, matches: matches };
+
+        function renderBabyList(state) {
+            var start = (state.page - 1) * PER_PAGE;
+            var end = Math.min(start + PER_PAGE, state.matches.length);
+            var pageNames = state.matches.slice(start, end);
+
+            var html = '<div class="section-title">👶 Gợi ý tên cho bé</div>';
+            html += '<div class="baby-grid">';
+            for (var r = 0; r < 10; r++) {
+                for (var c = 0; c < 3; c++) {
+                    var idx = r * 3 + c;
+                    if (idx < pageNames.length) {
+                        var n = pageNames[idx].name;
+                        var meaningWords = [];
+                        var words = n.split(' ');
+                        for (var wi = 0; wi < words.length; wi++) {
+                            if (babyMeanings[words[wi]]) {
+                                meaningWords.push(words[wi] + ': ' + babyMeanings[words[wi]]);
+                            }
+                        }
+                        if (meaningWords.length) {
+                            html += '<div><span class="num-tooltip" style="font-weight:600;">' + n + '<span class="tooltip-text">' + meaningWords.join('<br>') + '</span></span></div>';
+                        } else {
+                            html += '<div style="font-weight:600;">' + n + '</div>';
+                        }
+                    }
+                }
+            }
+            html += '</div>';
+
+            if (totalPages > 1) {
+                html += '<div style="display:flex;gap:6px;justify-content:center;margin-top:14px;">';
+                for (var p = 1; p <= totalPages; p++) {
+                    var active = p === state.page ? 'background:#d4b38c;color:#fff;' : 'background:#f5f0eb;color:#4d3425;';
+                    html += '<button class="page-btn" data-page="' + p + '" style="border:none;' + active + 'padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:15px;font-family:Quicksand,sans-serif;">' + p + '</button>';
+                }
+                html += '</div>';
+            }
+            resultDiv.innerHTML = html;
+        }
+
+        resultDiv.addEventListener('click', function(e) {
+            var btn = e.target.closest('.page-btn');
+            if (btn) {
+                babyState.page = parseInt(btn.getAttribute('data-page'));
+                renderBabyList(babyState);
+            }
+        });
+
+        renderBabyList(babyState);
+    });
+
+    // ========== NUMBER MEANING (BABY NAME) ==========
+    var numMeanings = {
+        1: 'Số 1 — Cá nhân, độc lập, lãnh đạo.\nCon mang số 1 là người tiên phong, tự tin và quyết đoán. Tên nên thể hiện sự mạnh mẽ, độc đáo và khả năng dẫn dắt. Con sẽ phát triển tốt trong môi trường khuyến khích tự lập và sáng tạo.',
+        2: 'Số 2 — Hợp tác, nhạy cảm, ngoại giao.\nCon mang số 2 có tâm hồn nhạy cảm, tinh tế và yêu hòa bình. Tên nên mang âm hưởng dịu dàng, hài hòa. Con cần sự yêu thương, ấm áp và môi trường gia đình ổn định để phát triển.',
+        3: 'Số 3 — Sáng tạo, vui vẻ, giao tiếp.\nCon mang số 3 tràn đầy năng lượng, yêu nghệ thuật và thích thể hiện bản thân. Tên nên vui tươi, bay bổng. Con phát triển tốt nhất khi được khuyến khích sáng tạo và giao tiếp tự do.',
+        4: 'Số 4 — Kỷ luật, thực tế, đáng tin cậy.\nCon mang số 4 có tính cách vững vàng, chăm chỉ và có trách nhiệm. Tên nên vững chãi, ổn định. Con cần nề nếp, kỷ luật rõ ràng và môi trường học tập có cấu trúc.',
+        5: 'Số 5 — Tự do, phiêu lưu, linh hoạt.\nCon mang số 5 yêu thích sự khám phá, thay đổi và mới mẻ. Tên nên thể hiện sự năng động và phóng khoáng. Con cần không gian tự do, ít gò bó để phát huy tiềm năng.',
+        6: 'Số 6 — Yêu thương, gia đình, trách nhiệm.\nCon mang số 6 giàu tình cảm, quan tâm đến mọi người và yêu mái ấm. Tên nên ấm áp, gần gũi. Con phát triển tốt trong môi trường gia đình đầm ấm, nhiều yêu thương.',
+        7: 'Số 7 — Trí tuệ, phân tích, tâm linh.\nCon mang số 7 thông thái, thích suy tư và tìm hiểu sâu sắc. Tên nên mang tính tri thức, huyền bí. Con cần không gian yên tĩnh để đọc sách, suy ngẫm và phát triển nội tâm.',
+        8: 'Số 8 — Quyền lực, tham vọng, thành công.\nCon mang số 8 có tố chất lãnh đạo, tham vọng và hướng đến thành tựu. Tên nên mạnh mẽ, uy nghi. Con cần được định hướng rõ ràng, học cách quản lý và sử dụng quyền lực đúng đắn.',
+        9: 'Số 9 — Nhân đạo, bao dung, lý tưởng.\nCon mang số 9 có trái tim nhân hậu, vị tha và tầm nhìn xa. Tên nên mang ý nghĩa cao cả, nhân văn. Con sẽ phát triển tốt khi được dạy về lòng nhân ái và trách nhiệm với cộng đồng.',
+        11: 'Số 11 — Trực giác, khai sáng, cảm hứng.\nCon mang số 11 có trực giác mạnh mẽ, nhạy cảm và giàu cảm hứng. Tên nên thanh cao, mang năng lượng tâm linh. Con cần môi trường giàu cảm xúc, được khuyến khích theo đuổi lý tưởng.',
+        22: 'Số 22 — Kiến tạo, tầm nhìn, vĩ đại.\nCon mang số 22 có khả năng biến ước mơ thành hiện thực. Tên nên thể hiện sức mạnh và tầm vóc. Con cần được dạy về tính kỷ luật, kiên trì và tầm nhìn dài hạn để phát huy hết tiềm năng.'
+    };
+
+    var parentingAdvice = {
+        1: 'Cách nuôi dạy Con số 1:\n• Khuyến khích tính tự lập từ sớm\n• Giao cho Con những nhiệm vụ nhỏ để tự hoàn thành\n• Dạy Con cách chấp nhận thất bại và học từ sai lầm\n• Không áp đặt quá mức, cho Con không gian thể hiện ý kiến\n• Khen ngợi nỗ lực hơn là kết quả\n• Hướng dẫn Con cách hợp tác và chia sẻ với người khác',
+        2: 'Cách nuôi dạy Con số 2:\n• Tạo môi trường gia đình ấm áp, an toàn\n• Lắng nghe và thấu hiểu cảm xúc của Con\n• Khuyến khích Con tham gia các hoạt động nhóm\n• Dạy Con cách nói "không" và bảo vệ bản thân\n• Tránh chỉ trích nặng lời, Con rất dễ tổn thương\n• Phát triển năng khiếu nghệ thuật và âm nhạc',
+        3: 'Cách nuôi dạy Con số 3:\n• Khuyến khích sự sáng tạo qua vẽ, hát, kể chuyện\n• Cho Con tham gia các lớp năng khiếu nghệ thuật\n• Dạy Con tập trung và kiên nhẫn hoàn thành việc\n• Tạo cơ hội cho Con giao lưu, kết bạn\n• Đặt giới hạn rõ ràng để Con không quá hiếu động\n• Khen ngợi sự nỗ lực sáng tạo của Con',
+        4: 'Cách nuôi dạy Con số 4:\n• Thiết lập thói quen và lịch trình cố định\n• Dạy Con tính kỷ luật qua các công việc nhà đơn giản\n• Khuyến khích Con tham gia thể thao để rèn luyện sức khỏe\n• Giúp Con linh hoạt hơn khi đối mặt với thay đổi\n• Dạy Con cách thư giãn, không quá căng thẳng\n• Làm gương về sự chăm chỉ và kiên trì',
+        5: 'Cách nuôi dạy Con số 5:\n• Cho Con nhiều trải nghiệm mới mẻ và đa dạng\n• Khuyến khích Con khám phá thiên nhiên và thế giới xung quanh\n• Dạy Con tính kỷ luật nhưng không quá gò bó\n• Cho Con tham gia các hoạt động ngoài trời, thể thao\n• Dạy Con về an toàn khi khám phá những điều mới\n• Kiên nhẫn với sự hiếu động và hay thay đổi của Con',
+        6: 'Cách nuôi dạy Con số 6:\n• Tạo bầu không khí gia đình đầm ấm, yêu thương\n• Dạy Con cách quan tâm và chia sẻ với mọi người\n• Cho Con tham gia các hoạt động gia đình thường xuyên\n• Không để Con lo lắng quá nhiều về người khác\n• Dạy Con cân bằng giữa cho và nhận\n• Phát triển năng khiếu nấu ăn, làm vườn, chăm sóc',
+        7: 'Cách nuôi dạy Con số 7:\n• Cung cấp sách vở và tài liệu học tập phong phú\n• Tạo không gian yên tĩnh cho Con học tập và suy nghĩ\n• Khuyến khích Con đặt câu hỏi và tìm tòi kiến thức\n• Dạy Con kỹ năng xã hội và giao tiếp\n• Cho Con thời gian ở một mình để phát triển nội tâm\n• Đưa Con đến thư viện, bảo tàng, các buổi triển lãm',
+        8: 'Cách nuôi dạy Con số 8:\n• Dạy Con về giá trị của tiền bạc và quản lý tài chính\n• Khuyến khích Con tham gia các hoạt động lãnh đạo\n• Dạy Con tính trung thực và trách nhiệm\n• Giúp Con cân bằng giữa công việc và cuộc sống\n• Không tạo áp lực thành công quá lớn\n• Dạy Con cách sử dụng quyền lực một cách tích cực',
+        9: 'Cách nuôi dạy Con số 9:\n• Dạy Con về lòng nhân ái và sự sẻ chia\n• Cho Con tham gia các hoạt động thiện nguyện\n• Khuyến khích Con theo đuổi lý tưởng và ước mơ\n• Dạy Con tha thứ và buông bỏ\n• Giúp Con kết nối với thiên nhiên và động vật\n• Định hướng cho Con những mục tiêu nhân văn, cao cả',
+        11: 'Cách nuôi dạy Con số 11:\n• Tạo môi trường giàu cảm hứng và sáng tạo\n• Khuyến khích Con phát triển trực giác và cảm xúc\n• Dạy Con kiểm soát cảm xúc và giữ bình tĩnh\n• Cho Con tiếp xúc với nghệ thuật, âm nhạc, thiền định\n• Bảo vệ Con khỏi những tác động tiêu cực\n• Giúp Con kết nối với thế giới tâm linh một cách lành mạnh',
+        22: 'Cách nuôi dạy Con số 22:\n• Dạy Con cách đặt mục tiêu lớn và chia nhỏ thành hành động\n• Khuyến khích tư duy thực tế và khả năng tổ chức\n• Cho Con tham gia các dự án nhóm để rèn kỹ năng lãnh đạo\n• Dạy Con kiên nhẫn theo đuổi mục tiêu dài hạn\n• Giúp Con cân bằng giữa lý tưởng và thực tế\n• Tạo môi trường ổn định để Con phát triển tầm nhìn'
+    };
+
+    function showNumMeaning() {
+        var val = parseInt(document.getElementById('babyDesiredNumber').value);
+        var div = document.getElementById('numMeaningResult');
+        var content = numMeanings[val];
+        if (content) {
+            div.innerHTML = '<strong>Con số ' + val + '</strong><br><br>' + content.replace(/\n/g, '<br>');
+        } else {
+            div.innerHTML = 'Chưa có dữ liệu';
+        }
+        div.classList.add('visible');
+    }
+    function showParenting() {
+        var val = parseInt(document.getElementById('babyDesiredNumber').value);
+        var div = document.getElementById('numParentingResult');
+        var content = parentingAdvice[val];
+        if (content) {
+            div.innerHTML = '<strong>Con số ' + val + '</strong><br><br>' + content.replace(/\n/g, '<br>');
+        } else {
+            div.innerHTML = 'Chưa có dữ liệu';
+        }
+        div.classList.add('visible');
+    }
+    document.getElementById('babyDesiredNumber').addEventListener('change', function() {
+        showNumMeaning();
+        showParenting();
+    });
+    showNumMeaning();
+    showParenting();
 
     renderProfile();
 </script>
