@@ -658,9 +658,11 @@
                 left: 0;
                 right: 0;
                 font-size: 8pt;
+                font-style: italic;
                 color: #b8956e;
                 line-height: 1.8;
-                letter-spacing: 1px;
+                letter-spacing: 0;
+                padding: 0 40px;
             }
             .cover-page .cover-footer .footer-line {
                 width: 200px;
@@ -669,6 +671,14 @@
                 margin: 0 auto 12px;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+            }
+
+            .cover-page .cover-package {
+                font-size: 9pt;
+                color: #8f7b6a;
+                letter-spacing: 2px;
+                margin: 4px 0 10px;
+                font-weight: 300;
             }
 
             .print-chapter { page-break-before: always; }
@@ -2111,7 +2121,7 @@
         // ========== TỔNG HỢP ==========
         const today = new Date().toLocaleDateString('vi-VN');
         let html = `
-            <div class="cover-page">
+            <div class="cover-page" style="page-break-after: always;">
                 <div class="cover-frame">
                     <div class="cover-frame-corner tl"></div>
                     <div class="cover-frame-corner tr"></div>
@@ -2128,6 +2138,7 @@
                     <span class="diamond"></span>
                     <span class="line"></span>
                 </div>
+                <div class="cover-package">Gói 4 – Full chi tiết &bull; Bảo mật tuyệt đối</div>
                 <div class="cover-info-box">
                     <div class="cover-info">
                         <div class="row"><span class="label">Họ và tên</span><span class="value">${fullName}</span></div>
@@ -2139,17 +2150,11 @@
                 </div>
                 <div class="cover-footer">
                     <div class="footer-line"></div>
-                    Gói 4 – Full chi tiết &bull; Bảo mật tuyệt đối<br>
+                    ✦ 6 năm chiêm nghiệm – Một bản đồ dành riêng cho hành trình của bạn ✦<br>
+                    “Những con số không gieo rắc định mệnh, chúng chỉ là tấm gương phản chiếu linh hồn bạn đang khát khao trở thành ai.”<br>
                     &copy; 2026 Vivian Numerology
                 </div>
             </div>
-
-            <h1>HỒ SƠ NHÂN SỐ HỌC CÁ NHÂN
-                <small>Gói 4 – Full chi tiết • Bảo mật tuyệt đối</small>
-            </h1>
-            <div class="subhead">✦ 6 năm chiêm nghiệm – Một bản đồ dành riêng cho hành trình của bạn ✦</div>
-
-            <div class="quote">“Những con số không gieo rắc định mệnh, chúng chỉ là tấm gương phản chiếu linh hồn bạn đang khát khao trở thành ai.”</div>
 
             ${chapter1}
             ${chapter2}
