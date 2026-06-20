@@ -498,9 +498,6 @@
             .cover-page {
                 display: flex !important;
                 flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
                 height: 100vh;
                 overflow: hidden;
                 page-break-after: always;
@@ -514,12 +511,20 @@
                 print-color-adjust: exact;
             }
 
+            .cover-page .cover-body {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
             .cover-page .cover-frame {
                 position: absolute;
-                top: 30pt;
-                left: 30pt;
-                right: 30pt;
-                bottom: 30pt;
+                top: 18pt;
+                left: 18pt;
+                right: 18pt;
+                bottom: 18pt;
                 border: 1px solid #d4b38c;
                 pointer-events: none;
             }
@@ -580,25 +585,13 @@
             .cover-page .cover-info .label { display: inline-block; min-width: 90px; text-align: left; color: #7c6352; font-weight: 400; }
             .cover-page .cover-info .value { display: inline-block; text-align: left; font-weight: 600; color: #4d3425; }
 
-            .cover-page .cover-footer {
-                position: absolute;
-                bottom: 36pt;
-                left: 0;
-                right: 0;
+            .cover-page .cover-bottom {
+                text-align: center;
                 font-size: 8pt;
                 font-style: italic;
                 color: #b8956e;
                 line-height: 1.8;
-                letter-spacing: 0;
-                padding: 0 40px;
-            }
-            .cover-page .cover-footer .footer-line {
-                width: 200px;
-                height: 1px;
-                background: #ddd0c2;
-                margin: 0 auto 12px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+                padding: 0 40px 22pt;
             }
 
             .cover-page .cover-package { font-size: 9pt; color: #8f7b6a; letter-spacing: 2px; margin: 4px 0 10px; font-weight: 300; }
@@ -2055,6 +2048,7 @@
                         <div class="cover-frame-corner bl"></div>
                         <div class="cover-frame-corner br"></div>
                     </div>
+                    <div class="cover-body">
                     <div class="cover-ornament">✦ ✦ ✦</div>
                     <div class="cover-subtitle">Vivian Nhân Số Học</div>
                     <div class="cover-divider"></div>
@@ -2075,8 +2069,8 @@
                             <div class="row"><span class="label">Ngày lập</span><span class="value">${today}</span></div>
                         </div>
                     </div>
-                    <div class="cover-footer">
-                        <div class="footer-line"></div>
+                    </div>
+                    <div class="cover-bottom">
                         ✦ 6 năm chiêm nghiệm – Một bản đồ dành riêng cho hành trình của bạn ✦<br>
                         “Những con số không gieo rắc định mệnh, chúng chỉ là tấm gương phản chiếu linh hồn bạn đang khát khao trở thành ai.”<br>
                         &copy; 2026 Vivian Numerology
