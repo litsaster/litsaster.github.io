@@ -484,7 +484,7 @@
         @media print {
             @page { margin: 0.5in; }
             * { box-shadow: none !important; text-shadow: none !important; }
-            body { background: #fff; padding: 0; font-size: 10pt; line-height: 1.4; color: #000; }
+            body { background: #fff; padding: 0; font-size: 11pt; line-height: 1.4; color: #000; }
             .app-layout { display: block; margin: 0; padding: 0; max-width: none; }
             .sidebar, .sidebar-backdrop { display: none !important; }
             .main-content { padding: 0 !important; display: block !important; }
@@ -631,7 +631,7 @@
             .cover-page .cover-info {
                 font-size: 10pt;
                 color: #4d3425;
-                line-height: 2.0;
+                line-height: 1.7;
             }
             .cover-page .cover-info .row {
                 display: flex;
@@ -684,62 +684,64 @@
             .print-chapter { page-break-before: always; }
             .print-chapter:first-of-type { page-break-before: avoid; }
 
-            table.profile-table { font-size: 10pt; margin: 8px 0; border-collapse: collapse; width: 100%; }
+            table.profile-table { font-size: 12pt; margin: 4px 0; border-collapse: collapse; width: 100%; }
             table.profile-table th {
                 background: #e8ddd2 !important;
-                padding: 6px 10px;
-                font-size: 10pt;
+                padding: 8px 12px;
+                font-size: 12pt;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-            table.profile-table td { padding: 5px 10px; font-size: 10pt; }
+            table.profile-table td { padding: 6px 12px; font-size: 12pt; }
 
             .profile { padding: 0; }
             .profile h1 { font-size: 16pt; margin: 0 0 2px; letter-spacing: 0; }
             .profile .subhead { font-size: 9pt; margin: 2px 0 8px; padding-bottom: 6px; border-bottom: 1px solid #aaa; }
 
             .section-title {
-                font-size: 13pt; margin: 14px 0 6px; padding-left: 8px;
+                font-size: 14pt; margin: 10px 0 4px; padding-left: 8px;
                 border-left: 3px solid #999; page-break-after: avoid;
             }
-            .section-title.sub { font-size: 11pt; margin-top: 10px; border-left-width: 2px; }
+            .section-title.sub { font-size: 12pt; margin-top: 6px; border-left-width: 2px; }
             .section-title.sub:first-of-type { margin-top: 4px; }
 
             .info-grid {
                 display: block !important;
                 background: #f5f0eb !important;
-                padding: 10px 16px;
-                margin: 8px 0 14px;
+                padding: 8px 14px;
+                margin: 6px 0 10px;
                 border-radius: 0;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
                 page-break-inside: avoid;
             }
             .info-grid .item {
-                display: block;
+                display: flex;
+                justify-content: space-between;
+                gap: 24px;
                 width: 100%;
                 border-bottom: none;
-                padding: 4px 0;
-                font-size: 10pt;
+                padding: 5px 0;
+                font-size: 11pt;
             }
             .info-grid .item .label { font-weight: 600; }
             .info-grid .item .value { font-weight: 400; }
 
             table.profile-table th, table.profile-table td { border: 1px solid #ccc; }
 
-            p { font-size: 10pt; margin: 4px 0; }
+            p { font-size: 11pt; margin: 3px 0; }
             ul { margin: 2px 0 2px 16px; }
-            li { font-size: 10pt; margin: 2px 0; }
+            li { font-size: 11pt; margin: 2px 0; }
 
             .two-col-grid { display: block !important; }
             .two-col-grid > div {
                 display: inline-block; width: 48%; vertical-align: top;
                 page-break-inside: avoid;
             }
-            .two-col-grid h4 { font-size: 11pt; margin: 4px 0; }
+            .two-col-grid h4 { font-size: 11pt; margin: 3px 0; }
 
             .affirmation-box, .example-box {
-                padding: 8px 12px !important;
+                padding: 6px 10px !important;
                 margin: 4px 0;
                 border-radius: 0;
                 -webkit-print-color-adjust: exact;
@@ -752,12 +754,12 @@
             .profile .famous-person { font-size: 8pt; padding: 1px 0; }
             .profile .famous-person hr { margin: 3px 0; }
             .profile .badge { font-size: 10pt; padding: 2px 8px; }
-            .quote { font-size: 10pt; margin: 6px 0; padding: 6px 12px; }
+            .quote { font-size: 11pt; margin: 4px 0; padding: 4px 10px; }
 
             .name-chart-svg-container, .pyramid-svg-container {
                 max-width: 100%;
                 page-break-inside: avoid;
-                margin: 14px 0 20px;
+                margin: 10px 0 14px;
             }
             .name-chart-svg-container svg, .pyramid-svg-container svg {
                 max-width: 100% !important;
@@ -1907,7 +1909,7 @@
 
         let chapter1b = `
             <div class="print-chapter">
-            <div class="section-title sub" style="margin-top:0;">📅 Biểu đồ ngày sinh</div>
+            <div class="section-title sub" style="margin-top:30px;">📅 Biểu đồ ngày sinh</div>
             <p><em>Mỗi chấm tròn thể hiện số lần xuất hiện của chữ số (từ 1-9) trong ngày/tháng/năm (bỏ qua số 0).</em></p>
             <div class="name-chart-svg-container">
                 ${birthChartHtml}
@@ -1982,14 +1984,14 @@
                 <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th></tr>
                 ${peakRows}
             </table>
-            <div class="print-list"><div class="print-list-label">🔺 Bảng đỉnh cao</div>${peakPrint}</div>
-            <div class="section-title sub" style="margin-top:18px;">🔻 Thử thách 3</div>
+            <div class="print-list">${peakPrint}</div>
+            <div class="quote">“Hiện tại, bạn đang ở giai đoạn chuẩn bị cho đỉnh cao tiếp theo. Hãy sống trọn vẹn từng chặng đường, vì mỗi bước chân hôm nay đều là viên gạch cho ngôi đền vinh quang của ngày mai.”</div>
+            <div class="section-title sub" style="margin-top:36px;">🔻 Thử thách 3</div>
             <table class="profile-table">
                 <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th></tr>
                 ${challengeRow}
             </table>
-            <div class="print-list"><div class="print-list-label">🔻 Thử thách 3</div>${challengePrint}</div>
-            <div class="quote">“Hiện tại, bạn đang ở giai đoạn chuẩn bị cho đỉnh cao tiếp theo. Hãy sống trọn vẹn từng chặng đường, vì mỗi bước chân hôm nay đều là viên gạch cho ngôi đền vinh quang của ngày mai.”</div>
+            <div class="print-list">${challengePrint}</div>
             <div class="section-title sub">🔺 Sơ đồ đỉnh cao và thử thách</div>
             <div class="pyramid-svg-container">
                 ${pyramidSvg}
@@ -2065,7 +2067,6 @@
                 <div class="section-title">🌊 Chương VII: Năm cá nhân</div>
                 <div class="section-title sub">Năm cá nhân ${personalYear} – ${yearName}</div>
                 <p>${yearDesc}</p>
-                </div>
             `;
             const physicalCycle = buildEventCycle(removeVietnameseAccents(first).replace(/\s/g, '').toLowerCase());
             const mentalCycle = buildEventCycle(removeVietnameseAccents(middle).replace(/\s/g, '').toLowerCase());
@@ -2078,13 +2079,13 @@
             const essenceDict = dicts[String(essenceNum)] || {};
             const essenceDesc = essenceDict.personalMessage || essenceDict.message || (essenceDict.lifePathNumber && essenceDict.lifePathNumber.description) || essenceDict.lifePath || 'Chưa có thông tin.';
 
-            chapter8 = `
-                <div class="print-chapter">
+            chapter7 += `
                 <div class="section-title">💌 Chương VIII: Thông điệp cá nhân ${currentYear}</div>
                 <div class="section-title sub">Số bản chất: ${essenceNum}</div>
                 <p>${essenceDesc}</p>
                 </div>
             `;
+            chapter8 = ``;
         } else {
             chapter7 = '';
             chapter8 = '';
@@ -2385,7 +2386,7 @@
             '.result-section{border-top:none;margin-top:0;padding-top:0}' +
             '.profile-table{display:none!important}.print-list{display:block!important}' +
             '.print-list-label{font-weight:700;font-size:11pt;color:#4d3425;margin:10px 0 4px;border-left:3px solid #999;padding-left:8px}' +
-            '.print-list-item{margin:6px 0 10px;font-size:9pt;line-height:1.6}.print-list-item .item-desc{margin-top:1px;color:#555;font-style:italic}' +
+            '.print-list-item{margin:6px 0 10px;font-size:11pt;line-height:1.6}.print-list-item .item-desc{margin-top:2px;color:#555;font-style:italic}' +
             '.print-chapter{break-before:page}' +
             '.print-chapter:first-of-type{break-before:auto}' +
             '@page{size:A4;margin:2.5cm 2cm;@bottom-center{content:counter(page);font-family:\'Quicksand\',sans-serif;font-size:9pt;color:#7c6352}}' +
