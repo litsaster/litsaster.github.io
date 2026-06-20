@@ -404,7 +404,7 @@
         .cover-page { display: none; }
 
         @media print {
-            @page { margin: 0.3in; }
+            @page { margin: 0.5in; }
             * { box-shadow: none !important; text-shadow: none !important; }
             body { background: #fff; padding: 0; font-size: 10pt; line-height: 1.4; color: #000; }
             .container { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
@@ -423,47 +423,170 @@
                 min-height: 100vh;
                 page-break-after: always;
                 page-break-inside: avoid;
+                position: relative;
+                background:
+                    radial-gradient(ellipse at 50% 40%, rgba(212, 179, 140, 0.06) 0%, transparent 70%),
+                    radial-gradient(ellipse at 50% 60%, rgba(212, 179, 140, 0.04) 0%, transparent 60%),
+                    linear-gradient(180deg, rgba(250, 243, 236, 0.3) 0%, transparent 30%, transparent 70%, rgba(250, 243, 236, 0.3) 100%);
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cover-page .cover-frame {
+                position: absolute;
+                top: 24pt;
+                left: 24pt;
+                right: 24pt;
+                bottom: 24pt;
+                border: 1px solid #d4b38c;
+                pointer-events: none;
+            }
+            .cover-page .cover-frame::before {
+                content: '';
+                position: absolute;
+                top: 8pt;
+                left: 8pt;
+                right: 8pt;
+                bottom: 8pt;
+                border: 1px solid rgba(212, 179, 140, 0.4);
+            }
+            .cover-page .cover-frame-corner {
+                position: absolute;
+                width: 20pt;
+                height: 20pt;
+                border-color: #c09f78;
+                border-style: solid;
+            }
+            .cover-page .cover-frame-corner.tl {
+                top: 6pt; left: 6pt;
+                border-width: 2px 0 0 2px;
+            }
+            .cover-page .cover-frame-corner.tr {
+                top: 6pt; right: 6pt;
+                border-width: 2px 2px 0 0;
+            }
+            .cover-page .cover-frame-corner.bl {
+                bottom: 6pt; left: 6pt;
+                border-width: 0 0 2px 2px;
+            }
+            .cover-page .cover-frame-corner.br {
+                bottom: 6pt; right: 6pt;
+                border-width: 0 2px 2px 0;
+            }
+
+            .cover-page .cover-ornament {
+                font-size: 28pt;
+                color: #d4b38c;
+                line-height: 1;
+                margin-bottom: 20px;
+                letter-spacing: 12px;
             }
             .cover-page .cover-subtitle {
-                font-size: 14pt;
-                color: #7c6352;
-                margin-bottom: 40px;
-                letter-spacing: 4px;
-            }
-            .cover-page .cover-title {
-                font-size: 28pt;
-                font-weight: 700;
-                color: #4d3425;
-                margin: 10px 0;
-                line-height: 1.3;
+                font-size: 12pt;
+                color: #8f7b6a;
+                letter-spacing: 5px;
+                text-transform: uppercase;
+                font-weight: 300;
             }
             .cover-page .cover-divider {
-                width: 120px;
-                height: 3px;
+                width: 80px;
+                height: 1px;
                 background: #d4b38c;
-                margin: 30px auto;
+                margin: 28px auto;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .cover-page .cover-title {
+                font-size: 30pt;
+                font-weight: 700;
+                color: #4d3425;
+                line-height: 1.2;
+                letter-spacing: 2px;
+                margin: 0;
+            }
+            .cover-page .cover-title-sub {
+                font-size: 14pt;
+                font-weight: 300;
+                color: #8f7b6a;
+                letter-spacing: 6px;
+                text-transform: uppercase;
+                margin-top: 8px;
+            }
+            .cover-page .cover-divider2 {
+                width: 160px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin: 32px auto;
+                justify-content: center;
+            }
+            .cover-page .cover-divider2 .line {
+                flex: 1;
+                height: 1px;
+                background: #d4b38c;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .cover-page .cover-divider2 .diamond {
+                width: 6px;
+                height: 6px;
+                background: #d4b38c;
+                transform: rotate(45deg);
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cover-page .cover-info-box {
+                background: rgba(250, 243, 236, 0.5);
+                border: 1px solid rgba(212, 179, 140, 0.3);
+                padding: 20px 40px;
+                margin: 8px 0;
+                min-width: 340px;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
             .cover-page .cover-info {
-                font-size: 12pt;
+                font-size: 11pt;
                 color: #4d3425;
-                line-height: 2.2;
-                margin: 20px 0;
+                line-height: 2.4;
             }
-            .cover-page .cover-info strong {
+            .cover-page .cover-info .row {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+            .cover-page .cover-info .label {
+                display: inline-block;
+                min-width: 120px;
+                text-align: right;
+                color: #7c6352;
+                font-weight: 400;
+            }
+            .cover-page .cover-info .value {
                 display: inline-block;
                 min-width: 140px;
-                text-align: right;
-                margin-right: 10px;
-                color: #7c6352;
+                text-align: left;
+                font-weight: 600;
+                color: #4d3425;
             }
+
             .cover-page .cover-footer {
-                margin-top: 60px;
-                font-size: 9pt;
+                position: absolute;
+                bottom: 48pt;
+                left: 0;
+                right: 0;
+                font-size: 8pt;
                 color: #b8956e;
-                font-style: italic;
                 line-height: 1.8;
+                letter-spacing: 1px;
+            }
+            .cover-page .cover-footer .footer-line {
+                width: 200px;
+                height: 1px;
+                background: #ddd0c2;
+                margin: 0 auto 12px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
 
             .profile { padding: 0; }
@@ -1771,20 +1894,35 @@
         const today = new Date().toLocaleDateString('vi-VN');
         let html = `
             <div class="cover-page">
-                <div class="cover-subtitle">VIVIAN NHÂN SỐ HỌC</div>
+                <div class="cover-frame">
+                    <div class="cover-frame-corner tl"></div>
+                    <div class="cover-frame-corner tr"></div>
+                    <div class="cover-frame-corner bl"></div>
+                    <div class="cover-frame-corner br"></div>
+                </div>
+                <div class="cover-ornament">✦ ✦ ✦</div>
+                <div class="cover-subtitle">Vivian Nhân Số Học</div>
                 <div class="cover-divider"></div>
-                <div class="cover-title">HỒ SƠ NHÂN SỐ HỌC<br>CÁ NHÂN</div>
-                <div class="cover-divider"></div>
-                <div class="cover-info">
-                    <strong>Họ và tên:</strong> ${fullName}<br>
-                    <strong>Ngày sinh:</strong> ${day}/${month}/${year}<br>
-                    <strong>Giới tính:</strong> ${gender}<br>
-                    <strong>Số chủ đạo:</strong> ${lifeName}<br>
-                    <strong>Ngày lập hồ sơ:</strong> ${today}
+                <div class="cover-title">HỒ SƠ NHÂN SỐ HỌC</div>
+                <div class="cover-title-sub">Cá Nhân</div>
+                <div class="cover-divider2">
+                    <span class="line"></span>
+                    <span class="diamond"></span>
+                    <span class="line"></span>
+                </div>
+                <div class="cover-info-box">
+                    <div class="cover-info">
+                        <div class="row"><span class="label">Họ và tên</span><span class="value">${fullName}</span></div>
+                        <div class="row"><span class="label">Ngày sinh</span><span class="value">${day}/${month}/${year}</span></div>
+                        <div class="row"><span class="label">Giới tính</span><span class="value">${gender}</span></div>
+                        <div class="row"><span class="label">Số chủ đạo</span><span class="value">${lifeName}</span></div>
+                        <div class="row"><span class="label">Ngày lập</span><span class="value">${today}</span></div>
+                    </div>
                 </div>
                 <div class="cover-footer">
-                    Gói 4 – Full chi tiết • Bảo mật tuyệt đối<br>
-                    © 2026 Vivian Numerology
+                    <div class="footer-line"></div>
+                    Gói 4 – Full chi tiết &bull; Bảo mật tuyệt đối<br>
+                    &copy; 2026 Vivian Numerology
                 </div>
             </div>
 
