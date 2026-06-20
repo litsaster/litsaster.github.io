@@ -420,7 +420,8 @@
                 justify-content: center;
                 align-items: center;
                 text-align: center;
-                min-height: 100vh;
+                height: 100vh;
+                overflow: hidden;
                 page-break-after: always;
                 page-break-inside: avoid;
                 position: relative;
@@ -434,10 +435,10 @@
 
             .cover-page .cover-frame {
                 position: absolute;
-                top: 24pt;
-                left: 24pt;
-                right: 24pt;
-                bottom: 24pt;
+                top: 30pt;
+                left: 30pt;
+                right: 30pt;
+                bottom: 30pt;
                 border: 1px solid #d4b38c;
                 pointer-events: none;
             }
@@ -475,14 +476,14 @@
             }
 
             .cover-page .cover-ornament {
-                font-size: 28pt;
+                font-size: 22pt;
                 color: #d4b38c;
                 line-height: 1;
-                margin-bottom: 20px;
+                margin-bottom: 10px;
                 letter-spacing: 12px;
             }
             .cover-page .cover-subtitle {
-                font-size: 12pt;
+                font-size: 10pt;
                 color: #8f7b6a;
                 letter-spacing: 5px;
                 text-transform: uppercase;
@@ -492,12 +493,12 @@
                 width: 80px;
                 height: 1px;
                 background: #d4b38c;
-                margin: 28px auto;
+                margin: 16px auto;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
             .cover-page .cover-title {
-                font-size: 30pt;
+                font-size: 24pt;
                 font-weight: 700;
                 color: #4d3425;
                 line-height: 1.2;
@@ -505,19 +506,19 @@
                 margin: 0;
             }
             .cover-page .cover-title-sub {
-                font-size: 14pt;
+                font-size: 11pt;
                 font-weight: 300;
                 color: #8f7b6a;
                 letter-spacing: 6px;
                 text-transform: uppercase;
-                margin-top: 8px;
+                margin-top: 4px;
             }
             .cover-page .cover-divider2 {
                 width: 160px;
                 display: flex;
                 align-items: center;
                 gap: 10px;
-                margin: 32px auto;
+                margin: 16px auto;
                 justify-content: center;
             }
             .cover-page .cover-divider2 .line {
@@ -539,16 +540,16 @@
             .cover-page .cover-info-box {
                 background: rgba(250, 243, 236, 0.5);
                 border: 1px solid rgba(212, 179, 140, 0.3);
-                padding: 20px 40px;
-                margin: 8px 0;
-                min-width: 340px;
+                padding: 12px 32px;
+                margin: 6px 0;
+                max-width: 80%;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
             .cover-page .cover-info {
-                font-size: 11pt;
+                font-size: 10pt;
                 color: #4d3425;
-                line-height: 2.4;
+                line-height: 2.0;
             }
             .cover-page .cover-info .row {
                 display: flex;
@@ -557,14 +558,14 @@
             }
             .cover-page .cover-info .label {
                 display: inline-block;
-                min-width: 120px;
+                min-width: 110px;
                 text-align: right;
                 color: #7c6352;
                 font-weight: 400;
             }
             .cover-page .cover-info .value {
                 display: inline-block;
-                min-width: 140px;
+                min-width: 130px;
                 text-align: left;
                 font-weight: 600;
                 color: #4d3425;
@@ -572,7 +573,7 @@
 
             .cover-page .cover-footer {
                 position: absolute;
-                bottom: 48pt;
+                bottom: 36pt;
                 left: 0;
                 right: 0;
                 font-size: 8pt;
@@ -588,6 +589,19 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
+            .print-chapter { page-break-before: always; }
+            .print-chapter:first-of-type { page-break-before: avoid; }
+
+            table.profile-table { font-size: 9pt; margin: 6px 0; border-collapse: collapse; width: 100%; }
+            table.profile-table th {
+                background: #e8ddd2 !important;
+                padding: 6px 10px;
+                font-size: 9pt;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            table.profile-table td { padding: 5px 10px; font-size: 9pt; }
 
             .profile { padding: 0; }
             .profile h1 { font-size: 16pt; margin: 0 0 2px; letter-spacing: 0; }
@@ -620,15 +634,6 @@
             .info-grid .item .label { font-weight: 600; }
             .info-grid .item .value { font-weight: 400; }
 
-            table.profile-table { font-size: 8pt; margin: 4px 0; border-collapse: collapse; width: 100%; }
-            table.profile-table th {
-                background: #e8ddd2 !important;
-                padding: 4px 6px;
-                font-size: 8pt;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            table.profile-table td { padding: 3px 6px; font-size: 8pt; }
             table.profile-table th, table.profile-table td { border: 1px solid #ccc; }
 
             p { font-size: 9pt; margin: 3px 0; }
@@ -1689,6 +1694,7 @@
 
         // ========== CHƯƠNG I: Biểu đồ ngày sinh & Họ Tên ==========
         let chapter1 = `
+            <div class="print-chapter">
             <div class="section-title">📊 Chương I: Biểu đồ ngày sinh & Họ Tên</div>
             <div class="info-grid">
                 ${infoItems}
@@ -1705,10 +1711,12 @@
             <div class="name-chart-svg-container">
                 ${birthChartHtml}
             </div>
+            </div>
         `;
 
         // ========== CHƯƠNG II: Con số chủ đạo ==========
         let chapter2 = `
+            <div class="print-chapter">
             <div class="section-title">✨ Chương II: Con số chủ đạo</div>
             <p><span class="badge">Số ${lifePath}</span> <strong>${lifeName}</strong></p>
             <p>${lifeDesc}</p>
@@ -1729,19 +1737,23 @@
         if (astrology) chapter2 += `<p><strong>🔮 Tương đồng chiêm tinh:</strong> ${astrology}</p>`;
         if (career) chapter2 += `<p><strong>💼 Nghề nghiệp phù hợp:</strong> ${career}</p>`;
         if (compatibility) chapter2 += `<p><strong>🤝 Tương thích:</strong> ${compatibility}</p>`;
+        chapter2 += `</div>`;
 
         // ========== CHƯƠNG III: Sứ mệnh / Linh hồn / Tính cách ==========
         let chapter3 = `
+            <div class="print-chapter">
             <div class="section-title">🧬 Chương III: Con số sứ mệnh / linh hồn / tính cách</div>
             <ul>
                 <li><strong>${destTitle} (${destiny}):</strong> ${destDesc}</li>
                 <li><strong>${soulTitle} (${soul}):</strong> ${soulDesc}</li>
                 <li><strong>${personTitle} (${personality}):</strong> ${personDesc}</li>
             </ul>
+            </div>
         `;
 
         // ========== CHƯƠNG IV: Số ngày sinh, số trưởng thành, bài học nhân quả ==========
         let chapter4 = `
+            <div class="print-chapter">
             <div class="section-title">📌 Chương IV: Con số ngày sinh, trưởng thành, bài học nhân quả</div>
             <div class="section-title sub">🎂 ${birthDayTitle}</div>
             <p>${birthDayDesc}</p>
@@ -1758,9 +1770,11 @@
         } else {
             chapter4 += `<p><em>Không có bài học nhân quả (tất cả các số đều xuất hiện trong biểu đồ họ và tên).</em></p>`;
         }
+        chapter4 += `</div>`;
 
         // ========== CHƯƠNG V: Chu kỳ 4 đỉnh cao & thử thách ==========
         let chapter5 = `
+            <div class="print-chapter">
             <div class="section-title">🏔️ Chương V: Chu kỳ 4 đỉnh cao & thử thách</div>
             <div class="section-title sub">🔺 Bảng đỉnh cao</div>
             <table class="profile-table">
@@ -1776,6 +1790,7 @@
             <div class="section-title sub">🔺 Sơ đồ đỉnh cao và thử thách</div>
             <div class="pyramid-svg-container">
                 ${pyramidSvg}
+            </div>
             </div>
         `;
 
@@ -1804,6 +1819,7 @@
         let chapter6, chapter7, chapter8;
 
         chapter6 = `
+            <div class="print-chapter">
             <div class="section-title">📆 Chương VI: Con số chu kỳ lớn (Các giai đoạn của cuộc đời)</div>
             <table class="profile-table">
                 <tr><th>Chu kỳ</th><th>Nguồn</th><th>Giá trị gốc</th><th>Số</th><th>Ý nghĩa</th></tr>
@@ -1829,13 +1845,16 @@
                     <td>${cycle3Name}<br><span style="font-weight:300; font-size:14px;">${cycle3Desc}</span></td>
                 </tr>
             </table>
+            </div>
         `;
 
         if (birthYear < 2011) {
             chapter7 = `
+                <div class="print-chapter">
                 <div class="section-title">🌊 Chương VII: Năm cá nhân</div>
                 <div class="section-title sub">Năm cá nhân ${personalYear} – ${yearName}</div>
                 <p>${yearDesc}</p>
+                </div>
             `;
             const physicalCycle = buildEventCycle(removeVietnameseAccents(first).replace(/\s/g, '').toLowerCase());
             const mentalCycle = buildEventCycle(removeVietnameseAccents(middle).replace(/\s/g, '').toLowerCase());
@@ -1849,9 +1868,11 @@
             const essenceDesc = essenceDict.personalMessage || essenceDict.message || (essenceDict.lifePathNumber && essenceDict.lifePathNumber.description) || essenceDict.lifePath || 'Chưa có thông tin.';
 
             chapter8 = `
+                <div class="print-chapter">
                 <div class="section-title">💌 Chương VIII: Thông điệp cá nhân ${currentYear}</div>
                 <div class="section-title sub">Số bản chất: ${essenceNum}</div>
                 <p>${essenceDesc}</p>
+                </div>
             `;
         } else {
             chapter7 = '';
@@ -1887,7 +1908,7 @@
             `;
         }
         if (extra) {
-            extra = `<div class="section-title">📖 Phụ lục – Tham khảo thêm</div>${extra}`;
+            extra = `<div class="print-chapter"><div class="section-title">📖 Phụ lục – Tham khảo thêm</div>${extra}</div>`;
         }
 
         // ========== TỔNG HỢP ==========
@@ -1943,6 +1964,7 @@
             ${chapter8}
             ${extra}
 
+            <div class="print-chapter">
             <div class="section-title">🎯 Lời kết – Tấm bản đồ và người dẫn đường là bạn</div>
             <p>Không một con số nào có thể tài giỏi hơn trái tim bạn. Những chỉ số này chỉ là la bàn – hướng đi, tốc độ và điểm dừng hoàn toàn thuộc về bạn. Hãy dùng chúng để thấu hiểu bản thân, nhưng đừng để chúng trói buộc bạn.</p>
             <p><strong>Ba điều bạn nên hành động ngay:</strong></p>
@@ -1956,6 +1978,7 @@
                 <strong>Vivian Nhân số học</strong> – Offline tại Đà Lạt • Online qua Google Meet<br>
                 Bảo mật tuyệt đối – Mọi thông tin chỉ dành riêng cho bạn.<br>
                 © 2026 Vivian Numerology – Thiết kế dành riêng cho hành trình của bạn.
+            </div>
             </div>
         `;
 
