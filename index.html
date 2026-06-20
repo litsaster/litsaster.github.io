@@ -905,21 +905,14 @@
     return map[day] || reduceToMaster(day);
 }
 
-    function reducePeak12(num) {
-        if (num === 22) return 4;
-        return num;
-    }
-
     function getPeaks(day, month, year) {
-        const d = reduceToMaster(day);
-        const m = reduceToMaster(month);
-        const y = reduceToMaster(year);
-        let p1 = reducePeak12(reduceToMaster(m + d));
-        let p2 = reducePeak12(reduceToMaster(d + y));
-        let p3raw = reduceToMaster(p1 + p2);
-        let p4raw = reduceToMaster(m + y);
-        let p3 = p3raw === 1 ? 10 : p3raw === 2 ? 11 : p3raw;
-        let p4 = p4raw === 1 ? 10 : p4raw === 2 ? 11 : p4raw;
+        const d = reduceToSingle(day);
+        const m = reduceToSingle(month);
+        const y = reduceToSingle(year);
+        let p1 = reduceToSingle(m + d);
+        let p2 = reduceToSingle(d + y);
+        let p3 = reduceToSingle(p1 + p2);
+        let p4 = reduceToSingle(m + y);
         return [p1, p2, p3, p4];
     }
 
@@ -930,13 +923,13 @@
     }
 
     function getChallenges(day, month, year) {
-        const d = reduceToMaster(day);
-        const m = reduceToMaster(month);
-        const y = reduceToMaster(year);
-        let c1 = reduceToMaster(Math.abs(d - m));
-        let c2 = reduceToMaster(Math.abs(y - d));
-        let c3 = reduceToMaster(Math.abs(c2 - c1));
-        let c4 = reduceToMaster(Math.abs(y - m));
+        const d = reduceToSingle(day);
+        const m = reduceToSingle(month);
+        const y = reduceToSingle(year);
+        let c1 = reduceToSingle(Math.abs(d - m));
+        let c2 = reduceToSingle(Math.abs(y - d));
+        let c3 = reduceToSingle(Math.abs(c2 - c1));
+        let c4 = reduceToSingle(Math.abs(y - m));
         return [c1, c2, c3, c4];
     }
 
@@ -1159,9 +1152,9 @@
     // 5. VẼ KIM TỰ THÁP (giữ nguyên)
     // ============================================================
     function buildPyramidSVG(month, day, year, peaks, peakAges, challenges, challengeAges, dicts) {
-        const m = reduceToMaster(month);
-        const d = reduceToMaster(day);
-        const y = reduceToMaster(year);
+        const m = reduceToSingle(month);
+        const d = reduceToSingle(day);
+        const y = reduceToSingle(year);
 
         const gapX = 280;
         const gapY = 150;
