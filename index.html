@@ -16,17 +16,19 @@
         }
         .app-layout {
             display: flex;
-            min-height: 100vh;
+            align-items: flex-start;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 24px;
         }
         .sidebar {
-            width: 320px;
-            min-width: 320px;
-            height: 100vh;
-            position: sticky;
-            top: 0;
-            overflow-y: auto;
+            width: 520px;
+            min-width: 520px;
+            flex-shrink: 0;
             background: #faf3ec;
-            border-right: 1px solid #e2d2c2;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             padding: 28px 24px;
         }
         .sidebar-header {
@@ -51,17 +53,16 @@
         }
         .main-content {
             flex: 1;
+            min-width: 0;
             display: flex;
             justify-content: center;
-            padding: 40px 30px;
-            overflow-y: auto;
         }
         .a4-container {
             width: 210mm;
             max-width: 100%;
             background: #fffcf8;
             padding: 40px 50px;
-            border-radius: 4px;
+            border-radius: 16px;
             box-shadow: 0 2px 24px rgba(0,0,0,0.08);
         }
         .form-section {
@@ -442,6 +443,7 @@
             @page { margin: 0.5in; }
             * { box-shadow: none !important; text-shadow: none !important; }
             body { background: #fff; padding: 0; font-size: 10pt; line-height: 1.4; color: #000; }
+            .app-layout { display: block; margin: 0; padding: 0; max-width: none; }
             .sidebar, .sidebar-backdrop { display: none !important; }
             .main-content { padding: 0 !important; display: block !important; }
             .a4-container { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
@@ -851,18 +853,55 @@
             background: rgba(0,0,0,0.4);
             z-index: 998;
         }
+        .sidebar-open-btn {
+            display: none;
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 997;
+            background: #faf3ec;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            font-size: 24px;
+            cursor: pointer;
+            color: #4d3425;
+            padding: 10px 14px;
+            line-height: 1;
+        }
         @media (max-width: 767px) {
+            .app-layout { display: block; margin: 0; padding: 0; }
+            .sidebar-open-btn {
+                display: inline-block;
+            }
             .sidebar {
                 position: fixed;
                 top: 0;
-                left: -320px;
+                left: 0;
+                width: calc(100vw - 40px);
+                max-width: 520px;
+                min-width: 0;
                 height: 100vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
                 z-index: 999;
-                transition: left 0.3s ease;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                border-radius: 0;
+                box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+                padding: 20px 16px;
+                padding-top: calc(20px + env(safe-area-inset-top));
+                padding-bottom: calc(20px + env(safe-area-inset-bottom));
             }
             .sidebar.open {
-                left: 0;
+                transform: translateX(0);
             }
+            .sidebar-header { margin-bottom: 16px; }
+            .sidebar-header h2 { font-size: 18px; }
+            .sidebar .form-row { gap: 12px; }
+            .sidebar .form-group { min-width: 0; flex: 1 1 100%; }
+            .sidebar .btn-group { gap: 8px; flex-direction: column; }
+            .sidebar .btn { padding: 10px 16px; font-size: 14px; width: 100%; }
             .sidebar-backdrop.open {
                 display: block;
             }
@@ -870,7 +909,7 @@
                 display: inline-block;
             }
             .main-content {
-                padding: 20px 12px;
+                padding: 0;
             }
             .a4-container {
                 padding: 20px 16px;
@@ -948,6 +987,7 @@
             <button class="btn no-print" id="pyramidBtn" style="margin-top:12px; display:none;">🔺 Kim tự tháp</button>
         </div>
     </aside>
+    <button class="sidebar-open-btn no-print" id="sidebarOpenBtn" aria-label="Mở menu">☰</button>
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
     <main class="main-content">
         <div class="a4-container">
@@ -2273,6 +2313,10 @@
     document.getElementById('sidebarToggle').addEventListener('click', function() {
         document.getElementById('sidebar').classList.toggle('open');
         document.getElementById('sidebarBackdrop').classList.toggle('open');
+    });
+    document.getElementById('sidebarOpenBtn').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('sidebarBackdrop').classList.add('open');
     });
     document.getElementById('sidebarBackdrop').addEventListener('click', function() {
         document.getElementById('sidebar').classList.remove('open');
