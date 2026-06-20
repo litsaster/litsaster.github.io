@@ -2138,40 +2138,40 @@
     }
 
     function openPrintPreview() {
-        const profileHtml = profileContent.innerHTML;
-        if (!profileHtml || profileHtml.includes('Đang tải')) {
+        var profileHtml = profileContent.innerHTML;
+        if (!profileHtml || profileHtml.indexOf('Đang tải') !== -1) {
             alert('Vui lòng cập nhật hồ sơ trước.');
             return;
         }
-        const styleText = document.querySelector('style').textContent;
-        const preview = window.open('', '_blank');
-        preview.document.write(`<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<title>Hồ sơ Nhân số học Vivian</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>${styleText}</style>
-<style>
-.container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important;background:white!important}
-.cover-page{display:flex!important}
-.form-section,.btn-group,.no-print,#eventTableBtn,#chartBtn,#pyramidBtn{display:none!important}
-.result-section{border-top:none;margin-top:0;padding-top:0}
-.section-title{string-set:chapterTitle content(text)}
-.print-chapter{break-before:page}
-.print-chapter:first-of-type{break-before:auto}
-@page{size:A4;margin:2.5cm 2cm;@bottom-center{content:counter(page);font-family:'Quicksand',sans-serif;font-size:9pt;color:#7c6352}@top-center{content:string(chapterTitle);font-family:'Quicksand',sans-serif;font-size:8pt;color:#b8956e;text-transform:uppercase;letter-spacing:2px}}
-@page:first{margin:0;@top-center{content:none}@bottom-center{content:none}}
-@page:blank{@top-center{content:none}@bottom-center{content:none}}
-@media print{@page{margin:0}body{background:white}.container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important}}
-</style>
-</head>
-<body>${profileHtml}
-<script>window.PagedConfig={before:()=>document.fonts.ready}</script>
-<script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"><\/script>
-</body>
-</html>`);
-        preview.document.close();
+        var styleText = document.querySelector('style').textContent;
+        var w = window.open('', '_blank');
+        var cs = '</' + 'script>';
+        w.document.write(
+            '<!DOCTYPE html>' +
+            '<html lang="vi"><head>' +
+            '<meta charset="UTF-8">' +
+            '<title>Hồ sơ Nhân số học Vivian</title>' +
+            '<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">' +
+            '<style>' + styleText + '</style>' +
+            '<style>' +
+            '.container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important;background:white!important}' +
+            '.cover-page{display:flex!important}' +
+            '.form-section,.btn-group,.no-print,#eventTableBtn,#chartBtn,#pyramidBtn{display:none!important}' +
+            '.result-section{border-top:none;margin-top:0;padding-top:0}' +
+            '.section-title{string-set:chapterTitle content(text)}' +
+            '.print-chapter{break-before:page}' +
+            '.print-chapter:first-of-type{break-before:auto}' +
+            '@page{size:A4;margin:2.5cm 2cm;@bottom-center{content:counter(page);font-family:\'Quicksand\',sans-serif;font-size:9pt;color:#7c6352}@top-center{content:string(chapterTitle);font-family:\'Quicksand\',sans-serif;font-size:8pt;color:#b8956e;text-transform:uppercase;letter-spacing:2px}}' +
+            '@page:first{margin:0;@top-center{content:none}@bottom-center{content:none}}' +
+            '@page:blank{@top-center{content:none}@bottom-center{content:none}}' +
+            '@media print{@page{margin:0}body{background:white}.container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important}}' +
+            '</style></head>' +
+            '<body>' + profileHtml +
+            '<script>window.PagedConfig={before:function(){return document.fonts.ready}}' + cs +
+            '<script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js">' + cs +
+            '</body></html>'
+        );
+        w.document.close();
     }
 
     document.getElementById('calculateBtn').addEventListener('click', renderProfile);
