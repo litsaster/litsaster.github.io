@@ -1166,6 +1166,15 @@
         <div class="modal-body" id="numDetailBody"></div>
     </div>
 </div>
+<div id="babyNameModal" class="modal-overlay no-print" style="display:none;">
+    <div class="modal-content" style="max-width:400px;">
+        <div class="modal-header">
+            <span class="modal-title" id="babyNameModalTitle">Tên</span>
+            <button class="modal-close" id="babyNameModalClose">&times;</button>
+        </div>
+        <div class="modal-body" id="babyNameModalBody"></div>
+    </div>
+</div>
 
 <script>
     // ============================================================
@@ -2700,6 +2709,23 @@
     });
     showNumMeaning();
     showParenting();
+
+    // ========== BABY NAME MODAL (mobile) ==========
+    var babyNameModal = document.getElementById('babyNameModal');
+    var babyNameModalTitle = document.getElementById('babyNameModalTitle');
+    var babyNameModalBody = document.getElementById('babyNameModalBody');
+    babyNameContainer.addEventListener('click', function(e) {
+        var tooltip = e.target.closest('.num-tooltip');
+        if (tooltip) {
+            var name = tooltip.childNodes[0].nodeValue.trim();
+            var meaning = tooltip.querySelector('.tooltip-text').innerHTML;
+            babyNameModalTitle.textContent = name;
+            babyNameModalBody.innerHTML = '<strong>Ý nghĩa:</strong><br><br>' + meaning;
+            babyNameModal.style.display = 'flex';
+        }
+    });
+    document.getElementById('babyNameModalClose').onclick = function() { babyNameModal.style.display = 'none'; };
+    babyNameModal.onclick = function(e) { if (e.target === babyNameModal) babyNameModal.style.display = 'none'; };
 
     renderProfile();
 </script>
