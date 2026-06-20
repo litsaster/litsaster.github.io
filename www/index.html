@@ -498,7 +498,6 @@
             .cover-page {
                 display: flex !important;
                 flex-direction: column;
-                justify-content: center;
                 align-items: center;
                 text-align: center;
                 height: 100vh;
@@ -514,12 +513,23 @@
                 print-color-adjust: exact;
             }
 
+            .cover-page .cover-content-wrap {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                flex: 1;
+                width: 100%;
+                padding: 42pt;
+            }
+
             .cover-page .cover-frame {
                 position: absolute;
-                top: 30pt;
-                left: 30pt;
-                right: 30pt;
-                bottom: 30pt;
+                top: 12pt;
+                left: 12pt;
+                right: 12pt;
+                bottom: 12pt;
                 border: 1px solid #d4b38c;
                 pointer-events: none;
             }
@@ -653,16 +663,13 @@
             }
 
             .cover-page .cover-footer {
-                position: absolute;
-                bottom: 36pt;
-                left: 0;
-                right: 0;
                 font-size: 8pt;
                 font-style: italic;
                 color: #b8956e;
                 line-height: 1.8;
                 letter-spacing: 0;
-                padding: 0 40px;
+                text-align: center;
+                padding: 0 40pt 28pt;
             }
             .cover-page .cover-footer .footer-line {
                 width: 200px;
@@ -2127,6 +2134,7 @@
         const today = new Date().toLocaleDateString('vi-VN');
         let html = `
                 <div class="cover-page" style="page-break-after: always;">
+                    <div class="cover-content-wrap">
                     <div class="cover-frame">
                         <div class="cover-frame-corner tl"></div>
                         <div class="cover-frame-corner tr"></div>
@@ -2152,6 +2160,7 @@
                             <div class="row"><span class="label">Số chủ đạo</span><span class="value">${lifeName}</span></div>
                             <div class="row"><span class="label">Ngày lập</span><span class="value">${today}</span></div>
                         </div>
+                    </div>
                     </div>
                     <div class="cover-footer">
                         <div class="footer-line"></div>
