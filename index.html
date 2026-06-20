@@ -181,6 +181,7 @@
         }
         .info-grid .item .label { font-weight: 600; color: #6b4f3a; }
         .info-grid .item .value { font-weight: 600; color: #4d3425; }
+        .info-grid .item-full { grid-column: 1 / -1; }
 
         .section-title {
             font-size: 24px;
@@ -240,6 +241,44 @@
             padding: 10px 14px;
             border-bottom: 1px solid #eee5dc;
         }
+        .num-tooltip {
+            position: relative;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4a2f;
+            border-bottom: 1px dashed #c4a88c;
+        }
+        .num-tooltip .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d2d2d;
+            color: #f0edea;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: normal;
+            max-width: 300px;
+            width: max-content;
+            z-index: 999;
+            transition: opacity 0.15s;
+            pointer-events: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .num-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .print-list { display: none; }
+
         .footer-note {
             margin-top: 40px;
             text-align: center;
@@ -672,6 +711,7 @@
             }
             .info-grid .item .label { font-weight: 600; }
             .info-grid .item .value { font-weight: 400; }
+            .info-grid .item-full { width: 100%; }
 
             table.profile-table th, table.profile-table td { border: 1px solid #ccc; }
 
@@ -964,11 +1004,13 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group" style="flex:2;">
+                <div class="form-group" style="flex:1;">
                     <label>Số chủ đạo</label>
                     <input type="text" id="lifePathDisplay" readonly>
                 </div>
-                <div class="form-group" style="flex:2;">
+            </div>
+            <div class="form-row" id="personalYearRow">
+                <div class="form-group" style="flex:1;">
                     <label>Năm cá nhân 2026</label>
                     <input type="text" id="personalYearDisplay" readonly>
                 </div>
@@ -1027,6 +1069,16 @@
             <button class="modal-close" id="pyramidModalClose">&times;</button>
         </div>
         <div class="modal-body" id="pyramidModalBody" style="text-align:center;"></div>
+    </div>
+</div>
+
+<div id="numDetailModal" class="modal-overlay no-print" style="display:none;">
+    <div class="modal-content" style="max-width:520px;">
+        <div class="modal-header">
+            <span class="modal-title" id="numDetailTitle">Chi tiết</span>
+            <button class="modal-close" id="numDetailClose">&times;</button>
+        </div>
+        <div class="modal-body" id="numDetailBody"></div>
     </div>
 </div>
 
@@ -1760,6 +1812,7 @@
         const pyramidSvg = buildPyramidSVG(month, day, year, peaks, peakAges, challenges, challengeAges, dicts);
 
         let peakRows = '';
+        let peakPrint = '';
         const peakLabels = ['Đỉnh 1', 'Đỉnh 2', 'Đỉnh 3', 'Đỉnh 4'];
         for (let i = 0; i < 4; i++) {
             const pNum = peaks[i];
@@ -1770,13 +1823,19 @@
                 <tr>
                     <td>${peakLabels[i]}</td>
                     <td>${peakAges[i]}</td>
-                    <td>${pNum}</td>
-                    <td>${pName}<br><span style="font-weight:300; font-size:14px;">${pDesc}</span></td>
+                    <td><span class="num-tooltip" data-title="${pName}" data-desc="${pDesc}">${pNum}<span class="tooltip-text">${pName}<br>${pDesc}</span></span></td>
                 </tr>
+            `;
+            peakPrint += `
+                <div class="print-list-item">
+                    <strong>${peakLabels[i]}</strong> — ${peakAges[i]} tuổi — <strong>Số ${pNum}</strong>
+                    <div class="item-desc">${pName}: ${pDesc}</div>
+                </div>
             `;
         }
 
         let challengeRow = '';
+        let challengePrint = '';
         {
             const i = 2;
             const cNum = challenges[i];
@@ -1787,9 +1846,14 @@
                 <tr>
                     <td>Thử thách 3</td>
                     <td>${challengeAges[i]}</td>
-                    <td>${cNum}</td>
-                    <td>${cName}<br><span style="font-weight:300; font-size:14px;">${cDesc}</span></td>
+                    <td><span class="num-tooltip" data-title="${cName}" data-desc="${cDesc}">${cNum}<span class="tooltip-text">${cName}<br>${cDesc}</span></span></td>
                 </tr>
+            `;
+            challengePrint = `
+                <div class="print-list-item">
+                    <strong>Thử thách 3</strong> — ${challengeAges[i]} tuổi — <strong>Số ${cNum}</strong>
+                    <div class="item-desc">${cName}: ${cDesc}</div>
+                </div>
             `;
         }
 
@@ -1802,12 +1866,12 @@
             <div class="item"><span class="label">🎂 Ngày sinh</span><span class="value">${day}/${month}/${year}</span></div>
             <div class="item"><span class="label">🧑 Giới tính</span><span class="value">${gender}</span></div>
             <div class="item"><span class="label">📅 Ngày lập</span><span class="value">${new Date().toLocaleDateString('vi-VN')}</span></div>
-            <div class="item"><span class="label">🔢 Số chủ đạo</span><span class="value">${lifeName}</span></div>
+            <div class="item item-full"><span class="label">🔢 Số chủ đạo</span><span class="value">${lifeName}</span></div>
         `;
 
         if (birthYear < 2011) {
             infoItems += `
-                <div class="item"><span class="label">🌊 Năm cá nhân</span><span class="value">${yearName}</span></div>
+                <div class="item item-full"><span class="label">🌊 Năm cá nhân</span><span class="value">${yearName}</span></div>
             `;
         }
 
@@ -1897,14 +1961,16 @@
             <div class="section-title">🏔️ Chương V: Chu kỳ 4 đỉnh cao & thử thách</div>
             <div class="section-title sub">🔺 Bảng đỉnh cao</div>
             <table class="profile-table">
-                <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th><th>Ý nghĩa</th></tr>
+                <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th></tr>
                 ${peakRows}
             </table>
+            <div class="print-list"><div class="print-list-label">🔺 Bảng đỉnh cao</div>${peakPrint}</div>
             <div class="section-title sub" style="margin-top:18px;">🔻 Thử thách 3</div>
             <table class="profile-table">
-                <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th><th>Ý nghĩa</th></tr>
+                <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th></tr>
                 ${challengeRow}
             </table>
+            <div class="print-list"><div class="print-list-label">🔻 Thử thách 3</div>${challengePrint}</div>
             <div class="quote">“Hiện tại, bạn đang ở giai đoạn chuẩn bị cho đỉnh cao tiếp theo. Hãy sống trọn vẹn từng chặng đường, vì mỗi bước chân hôm nay đều là viên gạch cho ngôi đền vinh quang của ngày mai.”</div>
             <div class="section-title sub">🔺 Sơ đồ đỉnh cao và thử thách</div>
             <div class="pyramid-svg-container">
@@ -1934,6 +2000,33 @@
         const cycle2Desc = cycle2Dict.cycle2 || cycle2Dict.lifePath || `Mô tả cho chu kỳ 2 của số ${cycle2Num}`;
         const cycle3Desc = cycle3Dict.cycle3 || cycle3Dict.lifePath || `Mô tả cho chu kỳ 3 của số ${cycle3Num}`;
 
+        const cycleAges = ['0-27', '28-54', '55+'];
+        const cycleLabels = ['Chu kỳ I', 'Chu kỳ II', 'Chu kỳ III'];
+        const cycleNums = [cycle1Num, cycle2Num, cycle3Num];
+        const cycleNames = [cycle1Name, cycle2Name, cycle3Name];
+        const cycleDescs = [cycle1Desc, cycle2Desc, cycle3Desc];
+
+        let cycleRows = '';
+        let cyclePrint = '';
+        for (let i = 0; i < 3; i++) {
+            const cn = cycleNums[i];
+            const cname = cycleNames[i];
+            const cdesc = cycleDescs[i];
+            cycleRows += `
+                <tr>
+                    <td>${cycleLabels[i]}</td>
+                    <td>${cycleAges[i]}</td>
+                    <td><span class="num-tooltip" data-title="${cname}" data-desc="${cdesc}">${cn}<span class="tooltip-text">${cname}<br>${cdesc}</span></span></td>
+                </tr>
+            `;
+            cyclePrint += `
+                <div class="print-list-item">
+                    <strong>${cycleLabels[i]}</strong> — ${cycleAges[i]} tuổi — <strong>Số ${cn}</strong>
+                    <div class="item-desc">${cname}: ${cdesc}</div>
+                </div>
+            `;
+        }
+
         // ========== CHƯƠNG VII, VIII ==========
         let chapter6, chapter7, chapter8;
 
@@ -1941,29 +2034,10 @@
             <div class="print-chapter">
             <div class="section-title">📆 Chương VI: Con số chu kỳ lớn (Các giai đoạn của cuộc đời)</div>
             <table class="profile-table">
-                <tr><th>Chu kỳ</th><th>Nguồn</th><th>Giá trị gốc</th><th>Số</th><th>Ý nghĩa</th></tr>
-                <tr>
-                    <td>Chu kỳ I</td>
-                    <td>Tháng sinh</td>
-                    <td>${cycle1Raw}</td>
-                    <td>${cycle1Num}</td>
-                    <td>${cycle1Name}<br><span style="font-weight:300; font-size:14px;">${cycle1Desc}</span></td>
-                </tr>
-                <tr>
-                    <td>Chu kỳ II</td>
-                    <td>Ngày sinh</td>
-                    <td>${cycle2Raw}</td>
-                    <td>${cycle2Num}</td>
-                    <td>${cycle2Name}<br><span style="font-weight:300; font-size:14px;">${cycle2Desc}</span></td>
-                </tr>
-                <tr>
-                    <td>Chu kỳ III</td>
-                    <td>Năm sinh</td>
-                    <td>${cycle3Raw}</td>
-                    <td>${cycle3Num}</td>
-                    <td>${cycle3Name}<br><span style="font-weight:300; font-size:14px;">${cycle3Desc}</span></td>
-                </tr>
+                <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th></tr>
+                ${cycleRows}
             </table>
+            <div class="print-list">${cyclePrint}</div>
             </div>
         `;
 
@@ -2132,6 +2206,7 @@
         const yearName = (dataDicts[String(pYear)] && dataDicts[String(pYear)].name) || `Số ${pYear}`;
         lifePathDisplay.value = `${lifeName}`;
         personalYearDisplay.value = `${yearName}`;
+        document.getElementById('personalYearRow').style.display = (year >= 2011) ? 'none' : '';
     }
 
     async function renderProfile() {
@@ -2236,6 +2311,21 @@
             pyramidBtn.onclick = function() { pyramidModal.style.display = 'flex'; };
             document.getElementById('pyramidModalClose').onclick = function() { pyramidModal.style.display = 'none'; };
             pyramidModal.onclick = function(e) { if (e.target === pyramidModal) pyramidModal.style.display = 'none'; };
+
+            // Num detail modal (click on .num-tooltip)
+            const numDetailModal = document.getElementById('numDetailModal');
+            const numDetailTitle = document.getElementById('numDetailTitle');
+            const numDetailBody = document.getElementById('numDetailBody');
+            profileContent.addEventListener('click', function(e) {
+                var tooltip = e.target.closest('.num-tooltip');
+                if (tooltip) {
+                    numDetailTitle.textContent = tooltip.getAttribute('data-title');
+                    numDetailBody.innerHTML = tooltip.getAttribute('data-desc');
+                    numDetailModal.style.display = 'flex';
+                }
+            });
+            document.getElementById('numDetailClose').onclick = function() { numDetailModal.style.display = 'none'; };
+            numDetailModal.onclick = function(e) { if (e.target === numDetailModal) numDetailModal.style.display = 'none'; };
         } catch (err) {
             console.error(err);
             profileContent.innerHTML = `<div class="error">⚠️ Có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại.</div>`;
@@ -2279,6 +2369,9 @@
             '.cover-page{display:flex!important}' +
             '.form-section,.btn-group,.no-print,#eventTableBtn,#chartBtn,#pyramidBtn{display:none!important}' +
             '.result-section{border-top:none;margin-top:0;padding-top:0}' +
+            '.profile-table{display:none!important}.print-list{display:block!important}' +
+            '.print-list-label{font-weight:700;font-size:11pt;color:#4d3425;margin:10px 0 4px;border-left:3px solid #999;padding-left:8px}' +
+            '.print-list-item{margin:6px 0 10px;font-size:9pt;line-height:1.6}.print-list-item .item-desc{margin-top:1px;color:#555;font-style:italic}' +
             '.section-title{string-set:chapterTitle content(text)}' +
             '.print-chapter{break-before:page}' +
             '.print-chapter:first-of-type{break-before:auto}' +
