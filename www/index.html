@@ -684,60 +684,59 @@
             .print-chapter { page-break-before: always; }
             .print-chapter:first-of-type { page-break-before: avoid; }
 
-            table.profile-table { font-size: 9pt; margin: 6px 0; border-collapse: collapse; width: 100%; }
+            table.profile-table { font-size: 10pt; margin: 8px 0; border-collapse: collapse; width: 100%; }
             table.profile-table th {
                 background: #e8ddd2 !important;
                 padding: 6px 10px;
-                font-size: 9pt;
+                font-size: 10pt;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-            table.profile-table td { padding: 5px 10px; font-size: 9pt; }
+            table.profile-table td { padding: 5px 10px; font-size: 10pt; }
 
             .profile { padding: 0; }
             .profile h1 { font-size: 16pt; margin: 0 0 2px; letter-spacing: 0; }
             .profile .subhead { font-size: 9pt; margin: 2px 0 8px; padding-bottom: 6px; border-bottom: 1px solid #aaa; }
 
             .section-title {
-                font-size: 12pt; margin: 12px 0 4px; padding-left: 8px;
+                font-size: 13pt; margin: 14px 0 6px; padding-left: 8px;
                 border-left: 3px solid #999; page-break-after: avoid;
             }
-            .section-title.sub { font-size: 10pt; margin-top: 8px; border-left-width: 2px; }
+            .section-title.sub { font-size: 11pt; margin-top: 10px; border-left-width: 2px; }
             .section-title.sub:first-of-type { margin-top: 4px; }
 
             .info-grid {
                 display: block !important;
                 background: #f5f0eb !important;
-                padding: 6px 12px;
-                margin: 6px 0 10px;
+                padding: 10px 16px;
+                margin: 8px 0 14px;
                 border-radius: 0;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
                 page-break-inside: avoid;
             }
             .info-grid .item {
-                display: inline-block;
-                width: 49%;
+                display: block;
+                width: 100%;
                 border-bottom: none;
-                padding: 2px 0;
-                font-size: 9pt;
+                padding: 4px 0;
+                font-size: 10pt;
             }
             .info-grid .item .label { font-weight: 600; }
             .info-grid .item .value { font-weight: 400; }
-            .info-grid .item-full { width: 100%; }
 
             table.profile-table th, table.profile-table td { border: 1px solid #ccc; }
 
-            p { font-size: 9pt; margin: 3px 0; }
+            p { font-size: 10pt; margin: 4px 0; }
             ul { margin: 2px 0 2px 16px; }
-            li { font-size: 9pt; margin: 1px 0; }
+            li { font-size: 10pt; margin: 2px 0; }
 
             .two-col-grid { display: block !important; }
             .two-col-grid > div {
                 display: inline-block; width: 48%; vertical-align: top;
                 page-break-inside: avoid;
             }
-            .two-col-grid h4 { font-size: 10pt; margin: 4px 0; }
+            .two-col-grid h4 { font-size: 11pt; margin: 4px 0; }
 
             .affirmation-box, .example-box {
                 padding: 8px 12px !important;
@@ -752,12 +751,13 @@
 
             .profile .famous-person { font-size: 8pt; padding: 1px 0; }
             .profile .famous-person hr { margin: 3px 0; }
-            .profile .badge { font-size: 9pt; padding: 2px 8px; }
-            .quote { font-size: 9pt; margin: 6px 0; padding: 6px 12px; }
+            .profile .badge { font-size: 10pt; padding: 2px 8px; }
+            .quote { font-size: 10pt; margin: 6px 0; padding: 6px 12px; }
 
             .name-chart-svg-container, .pyramid-svg-container {
                 max-width: 100%;
                 page-break-inside: avoid;
+                margin: 14px 0 20px;
             }
             .name-chart-svg-container svg, .pyramid-svg-container svg {
                 max-width: 100% !important;
@@ -1890,7 +1890,7 @@
         }
 
         // ========== CHƯƠNG I: Biểu đồ ngày sinh & Họ Tên ==========
-        let chapter1 = `
+        let chapter1a = `
             <div class="print-chapter">
             <div class="section-title">📊 Chương I: Biểu đồ ngày sinh & Họ Tên</div>
             <div class="info-grid">
@@ -1902,8 +1902,12 @@
             <div class="name-chart-svg-container">
                 ${nameChartHtml}
             </div>
+            </div>
+        `;
 
-            <div class="section-title sub">📅 Biểu đồ ngày sinh</div>
+        let chapter1b = `
+            <div class="print-chapter">
+            <div class="section-title sub" style="margin-top:0;">📅 Biểu đồ ngày sinh</div>
             <p><em>Mỗi chấm tròn thể hiện số lần xuất hiện của chữ số (từ 1-9) trong ngày/tháng/năm (bỏ qua số 0).</em></p>
             <div class="name-chart-svg-container">
                 ${birthChartHtml}
@@ -2156,7 +2160,8 @@
                 </div>
             </div>
 
-            ${chapter1}
+            ${chapter1a}
+            ${chapter1b}
             ${chapter2}
             ${chapter3}
             ${chapter4}
