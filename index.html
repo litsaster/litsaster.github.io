@@ -247,6 +247,7 @@
             font-weight: 600;
             color: #6b4a2f;
             border-bottom: 1px dashed #c4a88c;
+            touch-action: manipulation;
         }
         .num-tooltip .tooltip-text {
             visibility: hidden;
@@ -273,9 +274,11 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        .num-tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
+        @media (hover: hover) {
+            .num-tooltip:hover .tooltip-text {
+                visibility: visible;
+                opacity: 1;
+            }
         }
         .print-list { display: none; }
 
@@ -952,6 +955,7 @@
                 padding: 0;
             }
             .a4-container {
+                width: 100%;
                 padding: 20px 16px;
                 box-shadow: none;
                 border-radius: 0;
@@ -2372,17 +2376,13 @@
             '.profile-table{display:none!important}.print-list{display:block!important}' +
             '.print-list-label{font-weight:700;font-size:11pt;color:#4d3425;margin:10px 0 4px;border-left:3px solid #999;padding-left:8px}' +
             '.print-list-item{margin:6px 0 10px;font-size:9pt;line-height:1.6}.print-list-item .item-desc{margin-top:1px;color:#555;font-style:italic}' +
-            '.section-title{string-set:chapterTitle content(text)}' +
             '.print-chapter{break-before:page}' +
             '.print-chapter:first-of-type{break-before:auto}' +
-            '@page{size:A4;margin:2.5cm 2cm;@bottom-center{content:counter(page);font-family:\'Quicksand\',sans-serif;font-size:9pt;color:#7c6352}@top-center{content:string(chapterTitle);font-family:\'Quicksand\',sans-serif;font-size:8pt;color:#b8956e;text-transform:uppercase;letter-spacing:2px}}' +
-            '@page:first{margin:0;@top-center{content:none}@bottom-center{content:none}}' +
-            '@page:blank{@top-center{content:none}@bottom-center{content:none}}' +
-            '@media print{@page{margin:0}body{background:white}.a4-container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important}}' +
+            '@page{size:A4;margin:2.5cm 2cm;@bottom-center{content:counter(page);font-family:\'Quicksand\',sans-serif;font-size:9pt;color:#7c6352}}' +
+            '@page:first{margin:0;@bottom-center{content:none}}' +
             '</style></head>' +
             '<body><div class="a4-container">' + profileHtml + '</div>' +
-            '<script>window.PagedConfig={before:function(){return document.fonts.ready}}' + cs +
-            '<script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js">' + cs +
+            '<script>document.fonts.ready.then(function(){setTimeout(function(){window.print()},500)})' + cs +
             '</body></html>'
         );
         w.document.close();
