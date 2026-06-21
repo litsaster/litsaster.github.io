@@ -3,8 +3,11 @@
     .card-detail .traits { grid-template-columns: 1fr; }
     .profile-container .info-grid { grid-template-columns: 1fr; }
     .profile-container .two-col-grid { grid-template-columns: 1fr; }
+    .charts-row { flex-direction: column; }
+    .chart-col > p { height: auto; }
     #app { padding: 16px; }
     .card-detail, .profile-container { padding: 20px; }
+    #exportPdfBtn { display: none; }
 }
 @media (max-width: 500px) {
     .num-card { padding: 14px; }
