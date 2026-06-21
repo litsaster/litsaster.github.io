@@ -196,9 +196,9 @@ async function generateProfileAsync(data, dicts) {
         <div class="section-title ch4">📌 Chương IV: Con số ngày sinh, trưởng thành, bài học nhân quả</div>
         <div class="section-title sub">🎂 ${birthDayTitle}</div>
         <p>${birthDayDesc}</p>
+        <div class="section-title sub">🌱 Số Trưởng Thành ${maturityNum}</div>
+        <p>${maturity.description || ''}</p>
     `;
-    chapter4 += `<div class="section-title sub">🌱 Số Trưởng Thành ${maturityNum}</div><p>${maturity.description || ''}</p>`;
-
     if (karmicLessonNums.length > 0) {
         const klItems = karmicLessonNums.map(n => {
             const d = dicts[String(n)] || {};
@@ -221,13 +221,15 @@ async function generateProfileAsync(data, dicts) {
         </table>
         <div class="print-list">${peakPrint}</div>
         <div class="quote">“Hiện tại, bạn đang ở giai đoạn chuẩn bị cho đỉnh cao tiếp theo. Hãy sống trọn vẹn từng chặng đường, vì mỗi bước chân hôm nay đều là viên gạch cho ngôi đền vinh quang của ngày mai.”</div>
-        <div class="section-title sub" style="margin-top:36px;">🔻 Thử thách 3</div>
+        <div class="section-title sub" style="margin-top:36px;">🔻 Thử thách</div>
         <table class="profile-table">
             <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th></tr>
             ${challengeRow}
         </table>
         <div class="print-list">${challengePrint}</div>
-        <div class="section-title sub">🔺 Sơ đồ đỉnh cao và thử thách</div>
+        </div>
+        <div class="print-chapter pyramid-chapter">
+        <div class="section-title ch5">🏔️ Sơ đồ đỉnh cao và thử thách</div>
         <div class="pyramid-svg-container">
             ${pyramidSvg}
         </div>
@@ -286,11 +288,11 @@ async function generateProfileAsync(data, dicts) {
     chapter6 = `
         <div class="print-chapter">
         <div class="section-title ch6">📆 Chương VI: Con số chu kỳ lớn (Các giai đoạn của cuộc đời)</div>
-        <table class="profile-table">
+        <table class="profile-table ch6-table">
             <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th></tr>
             ${cycleRows}
         </table>
-        <div class="print-list">${cyclePrint}</div>
+        <div class="print-list ch6-list">${cyclePrint}</div>
         </div>
     `;
 
@@ -357,13 +359,8 @@ async function generateProfileAsync(data, dicts) {
 
     const today = new Date().toLocaleDateString('vi-VN');
     let html = `
-            <div class="cover-page" style="page-break-after: always;">
-                <div class="cover-frame">
-                    <div class="cover-frame-corner tl"></div>
-                    <div class="cover-frame-corner tr"></div>
-                    <div class="cover-frame-corner bl"></div>
-                    <div class="cover-frame-corner br"></div>
-                </div>
+            <div class="cover-page">
+                <div class="cover-border-inner"></div>
                 <div class="cover-ornament">✦ ✦ ✦</div>
                 <div class="cover-subtitle">Vivian Nhân Số Học</div>
                 <div class="cover-divider"></div>

@@ -280,6 +280,76 @@ document.getElementById('backToLandingBtn').addEventListener('click', function()
     landing.classList.remove('hidden');
 });
 
-document.getElementById('exportPdfBtn').addEventListener('click', function() {
-    window.print();
+document.getElementById('exportPdfBtn').addEventListener('click', async function() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pw = 210, ph = 297;
+
+    document.body.classList.add('pdf-export');
+    await new Promise(r => requestAnimationFrame(r));
+
+    const el = document.getElementById('profileContent');
+    const pc = document.getElementById('profileContainer');
+
+    // Save original styles
+    const origElWidth = el.style.width;
+    const origElMaxW = el.style.maxWidth;
+    const origPcPad = pc.style.padding;
+
+    // Set A4 width for capture
+    el.style.width = '210mm';
+    el.style.maxWidth = '210mm';
+
+    try {
+        const sections = document.querySelectorAll('#profileContent .cover-page, #profileContent .print-chapter');
+        let isFirstPage = true;
+        let pageNum = 0;
+
+        for (const section of sections) {
+            // For cover: remove container padding so it's full-bleed
+            if (section.classList.contains('cover-page')) {
+                pc.style.padding = '0';
+                await new Promise(r => requestAnimationFrame(r));
+                // Set cover height to exactly A4 proportion
+                section.style.minHeight = (section.offsetWidth * ph / pw) + 'px';
+                await new Promise(r => requestAnimationFrame(r));
+            }
+
+            const canvas = await html2canvas(section, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff'
+            });
+
+            // Restore container padding after cover capture
+            if (section.classList.contains('cover-page')) {
+                pc.style.padding = origPcPad;
+                section.style.minHeight = '';
+            }
+
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const ih = (canvas.height * pw) / canvas.width;
+            const pagesNeeded = ih > ph + 20 ? Math.ceil(ih / ph) : 1;
+
+            for (let p = 0; p < pagesNeeded; p++) {
+                pageNum++;
+                if (isFirstPage) isFirstPage = false;
+                else pdf.addPage();
+                pdf.addImage(imgData, 'JPEG', 0, -p * ph, pw, ih);
+                pdf.setFontSize(9);
+                pdf.setTextColor(180, 180, 180);
+                pdf.text(`${pageNum}`, pw - 12, ph - 10, { align: 'right' });
+            }
+        }
+
+        const nameEl = document.querySelector('.cover-info .row .value');
+        const customerName = nameEl ? nameEl.textContent.trim() : 'Khách hàng';
+        pdf.save('Hồ sơ nhân số học - ' + customerName + '.pdf');
+    } finally {
+        el.style.width = origElWidth;
+        el.style.maxWidth = origElMaxW;
+        pc.style.padding = origPcPad;
+        document.body.classList.remove('pdf-export');
+    }
 });

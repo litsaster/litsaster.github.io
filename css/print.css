@@ -7,28 +7,53 @@
     #landing { display: none !important; }
     .cards-grid { display: none !important; }
 
-    .cover-page { page-break-after: always; display: flex !important; flex-direction: column; justify-content: center; height: 100vh; position: relative; }
-    .cover-frame { position: absolute; top: 20px; bottom: 20px; left: calc(20px + 3mm); right: calc(20px + 3mm); border: 2px solid #c9a227; pointer-events: none; }
-    .cover-frame-corner { position: absolute; width: 24px; height: 24px; border-color: #c9a227; border-style: solid; }
-    .cover-frame-corner.tl { top: -1px; left: -1px; border-width: 3px 0 0 3px; }
-    .cover-frame-corner.tr { top: -1px; right: -1px; border-width: 3px 3px 0 0; }
-    .cover-frame-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 3px 3px; }
-    .cover-frame-corner.br { bottom: -1px; right: -1px; border-width: 0 3px 3px 0; }
+    .cover-page {
+        page-break-after: always;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        height: 100vh;
+        position: relative;
+        background: #fff !important;
+        margin: -18mm -15mm;
+        padding: 22mm 18mm;
+    }
+    .cover-page::before {
+        content: '';
+        position: absolute;
+        top: 4mm;
+        left: 4mm;
+        right: 4mm;
+        bottom: 4mm;
+        border: 1px solid rgba(201,162,39,0.25);
+        pointer-events: none;
+    }
+    .cover-page .cover-border-inner {
+        position: absolute;
+        top: 6mm;
+        left: 6mm;
+        right: 6mm;
+        bottom: 6mm;
+        border: 1.5px solid #c9a227;
+        border-radius: 2px;
+        pointer-events: none;
+    }
     .cover-ornament { text-align: center; font-size: 18px; color: #c9a227; margin-bottom: 16px; letter-spacing: 8px; }
-    .cover-subtitle { text-align: center; font-size: 14px; color: #a855f7; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 12px; }
+    .cover-subtitle { text-align: center; font-size: 14px; color: #5a3e1b; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 12px; }
     .cover-divider { width: 80px; height: 2px; background: #c9a227; margin: 0 auto 20px; }
-    .cover-title { text-align: center; font-size: 32px; font-weight: 900; font-family: 'Cinzel Decorative', serif; color: #222; margin-bottom: 8px; letter-spacing: 2px; }
-    .cover-title-sub { text-align: center; font-size: 18px; color: #a855f7; margin-bottom: 20px; letter-spacing: 3px; }
+    .cover-title { text-align: center; font-size: 32px; font-weight: 900; font-family: 'Cinzel Decorative', serif; color: #5a3e1b; margin-bottom: 8px; letter-spacing: 2px; }
+    .cover-title-sub { text-align: center; font-size: 18px; color: #5a3e1b; margin-bottom: 20px; letter-spacing: 3px; }
     .cover-divider2 { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 28px; }
-    .cover-divider2 .line { flex: 1; max-width: 120px; height: 1px; background: #ccc; }
+    .cover-divider2 .line { flex: 1; max-width: 120px; height: 1px; background: rgba(201,162,39,0.4); }
     .cover-divider2 .diamond { width: 10px; height: 10px; background: #c9a227; transform: rotate(45deg); }
-    .cover-package { text-align: center; font-size: 13px; color: #888; margin-bottom: 24px; }
-    .cover-info-box { max-width: 380px; margin: 0 auto 30px; border: 1px solid #ddd; border-radius: 12px; padding: 20px 28px; }
-    .cover-info .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 14px; }
-    .cover-info .row .label { color: #888; }
-    .cover-info .row .value { font-weight: 600; color: #222; }
-    .cover-footer { text-align: center; font-size: 12px; color: #999; line-height: 1.8; margin-top: 36px; }
-    .cover-footer .footer-line { width: 200px; height: 1px; background: #ddd; margin: 0 auto 16px; }
+    .cover-package { text-align: center; font-size: 13px; color: #a0886a; font-style: italic; margin-bottom: 24px; }
+    .cover-info-box { max-width: 380px; margin: 0 auto 30px; background: #fff; border: 1px solid rgba(201,162,39,0.3); border-radius: 12px; padding: 20px 28px; box-shadow: 0 2px 12px rgba(201,162,39,0.08); }
+    .cover-info .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(201,162,39,0.1); font-size: 14px; }
+    .cover-info .row:last-child { border-bottom: none; }
+    .cover-info .row .label { color: #a0886a; }
+    .cover-info .row .value { font-weight: 600; color: #5a3e1b; }
+    .cover-footer { text-align: center; font-size: 12px; color: #a0886a; line-height: 1.8; margin-top: auto; padding-top: 36px; }
+    .cover-footer .footer-line { width: 200px; height: 1px; background: rgba(201,162,39,0.3); margin: 0 auto 16px; }
 
     .profile-container { background: #fff !important; border: none !important; box-shadow: none !important; padding: 0; margin: 0; backdrop-filter: none !important; }
     .profile-container .profile h1 { color: #222; }
@@ -64,14 +89,14 @@
     .profile-container .name-chart-svg-container .cell-box { stroke: #a855f7; fill: #f0ecf5; }
     .profile-container .name-chart-svg-container .cell-box.empty { stroke: #ccc; fill: #fafafa; }
     .profile-container .name-chart-svg-container .cell-text { fill: #222; }
-    .profile-container .pyramid-svg-container .cell-box { stroke: #a855f7; fill: #000; }
-    .profile-container .pyramid-svg-container .cell-box.peak { stroke: #c9a227; fill: #000; }
-    .profile-container .pyramid-svg-container .cell-box.challenge { stroke: #ccc; fill: #000; }
-    .profile-container .pyramid-svg-container .cell-text { fill: #e8d8ff; }
-    .profile-container .pyramid-svg-container .cell-text.small { fill: #9370cc; }
-    .profile-container .pyramid-svg-container .cell-text.age { fill: #9370cc; }
+    .profile-container .pyramid-svg-container .cell-box { stroke: #a855f7; fill: #fff; }
+    .profile-container .pyramid-svg-container .cell-box.peak { stroke: #c9a227; fill: #fff; }
+    .profile-container .pyramid-svg-container .cell-box.challenge { stroke: #ccc; fill: #fff; }
+    .profile-container .pyramid-svg-container .cell-text { fill: #333; }
+    .profile-container .pyramid-svg-container .cell-text.small { fill: #666; }
+    .profile-container .pyramid-svg-container .cell-text.age { fill: #666; }
     .profile-container .pyramid-svg-container .connector { stroke: #a855f7; }
-    .profile-container .pyramid-svg-container .label-side { fill: #e8d8ff; }
+    .profile-container .pyramid-svg-container .label-side { fill: #555; }
     .profile-container .pyramid-svg-container .operator { fill: #c9a227; }
 
     .profile-container .affirmation-box { background: #f5f5f8; border-color: #ddd; color: #333; }
@@ -85,3 +110,124 @@
     .chart-col > p { height: auto; overflow: visible; font-size: 11px; color: #666; margin-bottom: 4px; }
     .chart-col .name-chart-svg-container { margin: 0; padding: 8px; }
 }
+
+/* ===== jsPDF Export (class toggle) ===== */
+.pdf-export {
+    background: #fff !important;
+    color: #222;
+}
+.pdf-export .no-print { display: none !important; }
+.pdf-export #particleCanvas { display: none !important; }
+.pdf-export #landing { display: none !important; }
+.pdf-export .cards-grid { display: none !important; }
+.pdf-export .print-chapter { page-break-inside: avoid; }
+
+.pdf-export .profile-container {
+    background: #fff !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 15mm 12mm;
+    margin: 0;
+    backdrop-filter: none !important;
+}
+.pdf-export .profile-container .profile { padding: 0; }
+.pdf-export .profile-container .profile h1 { color: #222; font-size: 22px; }
+.pdf-export .profile-container .profile h1 small { color: #888; }
+.pdf-export .profile-container .section-title { color: #222; border-left-color: #a855f7; text-shadow: none !important; font-size: 18px; margin: 3.5mm 0 1.5mm; }
+.pdf-export .profile-container .section-title.sub { color: #333; font-size: 16px; margin: 2mm 0 1mm; }
+.pdf-export .profile-container .section-title.ch1, .pdf-export .profile-container .section-title.ch2, .pdf-export .profile-container .section-title.ch3, .pdf-export .profile-container .section-title.ch4, .pdf-export .profile-container .section-title.ch5, .pdf-export .profile-container .section-title.ch6, .pdf-export .profile-container .section-title.ch7, .pdf-export .profile-container .section-title.ch8, .pdf-export .profile-container .section-title.ch-appendix, .pdf-export .profile-container .section-title.ch-closing { color: #333; text-shadow: none !important; }
+.pdf-export .profile-container p, .pdf-export .profile-container li { color: #444; font-size: 15px; line-height: 1.65; }
+.pdf-export .profile-container ul, .pdf-export .profile-container ol { padding-left: 20px; margin: 1.5mm 0 2mm; }
+.pdf-export .profile-container .info-grid { background: #f5f5f5; padding: 2mm 3mm; border-radius: 6px; }
+.pdf-export .profile-container .info-grid .item { border-bottom-color: #ddd; padding: 1.2mm 0; }
+.pdf-export .profile-container .info-grid .item .label { color: #888; font-size: 13px; }
+.pdf-export .profile-container .info-grid .item .value { color: #222; font-size: 13px; }
+.pdf-export .profile-container .badge { background: rgba(168,85,247,0.15); color: #a855f7; font-size: 14px; }
+.pdf-export .profile-container .quote { color: #555; border-left-color: #a855f7; background: #f5f5f8; font-size: 15px; padding: 2mm 3mm; margin: 2mm 0; }
+.pdf-export .profile-container table.profile-table { font-size: 14px; margin: 1.5mm 0 2mm; }
+.pdf-export .profile-container table.profile-table th { background: #a855f7; color: #fff; border-color: #a855f7; padding: 1.5mm 2.5mm; }
+.pdf-export .profile-container table.profile-table td { color: #333; border-color: #ddd; padding: 1.5mm 2.5mm; }
+.pdf-export .profile-container .num-tooltip { color: #a855f7; border-bottom-color: rgba(168,85,247,0.3); }
+.pdf-export .profile-container .num-tooltip .tooltip-text { display: none !important; }
+.pdf-export .print-list { display: block !important; margin: 1.5mm 0; }
+.pdf-export .print-list .print-list-item { padding: 1.5mm 0; border-bottom: 1px solid #eee; font-size: 14px; color: #444; }
+.pdf-export .print-list .print-list-item .item-desc { font-size: 13px; color: #777; margin-top: 0.5mm; }
+
+.pdf-export .profile-container .name-chart-svg-container,
+.pdf-export .profile-container .pyramid-svg-container { background: #fafafa; border-color: #ddd; padding: 2mm; }
+.pdf-export .profile-container .name-chart-svg-container .cell-box { stroke: #a855f7; fill: #f0ecf5; }
+.pdf-export .profile-container .name-chart-svg-container .cell-box.empty { stroke: #ccc; fill: #fafafa; }
+.pdf-export .profile-container .name-chart-svg-container .cell-text { fill: #222; }
+.pdf-export .profile-container .pyramid-svg-container .cell-box { stroke: #a855f7; fill: #fff; }
+.pdf-export .profile-container .pyramid-svg-container .cell-box.peak { stroke: #c9a227; fill: #fff; }
+.pdf-export .profile-container .pyramid-svg-container .cell-box.challenge { stroke: #ccc; fill: #fff; }
+.pdf-export .profile-container .pyramid-svg-container .cell-text { fill: #333; font-size: 14px; }
+.pdf-export .profile-container .pyramid-svg-container .cell-text.small { fill: #666; font-size: 12px; }
+.pdf-export .profile-container .pyramid-svg-container .cell-text.age { fill: #666; font-size: 12px; }
+.pdf-export .profile-container .pyramid-svg-container .connector { stroke: #a855f7; stroke-width: 2; }
+.pdf-export .profile-container .pyramid-svg-container .label-side { fill: #e8d8ff; }
+.pdf-export .profile-container .pyramid-svg-container .operator { fill: #c9a227; }
+.pdf-export .profile-container .affirmation-box { background: #f5f5f8; border-color: #ddd; color: #333; font-size: 14px; padding: 2mm 4mm; }
+.pdf-export .profile-container .example-box { background: #fafafa; border-color: #ddd; padding: 2mm 3mm; font-size: 13px; }
+.pdf-export .profile-container .two-col-grid { gap: 2mm 5mm; margin: 1.5mm 0; }
+.pdf-export .profile-container .two-col-grid h4 { font-size: 14px; }
+.pdf-export .profile-container .footer-note { color: #888; border-top-color: #ddd; font-size: 12px; margin-top: 3mm; padding-top: 2mm; }
+.pdf-export .profile-container .loading, .pdf-export .profile-container .error { display: none !important; }
+.pdf-export .profile-container .charts-row { margin: 1.5mm 0; flex-direction: column; }
+.pdf-export .profile-container .chart-col { max-width: 55%; margin: 0 auto; flex: none; }
+.pdf-export .profile-container .chart-col .name-chart-svg-container { margin: 0; padding: 2mm; }
+.pdf-export .chart-col > p { height: auto; overflow: visible; font-size: 13px; color: #666; margin-bottom: 4px; }
+.pdf-export .pyramid-chapter .pyramid-svg-container { max-width: 100%; padding: 1mm; margin: 0; }
+.pdf-export .pyramid-chapter .section-title { margin: 2mm 0 0.5mm; }
+
+.pdf-export .ch6-table td { font-size: 16px; padding: 2mm 3mm; }
+.pdf-export .ch6-table th { font-size: 15px; padding: 2mm 3mm; }
+.pdf-export .ch6-list .print-list-item { font-size: 16px; }
+.pdf-export .ch6-list .print-list-item .item-desc { font-size: 15px; }
+
+.pdf-export .cover-page {
+    page-break-after: always;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 22mm 18mm;
+    background: #fff !important;
+    height: auto;
+}
+.pdf-export .cover-page::before {
+    content: '';
+    position: absolute;
+    top: 4mm;
+    left: 4mm;
+    right: 4mm;
+    bottom: 4mm;
+    border: 1px solid rgba(201,162,39,0.25);
+    pointer-events: none;
+}
+.pdf-export .cover-page .cover-border-inner {
+    position: absolute;
+    top: 6mm;
+    left: 6mm;
+    right: 6mm;
+    bottom: 6mm;
+    border: 1.5px solid #c9a227;
+    border-radius: 2px;
+    pointer-events: none;
+}
+.pdf-export .cover-ornament { text-align: center; font-size: 20px; color: #c9a227; margin-bottom: 14px; letter-spacing: 8px; }
+.pdf-export .cover-subtitle { text-align: center; font-size: 14px; color: #5a3e1b; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px; }
+.pdf-export .cover-divider { width: 70px; height: 2px; background: #c9a227; margin: 0 auto 16px; }
+.pdf-export .cover-title { text-align: center; font-size: 30px; font-weight: 900; font-family: 'Cinzel Decorative', serif; color: #5a3e1b; margin-bottom: 6px; letter-spacing: 2px; }
+.pdf-export .cover-title-sub { text-align: center; font-size: 18px; color: #5a3e1b; margin-bottom: 16px; letter-spacing: 3px; }
+.pdf-export .cover-divider2 { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 22px; }
+.pdf-export .cover-divider2 .line { flex: 1; max-width: 100px; height: 1px; background: rgba(201,162,39,0.4); }
+.pdf-export .cover-divider2 .diamond { width: 8px; height: 8px; background: #c9a227; transform: rotate(45deg); }
+.pdf-export .cover-package { text-align: center; font-size: 13px; color: #a0886a; font-style: italic; margin-bottom: 20px; }
+.pdf-export .cover-info-box { max-width: 420px; width: 90%; margin: 0 auto 24px; background: #fff; border: 1px solid rgba(201,162,39,0.3); border-radius: 10px; padding: 6mm 8mm; box-shadow: 0 2px 12px rgba(201,162,39,0.08); }
+.pdf-export .cover-info .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; padding: 2.5mm 0; border-bottom: 1px solid rgba(201,162,39,0.1); font-size: 14px; }
+.pdf-export .cover-info .row:last-child { border-bottom: none; }
+.pdf-export .cover-info .row .label { color: #a0886a; white-space: nowrap; flex-shrink: 0; }
+.pdf-export .cover-info .row .value { font-weight: 600; color: #5a3e1b; text-align: right; word-break: break-word; }
+.pdf-export .cover-footer { text-align: center; font-size: 12px; color: #a0886a; line-height: 1.7; margin-top: auto; padding-top: 30px; }
+.pdf-export .cover-footer .footer-line { width: 180px; height: 1px; background: rgba(201,162,39,0.3); margin: 0 auto 12px; }

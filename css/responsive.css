@@ -13,3 +13,10 @@
     .num-card { padding: 14px; }
     .num-card .circle { width: 52px; height: 52px; font-size: 20px; }
 }
+@media (max-width: 400px) {
+    .landing-form-header h2 { font-size: 17px; }
+    .landing-form-header p { font-size: 12px; }
+    .landing-btn { padding: 14px; font-size: 15px; }
+    .landing-row .field input,
+    .landing-row .field select { padding: 10px 12px; font-size: 14px; }
+}

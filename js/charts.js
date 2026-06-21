@@ -11,11 +11,11 @@ function buildChartSVG(counts) {
         [3, 6, 9]
     ];
 
-    const boxW = 70;
-    const boxH = 50;
-    const gapX = 115;
-    const gapY = 90;
-    const padding = 50;
+    const boxW = 55;
+    const boxH = 38;
+    const gapX = 85;
+    const gapY = 55;
+    const padding = 35;
 
     const pos = {};
     for (let colIdx = 0; colIdx < 3; colIdx++) {

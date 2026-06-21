@@ -324,6 +324,7 @@
 
 .print-list { display: none; }
 .cover-page { display: none; }
+.cover-border-inner { display: none; }
 .no-print { }
 
 .profile-container .print-chapter {
@@ -359,3 +360,5 @@
 }
 .modal-close:hover { color: #a855f7; }
 .modal-body p { font-size: 15px; color: #c4b5d8; line-height: 1.7; }
+
+.pyramid-svg-container { cursor: zoom-in; }

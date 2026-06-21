@@ -18,14 +18,21 @@
     margin-bottom: 20px;
 }
 .landing-title {
-    font-size: 46px; font-weight: 900; margin: 0 0 10px;
+    font-size: clamp(28px, 10vw, 46px); font-weight: 900; margin: 0 0 10px;
     font-family: 'Cinzel Decorative', serif;
-    background: linear-gradient(135deg, #c9a227 0%, #e8d8ff 45%, #a855f7 100%);
+    background: linear-gradient(135deg, #c9a227 0%, #e8d8ff 35%, #a855f7 65%, #e8d8ff 85%, #c9a227 100%);
+    background-size: 300% 300%;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: shimmerTitle 5s ease-in-out infinite;
+}
+@keyframes shimmerTitle {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 .landing-subtitle {
-    font-size: 15px; color: #9370cc; line-height: 1.5; margin: 0;
+    font-size: clamp(13px, 3.5vw, 15px); color: #9370cc; line-height: 1.5; margin: 0;
     font-weight: 300;
 }
 
@@ -34,8 +41,8 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(124,58,237,0.3);
-    border-radius: 24px;
-    padding: 32px;
+    border-radius: clamp(16px, 4vw, 24px);
+    padding: clamp(20px, 4vw, 32px);
     box-shadow: 0 0 80px rgba(124,58,237,0.15);
     position: relative;
     overflow: hidden;
@@ -108,7 +115,5 @@
 }
 
 @media (max-width: 500px) {
-    .landing-title { font-size: 32px; }
-    .landing-card { padding: 24px 20px; }
     .landing-row { flex-direction: column; gap: 10px; }
 }
