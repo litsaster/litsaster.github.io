@@ -100,82 +100,78 @@ function initStars(count) {
 }
 
 // ========== CONSTELLATIONS ==========
-const constellations = [
-    {
-        stars: [{x:0.12,y:0.2},{x:0.17,y:0.27},{x:0.14,y:0.36},{x:0.22,y:0.42},{x:0.28,y:0.44},{x:0.34,y:0.48},{x:0.32,y:0.56}],
-        color: '#c9a227', lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
-    },
-    {
-        stars: [{x:0.72,y:0.18},{x:0.78,y:0.35},{x:0.64,y:0.32}],
-        color: '#e879f9', lines: [[0,1],[1,2],[2,0]]
-    },
-    {
-        stars: [{x:0.82,y:0.62},{x:0.78,y:0.7},{x:0.88,y:0.68},{x:0.85,y:0.56}],
-        color: '#38bdf8', lines: [[0,1],[1,2],[2,3],[3,0]]
-    }
-];
-let constDrift = [];
+const constellation = {
+    name: 'Xử Nữ',
+    color: '#34d399',
+    stars: [
+        {x:0.5, y:0.12},
+        {x:0.3, y:0.28},
+        {x:0.7, y:0.28},
+        {x:0.5, y:0.4},
+        {x:0.18, y:0.52},
+        {x:0.82, y:0.52},
+        {x:0.5, y:0.68}
+    ],
+    lines: [[0,1],[0,2],[1,3],[2,3],[1,4],[2,5],[4,3],[5,3],[3,6]]
+};
+let constDrift = { dx: 0, dy: 0, phase: 0 };
 
 function initConstellations() {
-    constDrift = constellations.map(c => ({
+    constDrift = {
         dx: (Math.random() - 0.5) * 0.03,
         dy: (Math.random() - 0.5) * 0.03,
         phase: Math.random() * Math.PI * 2
-    }));
+    };
 }
 
 function drawConstellations() {
-    constellations.forEach((c, ci) => {
-        const dr = constDrift[ci];
-        const pulse = 0.85 + 0.15 * Math.sin(Date.now() * 0.001 + dr.phase);
-        const w = particleCanvas.width, h = particleCanvas.height;
+    const c = constellation;
+    const dr = constDrift;
+    const pulse = 0.85 + 0.15 * Math.sin(Date.now() * 0.001 + dr.phase);
+    const w = particleCanvas.width, h = particleCanvas.height;
 
-        // calculate center of constellation for drift
-        const cx = c.stars.reduce((s, st) => s + st.x, 0) / c.stars.length;
-        const cy = c.stars.reduce((s, st) => s + st.y, 0) / c.stars.length;
-        const offsetX = dr.dx * Math.sin(Date.now() * 0.0003 + dr.phase) * w;
-        const offsetY = dr.dy * Math.sin(Date.now() * 0.0003 + dr.phase + 1) * h;
+    const cx = c.stars.reduce((s, st) => s + st.x, 0) / c.stars.length;
+    const cy = c.stars.reduce((s, st) => s + st.y, 0) / c.stars.length;
+    const offsetX = dr.dx * Math.sin(Date.now() * 0.0003 + dr.phase) * w;
+    const offsetY = dr.dy * Math.sin(Date.now() * 0.0003 + dr.phase + 1) * h;
 
-        // draw lines
-        const pts = c.stars.map(st => ({
-            x: (st.x - cx) * 1.2 * w + cx * w + offsetX,
-            y: (st.y - cy) * 1.2 * h + cy * h + offsetY
-        }));
+    const pts = c.stars.map(st => ({
+        x: (st.x - cx) * 1.2 * w + cx * w + offsetX,
+        y: (st.y - cy) * 1.2 * h + cy * h + offsetY
+    }));
 
-        c.lines.forEach(([i, j]) => {
-            const dx = pts[i].x - pts[j].x;
-            const dy = pts[i].y - pts[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist > 600) return;
+    c.lines.forEach(([i, j]) => {
+        const dx = pts[i].x - pts[j].x;
+        const dy = pts[i].y - pts[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 600) return;
 
-            particleCtx.beginPath();
-            particleCtx.moveTo(pts[i].x, pts[i].y);
-            particleCtx.lineTo(pts[j].x, pts[j].y);
-            particleCtx.strokeStyle = c.color;
-            particleCtx.globalAlpha = 0.2 * pulse;
-            particleCtx.lineWidth = 0.8;
-            particleCtx.stroke();
-            particleCtx.globalAlpha = 1;
-        });
+        particleCtx.beginPath();
+        particleCtx.moveTo(pts[i].x, pts[i].y);
+        particleCtx.lineTo(pts[j].x, pts[j].y);
+        particleCtx.strokeStyle = c.color;
+        particleCtx.globalAlpha = 0.2 * pulse;
+        particleCtx.lineWidth = 0.8;
+        particleCtx.stroke();
+        particleCtx.globalAlpha = 1;
+    });
 
-        // draw stars
-        pts.forEach(pt => {
-            const s = (1.5 + Math.random() * 0.5) * pulse;
-            particleCtx.save();
-            const grd = particleCtx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, s * 4);
-            grd.addColorStop(0, `rgba(255,255,255,${0.4 * pulse})`);
-            grd.addColorStop(0.2, c.color);
-            grd.addColorStop(1, 'rgba(255,255,255,0)');
-            particleCtx.fillStyle = grd;
-            particleCtx.beginPath();
-            particleCtx.arc(pt.x, pt.y, s * 4, 0, Math.PI * 2);
-            particleCtx.fill();
-            particleCtx.beginPath();
-            particleCtx.arc(pt.x, pt.y, s * 0.6, 0, Math.PI * 2);
-            particleCtx.fillStyle = '#fff';
-            particleCtx.fill();
-            particleCtx.restore();
-        });
+    pts.forEach(pt => {
+        const s = (1.5 + Math.random() * 0.5) * pulse;
+        particleCtx.save();
+        const grd = particleCtx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, s * 4);
+        grd.addColorStop(0, `rgba(255,255,255,${0.4 * pulse})`);
+        grd.addColorStop(0.2, c.color);
+        grd.addColorStop(1, 'rgba(255,255,255,0)');
+        particleCtx.fillStyle = grd;
+        particleCtx.beginPath();
+        particleCtx.arc(pt.x, pt.y, s * 4, 0, Math.PI * 2);
+        particleCtx.fill();
+        particleCtx.beginPath();
+        particleCtx.arc(pt.x, pt.y, s * 0.6, 0, Math.PI * 2);
+        particleCtx.fillStyle = '#fff';
+        particleCtx.fill();
+        particleCtx.restore();
     });
 }
 
