@@ -99,21 +99,20 @@ function initStars(count) {
     for (let i = 0; i < count; i++) particles.push(new Star());
 }
 
-// ========== CONSTELLATION: SONG TỬ (GEMINI) ==========
+// ========== CONSTELLATION: XỬ NỮ (VIRGO) ==========
 const constellation = {
-    name: 'Song Tử',
-    color: '#fbbf24',
+    name: 'Xử Nữ',
+    color: '#60a5fa',
     stars: [
-        {x:0.4, y:0.12},
-        {x:0.6, y:0.12},
-        {x:0.35, y:0.28},
-        {x:0.65, y:0.28},
-        {x:0.3, y:0.45},
-        {x:0.7, y:0.45},
-        {x:0.25, y:0.62},
-        {x:0.75, y:0.62}
+        {x:0.5, y:0.12},
+        {x:0.3, y:0.28},
+        {x:0.7, y:0.28},
+        {x:0.5, y:0.4},
+        {x:0.18, y:0.52},
+        {x:0.82, y:0.52},
+        {x:0.5, y:0.68}
     ],
-    lines: [[0,2],[2,4],[4,6],[1,3],[3,5],[5,7],[0,1],[2,3],[4,5]]
+    lines: [[0,1],[0,2],[1,3],[2,3],[1,4],[2,5],[4,3],[5,3],[3,6]]
 };
 let constDrift = { dx: 0, dy: 0, phase: 0 };
 
