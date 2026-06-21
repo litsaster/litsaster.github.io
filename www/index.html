@@ -983,7 +983,7 @@
             <span class="tab-icon">🔢</span>
             <span class="tab-label">Numer</span>
         </button>
-        <button class="tab-btn" data-tab="babyname">
+        <button class="tab-btn" data-tab="babyname" style="display:none;">
             <span class="tab-icon">👶</span>
             <span class="tab-label">Baby</span>
         </button>
@@ -1063,6 +1063,12 @@
                     <div class="form-group">
                         <label>Họ của bé</label>
                         <input type="text" id="babySurname" value="Nguyễn">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ngày sinh (dự sinh)</label>
+                        <input type="date" id="babyBirth">
                     </div>
                 </div>
                 <div class="form-row">
@@ -1963,7 +1969,7 @@
             <div class="item item-full"><span class="label">🔢 Số chủ đạo</span><span class="value">${lifeName}</span></div>
         `;
 
-        if (birthYear < 2011) {
+        if (new Date().getFullYear() - birthYear > 15) {
             infoItems += `
                 <div class="item item-full"><span class="label">🌊 Năm cá nhân</span><span class="value">${yearName}</span></div>
             `;
@@ -2139,7 +2145,7 @@
             </div>
         `;
 
-        if (birthYear < 2011) {
+        if (new Date().getFullYear() - birthYear > 15) {
             chapter7 = `
                 <div class="print-chapter">
                 <div class="section-title">🌊 Chương VII: Năm cá nhân</div>
@@ -2299,7 +2305,7 @@
         const yearName = (dataDicts[String(pYear)] && dataDicts[String(pYear)].name) || `Số ${pYear}`;
         lifePathDisplay.value = `${lifeName}`;
         personalYearDisplay.value = `${yearName}`;
-        document.getElementById('personalYearRow').style.display = (year >= 2011) ? 'none' : '';
+        document.getElementById('personalYearRow').style.display = (new Date().getFullYear() - year <= 15) ? 'none' : '';
     }
 
     async function renderProfile() {
