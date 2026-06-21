@@ -99,20 +99,21 @@ function initStars(count) {
     for (let i = 0; i < count; i++) particles.push(new Star());
 }
 
-// ========== CONSTELLATIONS ==========
+// ========== CONSTELLATION: SONG TỬ (GEMINI) ==========
 const constellation = {
-    name: 'Xử Nữ',
-    color: '#34d399',
+    name: 'Song Tử',
+    color: '#fbbf24',
     stars: [
-        {x:0.5, y:0.12},
-        {x:0.3, y:0.28},
-        {x:0.7, y:0.28},
-        {x:0.5, y:0.4},
-        {x:0.18, y:0.52},
-        {x:0.82, y:0.52},
-        {x:0.5, y:0.68}
+        {x:0.4, y:0.12},
+        {x:0.6, y:0.12},
+        {x:0.35, y:0.28},
+        {x:0.65, y:0.28},
+        {x:0.3, y:0.45},
+        {x:0.7, y:0.45},
+        {x:0.25, y:0.62},
+        {x:0.75, y:0.62}
     ],
-    lines: [[0,1],[0,2],[1,3],[2,3],[1,4],[2,5],[4,3],[5,3],[3,6]]
+    lines: [[0,2],[2,4],[4,6],[1,3],[3,5],[5,7],[0,1],[2,3],[4,5]]
 };
 let constDrift = { dx: 0, dy: 0, phase: 0 };
 
@@ -127,7 +128,6 @@ function initConstellations() {
 function drawConstellations() {
     const c = constellation;
     const dr = constDrift;
-    const pulse = 0.85 + 0.15 * Math.sin(Date.now() * 0.001 + dr.phase);
     const w = particleCanvas.width, h = particleCanvas.height;
 
     const cx = c.stars.reduce((s, st) => s + st.x, 0) / c.stars.length;
@@ -146,29 +146,33 @@ function drawConstellations() {
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist > 600) return;
 
+        particleCtx.save();
+        particleCtx.shadowColor = c.color;
+        particleCtx.shadowBlur = 6;
         particleCtx.beginPath();
         particleCtx.moveTo(pts[i].x, pts[i].y);
         particleCtx.lineTo(pts[j].x, pts[j].y);
         particleCtx.strokeStyle = c.color;
-        particleCtx.globalAlpha = 0.2 * pulse;
-        particleCtx.lineWidth = 0.8;
+        particleCtx.globalAlpha = 0.45;
+        particleCtx.lineWidth = 1;
         particleCtx.stroke();
-        particleCtx.globalAlpha = 1;
+        particleCtx.restore();
     });
 
     pts.forEach(pt => {
-        const s = (1.5 + Math.random() * 0.5) * pulse;
         particleCtx.save();
-        const grd = particleCtx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, s * 4);
-        grd.addColorStop(0, `rgba(255,255,255,${0.4 * pulse})`);
+        particleCtx.shadowColor = c.color;
+        particleCtx.shadowBlur = 12;
+        const grd = particleCtx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 8);
+        grd.addColorStop(0, 'rgba(255,255,255,0.5)');
         grd.addColorStop(0.2, c.color);
         grd.addColorStop(1, 'rgba(255,255,255,0)');
         particleCtx.fillStyle = grd;
         particleCtx.beginPath();
-        particleCtx.arc(pt.x, pt.y, s * 4, 0, Math.PI * 2);
+        particleCtx.arc(pt.x, pt.y, 8, 0, Math.PI * 2);
         particleCtx.fill();
         particleCtx.beginPath();
-        particleCtx.arc(pt.x, pt.y, s * 0.6, 0, Math.PI * 2);
+        particleCtx.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
         particleCtx.fillStyle = '#fff';
         particleCtx.fill();
         particleCtx.restore();
