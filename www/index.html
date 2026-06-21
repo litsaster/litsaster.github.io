@@ -3,1186 +3,933 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hồ sơ Nhân số học Vivian</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Numerology — Nhân số học</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&family=Cinzel+Decorative:wght@400;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* CSS giữ nguyên như file trước */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             margin: 0;
-            background: #f4ede7;
+            background: #06030f;
             font-family: 'Quicksand', sans-serif;
-            color: #3e2c20;
-        }
-        .app-layout {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 24px;
-        }
-        .sidebar {
-            width: 520px;
-            min-width: 520px;
-            flex-shrink: 0;
-            background: #faf3ec;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            padding: 28px 24px;
-        }
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .sidebar-header h2 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #4d3425;
-        }
-        .sidebar-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #4d3425;
-            padding: 4px 8px;
-        }
-        .main-content {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            justify-content: center;
-        }
-        .a4-container {
-            width: 210mm;
-            max-width: 100%;
-            background: #fffcf8;
-            padding: 40px 50px;
-            border-radius: 16px;
-            box-shadow: 0 2px 24px rgba(0,0,0,0.08);
-        }
-        .form-section {
-            padding: 0;
-        }
-        .section-divider {
-            border: none;
-            border-top: 1px solid #e0d4c8;
-            margin: 20px 0;
-        }
-        .result-inline {
-            margin-top: 14px;
-            font-size: 14px;
-            line-height: 1.7;
-            color: #4d3425;
-            background: #faf6f1;
-            padding: 14px 16px;
-            border-radius: 10px;
-            border: 1px solid #e8dccc;
-            display: none;
-        }
-        .result-inline.visible { display: block; }
-        .form-section h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #4d3425;
-            margin-bottom: 18px;
-        }
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px 30px;
-            margin-bottom: 12px;
-        }
-        .form-group {
-            flex: 1 1 180px;
-            min-width: 150px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 14px;
-            color: #6b4f3a;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #ddd0c2;
-            border-radius: 10px;
-            font-size: 15px;
-            font-family: 'Quicksand', sans-serif;
-            background: #fff;
-            transition: 0.2s;
-        }
-        .form-group input:focus, .form-group select:focus {
-            border-color: #b8956e;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(184, 149, 110, 0.2);
-        }
-        .form-group input[readonly] {
-            background: #f0ebe6;
-            font-weight: 600;
-        }
-        .btn-group {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-        }
-        .btn {
-            padding: 12px 30px;
-            background: #d4b38c;
-            border: none;
-            border-radius: 40px;
-            color: #fff;
-            font-weight: 700;
-            font-size: 16px;
-            font-family: 'Quicksand', sans-serif;
-            cursor: pointer;
-            transition: 0.25s;
-            box-shadow: 0 4px 10px rgba(212, 179, 140, 0.25);
-        }
-        .btn:hover { background: #c09f78; transform: translateY(-2px); }
-        .btn-secondary { background: #b0a091; box-shadow: none; }
-        .btn-secondary:hover { background: #99887a; }
-        .btn-print { background: #4d3425; box-shadow: 0 4px 10px rgba(77, 52, 37, 0.25); }
-        .btn-print:hover { background: #3e2c20; }
-        .btn-edit { background: #7a9e7e; box-shadow: 0 4px 10px rgba(122, 158, 126, 0.25); }
-        .btn-edit:hover { background: #5f8263; }
-        .btn-edit.active { background: #b88a6b; }
-
-        .tab-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            width: 52px;
-            min-width: 52px;
-            flex-shrink: 0;
-            background: #f5ebe3;
-            border-radius: 14px;
-            padding: 8px 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .tab-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            padding: 10px 4px;
-            border: none;
-            border-radius: 10px;
-            background: transparent;
-            cursor: pointer;
-            font-family: 'Quicksand', sans-serif;
-            font-size: 10px;
-            font-weight: 600;
-            color: #8f7b6a;
-            transition: 0.2s;
-        }
-        .tab-btn .tab-icon { font-size: 20px; line-height: 1; }
-        .tab-btn:hover { background: rgba(255,255,255,0.5); color: #4d3425; }
-        .tab-btn.active { background: #fff; color: #4d3425; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-        .sidebar-content { display: block; }
-        .sidebar-content.hidden { display: none; }
-
-        .babyname-form { }
-
-        .result-section { margin-top: 10px; padding-top: 10px; border-top: 2px dashed #e2d2c2; }
-        .profile { padding: 20px 0; }
-        .profile h1 {
-            font-size: 32px;
-            font-weight: 700;
-            text-align: center;
-            color: #4d3425;
-            letter-spacing: 1px;
-        }
-        .profile h1 small {
-            display: block;
-            font-size: 16px;
-            font-weight: 400;
-            color: #b8956e;
-            margin-top: 4px;
-            letter-spacing: 3px;
-        }
-        .profile .subhead {
-            text-align: center;
-            font-size: 18px;
-            font-style: italic;
-            color: #7c6352;
-            margin: 8px 0 20px;
-            border-bottom: 1px solid #e8d9cc;
-            padding-bottom: 16px;
-        }
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 30px;
-            background: #faf3ec;
-            padding: 18px 25px;
-            border-radius: 14px;
-            margin: 16px 0 25px;
-        }
-        .info-grid .item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #e0d2c4;
-            padding: 6px 0;
-        }
-        .info-grid .item .label { font-weight: 600; color: #6b4f3a; }
-        .info-grid .item .value { font-weight: 600; color: #4d3425; }
-        .info-grid .item-full { grid-column: 1 / -1; }
-
-        .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 30px 0 12px;
-            color: #4d3425;
-            border-left: 5px solid #d4b38c;
-            padding-left: 16px;
-        }
-        .section-title.sub {
-            font-size: 20px;
-            margin-top: 22px;
-            border-left-width: 3px;
-        }
-        .profile p, .profile li {
-            font-size: 16px;
-            line-height: 1.8;
-            color: #4a3f38;
-        }
-        .profile ul, .profile ol { padding-left: 24px; margin: 8px 0 12px; }
-        .profile .badge {
-            display: inline-block;
-            background: #d4b38c;
-            color: #fff;
-            font-weight: 700;
-            padding: 2px 16px;
-            border-radius: 30px;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            margin-right: 6px;
-        }
-        .profile .quote {
-            font-style: italic;
-            font-size: 18px;
-            color: #7c6352;
-            border-left: 4px solid #d4b38c;
-            padding-left: 24px;
-            margin: 20px 0;
-            background: rgba(212, 179, 140, 0.06);
-            padding: 14px 24px;
-            border-radius: 0 10px 10px 0;
-        }
-        table.profile-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 15px;
-        }
-        table.profile-table th {
-            background: #f0e6dc;
-            color: #3e2c20;
-            font-weight: 600;
-            padding: 10px 14px;
-            text-align: left;
-        }
-        table.profile-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #eee5dc;
-        }
-        .num-tooltip {
-            position: relative;
-            cursor: pointer;
-            font-weight: 600;
-            color: #6b4a2f;
-            border-bottom: 1px dashed #c4a88c;
-            touch-action: manipulation;
-        }
-        .num-tooltip .tooltip-text {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: calc(100% + 6px);
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2d2d2d;
-            color: #f0edea;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.5;
-            white-space: normal;
-            max-width: 300px;
-            width: max-content;
-            z-index: 999;
-            transition: opacity 0.15s;
-            pointer-events: none;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        @media (hover: hover) {
-            .num-tooltip:hover .tooltip-text {
-                visibility: visible;
-                opacity: 1;
-            }
-        }
-        .baby-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 14px 8px;
-            font-size: 20px;
-            text-align: center;
-            padding: 10px 0;
-        }
-        .baby-grid > div {
-            padding: 6px 0;
-        }
-        .print-list { display: none; }
-
-        .footer-note {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 14px;
-            color: #b8956e;
-            border-top: 1px solid #eee5dc;
-            padding-top: 25px;
-            font-style: italic;
+            color: #e8d8ff;
+            overflow-x: hidden;
         }
 
-        .two-col-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px 40px;
-            margin: 12px 0;
-        }
-        .two-col-grid ul { margin: 4px 0; }
-
-        .profile .affirmation-box {
-            background: #f0e6dc;
-            padding: 20px 30px;
-            border-radius: 16px;
-            font-size: 20px;
-            font-style: italic;
-            text-align: center;
-            color: #4d3425;
-            margin: 20px 0;
-            border: 1px solid #d4b38c;
-        }
-        .profile .example-box {
-            background: #faf3ec;
-            padding: 18px 22px;
-            border-radius: 14px;
-            line-height: 1.8;
-        }
-        .profile .famous-person {
-            padding: 4px 0;
-        }
-
-        .name-chart-svg-container {
-            display: flex;
-            justify-content: center;
-            margin: 16px 0;
-            overflow-x: auto;
-            overflow-y: visible;
-            padding: 20px 10px;
-            background: #fcf9f5;
-            border-radius: 12px;
-            position: relative;
-        }
-        .name-chart-svg-container svg {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            overflow: visible;
-        }
-        .name-chart-svg-container .cell-box {
-            fill: #faf3ec;
-            stroke: #b8956e;
-            stroke-width: 2;
-            rx: 8;
-            ry: 8;
-        }
-        .name-chart-svg-container .cell-box.empty {
-            fill: #faf3ec;
-            stroke: #ddd0c2;
-            stroke-width: 1.5;
-        }
-        .name-chart-svg-container .cell-text {
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 700;
-            fill: #4d3425;
-            text-anchor: middle;
-            dominant-baseline: central;
-            font-size: 20px;
-        }
-        .name-chart-svg-container .dot {
-            fill: #b8956e;
-            r: 4;
-        }
-        .name-chart-svg-container .line-connect {
-            stroke: #a67c4e;
-            stroke-width: 2.5;
-            fill: none;
-        }
-        .name-chart-svg-container .line-connect.dashed {
-            stroke-dasharray: 6,4;
-        }
-        .name-chart-svg-container .arrow-head {
-            fill: #a67c4e;
-        }
-
-        .pyramid-svg-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-            overflow-x: auto;
-            background: #fcf9f5;
-            border-radius: 16px;
-            padding: 30px 20px;
-        }
-        .pyramid-svg-container svg {
-            max-width: 100%;
-            height: auto;
-        }
-        .pyramid-svg-container .cell-box {
-            fill: #faf3ec;
-            stroke: #b8956e;
-            stroke-width: 2;
-            rx: 8;
-            ry: 8;
-        }
-        .pyramid-svg-container .cell-box.peak {
-            fill: #f0e6dc;
-            stroke: #a67c4e;
-            stroke-width: 2.5;
-        }
-        .pyramid-svg-container .cell-box.peak-highlight {
-            fill: #e8d5c4;
-            stroke: #8a6b4e;
-            stroke-width: 3;
-        }
-        .pyramid-svg-container .cell-box.challenge {
-            fill: #f5ede4;
-            stroke: #b88a6b;
-            stroke-width: 2;
-        }
-        .pyramid-svg-container .cell-box.challenge-highlight {
-            fill: #e8d9cc;
-            stroke: #9a7a5a;
-            stroke-width: 3;
-        }
-        .pyramid-svg-container .cell-text {
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 700;
-            fill: #4d3425;
-            text-anchor: middle;
-            dominant-baseline: central;
-        }
-        .pyramid-svg-container .cell-text.small {
-            font-size: 12px;
-            fill: #6b4f3a;
-        }
-        .pyramid-svg-container .cell-text.age {
-            font-size: 13px;
-            fill: #7c6352;
-        }
-        .pyramid-svg-container .connector {
-            stroke: #c9a87c;
-            stroke-width: 2.5;
-            fill: none;
-        }
-        .pyramid-svg-container .connector.challenge {
-            stroke: #b88a6b;
-        }
-        .pyramid-svg-container .label-side {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 16px;
-            fill: #4d3425;
-            text-anchor: middle;
-            font-weight: 700;
-        }
-        .pyramid-svg-container .operator {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 20px;
-            fill: #a67c4e;
-            text-anchor: middle;
-            dominant-baseline: central;
-            font-weight: 700;
-        }
-        .pyramid-svg-container .operator.challenge {
-            fill: #b88a6b;
-        }
-
-        .profile.editing .section-title,
-        .profile.editing p,
-        .profile.editing li,
-        .profile.editing .quote,
-        .profile.editing td,
-        .profile.editing .info-grid .item .value,
-        .profile.editing .info-grid .item .label,
-        .profile.editing .affirmation-box,
-        .profile.editing .example-box,
-        .profile.editing .two-col-grid {
-            outline: 2px dashed #b8956e;
-            outline-offset: 2px;
-            background: rgba(255, 248, 240, 0.3);
-            border-radius: 4px;
-            padding: 2px 6px;
-        }
-        .profile.editing .info-grid .item .value,
-        .profile.editing .info-grid .item .label { background: transparent; }
-        .profile.editing .info-grid { background: rgba(250, 243, 236, 0.5); }
-
-        .loading { text-align: center; padding: 40px; font-size: 18px; color: #7c6352; }
-        .error { color: #b33; background: #fdd; padding: 16px; border-radius: 12px; margin: 20px 0; }
-
-        .cover-page { display: none; }
-
-        @media print {
-            @page { margin: 0.5in; }
-            * { box-shadow: none !important; text-shadow: none !important; }
-            body { background: #fff; padding: 0; font-size: 11pt; line-height: 1.4; color: #000; }
-            .app-layout { display: block; margin: 0; padding: 0; max-width: none; }
-            .sidebar, .sidebar-backdrop { display: none !important; }
-            .main-content { padding: 0 !important; display: block !important; }
-            .a4-container { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
-            .form-section { display: none !important; }
-            .no-print { display: none !important; }
-            .btn-group { display: none !important; }
-            #eventTableBtn, #chartBtn, #pyramidBtn { display: none !important; }
-            .result-section { border-top: none; margin-top: 0; padding-top: 0; }
-
-            .cover-page {
-                display: flex !important;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                height: 100vh;
-                overflow: hidden;
-                page-break-after: always;
-                page-break-inside: avoid;
-                position: relative;
-                background:
-                    radial-gradient(ellipse at 50% 40%, rgba(212, 179, 140, 0.06) 0%, transparent 70%),
-                    radial-gradient(ellipse at 50% 60%, rgba(212, 179, 140, 0.04) 0%, transparent 60%),
-                    linear-gradient(180deg, rgba(250, 243, 236, 0.3) 0%, transparent 30%, transparent 70%, rgba(250, 243, 236, 0.3) 100%);
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .cover-page .cover-frame {
-                position: absolute;
-                top: 30pt;
-                left: 30pt;
-                right: 30pt;
-                bottom: 30pt;
-                border: 1px solid #d4b38c;
-                pointer-events: none;
-            }
-            .cover-page .cover-frame::before {
-                content: '';
-                position: absolute;
-                top: 8pt;
-                left: 8pt;
-                right: 8pt;
-                bottom: 8pt;
-                border: 1px solid rgba(212, 179, 140, 0.4);
-            }
-            .cover-page .cover-frame-corner {
-                position: absolute;
-                width: 20pt;
-                height: 20pt;
-                border-color: #c09f78;
-                border-style: solid;
-            }
-            .cover-page .cover-frame-corner.tl {
-                top: 6pt; left: 6pt;
-                border-width: 2px 0 0 2px;
-            }
-            .cover-page .cover-frame-corner.tr {
-                top: 6pt; right: 6pt;
-                border-width: 2px 2px 0 0;
-            }
-            .cover-page .cover-frame-corner.bl {
-                bottom: 6pt; left: 6pt;
-                border-width: 0 0 2px 2px;
-            }
-            .cover-page .cover-frame-corner.br {
-                bottom: 6pt; right: 6pt;
-                border-width: 0 2px 2px 0;
-            }
-
-            .cover-page .cover-ornament { font-size: 22pt; color: #d4b38c; line-height: 1; margin-bottom: 10px; letter-spacing: 12px; }
-            .cover-page .cover-subtitle { font-size: 10pt; color: #8f7b6a; letter-spacing: 5px; text-transform: uppercase; font-weight: 300; }
-            .cover-page .cover-divider { width: 80px; height: 1px; background: #d4b38c; margin: 16px auto; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .cover-page .cover-title { font-size: 24pt; font-weight: 700; color: #4d3425; line-height: 1.2; letter-spacing: 2px; margin: 0; }
-            .cover-page .cover-title-sub { font-size: 11pt; font-weight: 300; color: #8f7b6a; letter-spacing: 6px; text-transform: uppercase; margin-top: 4px; }
-            .cover-page .cover-divider2 { width: 160px; display: flex; align-items: center; gap: 10px; margin: 16px auto; justify-content: center; }
-            .cover-page .cover-divider2 .line { flex: 1; height: 1px; background: #d4b38c; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .cover-page .cover-divider2 .diamond { width: 6px; height: 6px; background: #d4b38c; transform: rotate(45deg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-            .cover-page .cover-info-box {
-                background: rgba(250, 243, 236, 0.5);
-                border: 1px solid rgba(212, 179, 140, 0.3);
-                padding: 12px 24px;
-                margin: 6px 0;
-                max-width: 80%;
-                text-align: left;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .cover-page .cover-info { font-size: 10pt; color: #4d3425; line-height: 1.7; }
-            .cover-page .cover-info .row { display: flex; justify-content: flex-start; gap: 6px; }
-            .cover-page .cover-info .label { display: inline-block; min-width: 90px; text-align: left; color: #7c6352; font-weight: 400; }
-            .cover-page .cover-info .value { display: inline-block; text-align: left; font-weight: 600; color: #4d3425; }
-
-            .cover-page .cover-footer {
-                position: absolute;
-                bottom: 36pt;
-                left: 0;
-                right: 0;
-                font-size: 8pt;
-                font-style: italic;
-                color: #b8956e;
-                line-height: 1.8;
-                letter-spacing: 0;
-                padding: 0 40px;
-            }
-            .cover-page .cover-footer .footer-line {
-                width: 200px;
-                height: 1px;
-                background: #ddd0c2;
-                margin: 0 auto 12px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .cover-page .cover-package { font-size: 9pt; color: #8f7b6a; letter-spacing: 2px; margin: 4px 0 10px; font-weight: 300; }
-
-            .print-chapter { page-break-before: always; }
-            .print-chapter:first-of-type { page-break-before: avoid; }
-
-            table.profile-table { font-size: 12pt; margin: 4px 0; border-collapse: collapse; width: 100%; }
-            table.profile-table th {
-                background: #e8ddd2 !important;
-                padding: 8px 12px;
-                font-size: 12pt;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            table.profile-table td { padding: 6px 12px; font-size: 12pt; }
-
-            .profile { padding: 0; }
-            .profile h1 { font-size: 16pt; margin: 0 0 2px; letter-spacing: 0; }
-            .profile .subhead { font-size: 9pt; margin: 2px 0 8px; padding-bottom: 6px; border-bottom: 1px solid #aaa; }
-
-            .section-title {
-                font-size: 14pt; margin: 10px 0 4px; padding-left: 8px;
-                border-left: 3px solid #999; page-break-after: avoid;
-            }
-            .section-title.sub { font-size: 12pt; margin-top: 6px; border-left-width: 2px; }
-            .section-title.sub:first-of-type { margin-top: 4px; }
-
-            .info-grid {
-                display: block !important;
-                background: #f5f0eb !important;
-                padding: 8px 14px;
-                margin: 6px 0 10px;
-                border-radius: 0;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                page-break-inside: avoid;
-            }
-            .info-grid .item {
-                display: flex;
-                justify-content: space-between;
-                gap: 24px;
-                width: 100%;
-                border-bottom: none;
-                padding: 5px 0;
-                font-size: 11pt;
-            }
-            .info-grid .item .label { font-weight: 600; }
-            .info-grid .item .value { font-weight: 400; }
-
-            table.profile-table th, table.profile-table td { border: 1px solid #ccc; }
-
-            p { font-size: 11pt; margin: 3px 0; }
-            ul { margin: 2px 0 2px 16px; }
-            li { font-size: 11pt; margin: 2px 0; }
-
-            .two-col-grid { display: block !important; }
-            .two-col-grid > div {
-                display: inline-block; width: 48%; vertical-align: top;
-                page-break-inside: avoid;
-            }
-            .two-col-grid h4 { font-size: 11pt; margin: 3px 0; }
-
-            .affirmation-box, .example-box {
-                padding: 6px 10px !important;
-                margin: 4px 0;
-                border-radius: 0;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                page-break-inside: avoid;
-            }
-            .affirmation-box { background: #f0e6dc !important; }
-            .example-box { background: #faf3ec !important; }
-
-            .profile .famous-person { font-size: 8pt; padding: 1px 0; }
-            .profile .famous-person hr { margin: 3px 0; }
-            .profile .badge { font-size: 10pt; padding: 2px 8px; }
-            .quote { font-size: 11pt; margin: 4px 0; padding: 4px 10px; }
-
-            .name-chart-svg-container, .pyramid-svg-container {
-                max-width: 100%;
-                page-break-inside: avoid;
-                margin: 10px 0 14px;
-            }
-            .name-chart-svg-container svg, .pyramid-svg-container svg {
-                max-width: 100% !important;
-                height: auto !important;
-            }
-            .name-chart-svg-container .cell-box { fill: #faf3ec !important; stroke: #b8956e !important; }
-            .name-chart-svg-container .cell-box.empty { fill: #faf3ec !important; }
-            .name-chart-svg-container .line-connect { stroke: #a67c4e !important; }
-            .name-chart-svg-container .arrow-head { fill: #a67c4e !important; }
-
-            .pyramid-svg-container .cell-box { fill: #faf3ec !important; stroke: #b8956e !important; }
-            .pyramid-svg-container .cell-box.peak { fill: #f0e6dc !important; }
-            .pyramid-svg-container .cell-box.peak-highlight { fill: #e8d5c4 !important; }
-            .pyramid-svg-container .cell-box.challenge { fill: #f5ede4 !important; }
-            .pyramid-svg-container .cell-box.challenge-highlight { fill: #e8d9cc !important; }
-            .pyramid-svg-container .connector { stroke: #c9a87c !important; }
-            .pyramid-svg-container .connector.challenge { stroke: #b88a6b !important; }
-        }
-        @media (max-width: 700px) {
-            .container { padding: 20px; }
-            .form-row { flex-direction: column; }
-            .form-group { flex: 1 1 100%; }
-            .info-grid { grid-template-columns: 1fr; }
-            .btn-group { flex-direction: column; }
-            .btn { width: 100%; justify-content: center; }
-            .two-col-grid { grid-template-columns: 1fr; }
-        }
-        #eventTableContainer table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            margin-top: 10px;
-        }
-        #eventTableContainer th,
-        #eventTableContainer td {
-            padding: 6px 8px;
-            text-align: center;
-            border: 1px solid #ddd0c2;
-            white-space: nowrap;
-        }
-        #eventTableContainer th {
-            background: #4d3425;
-            color: #fff;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-        }
-        .modal-body .row-year td { background: #f7e8d0; color: #5a3e2b; font-weight: 700; }
-        .modal-body .row-age td { background: #e8d8c8; color: #5a3e2b; }
-        .modal-body .row-physical td { background: #d4e8d4; color: #2d5a2d; }
-        .modal-body .row-mental td { background: #cddce8; color: #2d4a6b; }
-        .modal-body .row-spiritual td { background: #e0cce8; color: #4a2d5a; }
-        .modal-body .row-essence td { background: #f7e0b0; color: #5a3e2b; font-weight: 700; }
-        .modal-overlay {
+        /* ======================== LANDING ======================== */
+        #landing {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
+            inset: 0;
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: transparent;
             padding: 20px;
         }
-        .modal-content {
-            background: #fffcf8;
-            border-radius: 16px;
-            max-width: 95vw;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        #landing.hidden { display: none; }
+        .landing-inner { width: 100%; max-width: 500px; position: relative; z-index: 2; }
+        .landing-header { text-align: center; margin-bottom: 36px; }
+        .landing-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 64px; height: 64px; border-radius: 50%;
+            background: rgba(201,162,39,0.12); border: 2px solid rgba(201,162,39,0.4);
+            margin-bottom: 20px;
         }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 24px;
-            border-bottom: 1px solid #e8d9cc;
+        .landing-title {
+            font-size: 46px; font-weight: 900; margin: 0 0 10px;
+            font-family: 'Cinzel Decorative', serif;
+            background: linear-gradient(135deg, #c9a227 0%, #e8d8ff 45%, #a855f7 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #4d3425;
+        .landing-subtitle {
+            font-size: 15px; color: #9370cc; line-height: 1.5; margin: 0;
+            font-weight: 300;
         }
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: #8f7b6a;
-            cursor: pointer;
-            padding: 0 4px;
-            line-height: 1;
+
+        .landing-card {
+            background: rgba(12,5,28,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 0 80px rgba(124,58,237,0.15);
+            position: relative;
+            overflow: hidden;
         }
-        .modal-close:hover { color: #4d3425; }
-        .modal-body {
-            padding: 16px 24px;
-            overflow: auto;
-            max-height: 70vh;
+        .landing-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,162,39,0.8), transparent);
         }
-        .modal-body table { font-size: 12px; }
-        .modal-body th,
-        .modal-body td { padding: 4px 6px; }
-        .modal-body .table-wrap { overflow-x: auto; }
-        .modal-body .row-year td { font-weight: 700; color: #4d3425; }
-        @media print {
-            .modal-overlay { display: none !important; }
+        .landing-card-glow {
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 240px; height: 240px;
+            border-radius: 50%;
+            background: rgba(124,58,237,0.12);
+            filter: blur(60px);
+            pointer-events: none;
         }
-        .modal-body .label-cell {
-            font-weight: 700;
-            text-align: left;
-            color: #3e2c20;
-            min-width: 80px;
+        .landing-card-inner { position: relative; }
+
+        .landing-form-header { text-align: center; margin-bottom: 24px; }
+        .landing-form-header h2 { font-size: 20px; font-weight: 700; color: #e8d8ff; font-family: 'Quicksand', sans-serif; }
+        .landing-form-header p { font-size: 14px; color: #9370cc; margin-top: 4px; }
+
+        .landing-row { display: flex; gap: 12px; margin-bottom: 14px; }
+        .landing-row .field { flex: 1; }
+        .landing-row .field label {
+            display: block; font-size: 11px; font-weight: 600; color: #9370cc;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
         }
-        #eventTableBtn, #chartBtn, #pyramidBtn {
-            transition: 0.2s;
-        }
-        #eventTableBtn.active {
-            background: #7a9e7e;
-            box-shadow: 0 4px 10px rgba(122, 158, 126, 0.25);
-        }
-        #chartBtn, #pyramidBtn { margin-left: 8px; }
-        .chart-modal-wrap {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            align-items: center;
-        }
-        .chart-modal-wrap .chart-section {
-            width: 100%;
-            text-align: center;
-        }
-        .chart-modal-wrap .chart-section h3 {
-            font-size: 16px;
-            color: #4d3425;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-        .chart-modal-wrap .chart-section svg {
-            max-width: 100%;
-            height: auto;
-        }
-        .sidebar-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 998;
-        }
-        .sidebar-open-btn {
-            display: none;
-            position: fixed;
-            top: 12px;
-            left: 12px;
-            z-index: 997;
-            background: #faf3ec;
-            border: none;
+        .landing-row .field input,
+        .landing-row .field select {
+            width: 100%; padding: 12px 14px;
+            border: 1px solid rgba(124,58,237,0.3);
             border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-            font-size: 24px;
+            font-size: 15px; font-family: 'Quicksand', sans-serif;
+            color: #e8d8ff; background: rgba(8,3,20,0.7);
+            outline: none; transition: 0.2s;
+        }
+        .landing-row .field input:focus,
+        .landing-row .field select:focus {
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168,85,247,0.15);
+        }
+        .landing-row .field input::placeholder { color: #6b5390; }
+        .landing-row .field select option { background: #0c051c; color: #e8d8ff; }
+
+        .landing-btn {
+            width: 100%; padding: 16px;
+            border: none; border-radius: 40px;
+            font-size: 17px; font-weight: 700;
+            color: #fff;
+            font-family: 'Quicksand', sans-serif;
+            transition: 0.3s;
+            margin-top: 8px;
+            opacity: 0.35;
+            cursor: not-allowed;
+            background: linear-gradient(135deg, #c9a227, #b8941f);
+        }
+        .landing-btn.enabled {
+            opacity: 1;
             cursor: pointer;
-            color: #4d3425;
-            padding: 10px 14px;
-            line-height: 1;
+            box-shadow: 0 4px 24px rgba(201,162,39,0.4);
         }
-        @media (max-width: 767px) {
-            .app-layout { display: block; margin: 0; padding: 0; }
-            .tab-bar {
-                flex-direction: row;
-                width: 100%;
-                min-width: 0;
-                justify-content: center;
-                border-radius: 0;
-                padding: 6px 12px;
-                gap: 8px;
-            }
-            .tab-btn {
-                flex-direction: row;
-                gap: 6px;
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-            .sidebar-open-btn {
-                display: inline-block;
-            }
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: calc(100vw - 40px);
-                max-width: 520px;
-                min-width: 0;
-                height: 100vh;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                z-index: 999;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                border-radius: 0;
-                box-shadow: 4px 0 24px rgba(0,0,0,0.15);
-                padding: 20px 16px;
-                padding-top: calc(20px + env(safe-area-inset-top));
-                padding-bottom: calc(20px + env(safe-area-inset-bottom));
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .sidebar-header { margin-bottom: 16px; }
-            .sidebar-header h2 { font-size: 18px; }
-            .sidebar .form-row { gap: 12px; }
-            .sidebar .form-group { min-width: 0; flex: 1 1 100%; }
-            .sidebar .btn-group { gap: 8px; flex-direction: column; }
-            .sidebar .btn { padding: 10px 16px; font-size: 14px; width: 100%; }
-            .sidebar-backdrop.open {
-                display: block;
-            }
-            .sidebar-toggle {
-                display: inline-block;
-            }
-            .main-content {
-                padding: 0;
-            }
-            .a4-container {
-                width: 100%;
-                padding: 20px 16px;
-                box-shadow: none;
-                border-radius: 0;
+        .landing-btn.enabled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(201,162,39,0.6);
+        }
+
+        @media (max-width: 500px) {
+            .landing-title { font-size: 32px; }
+            .landing-card { padding: 24px 20px; }
+            .landing-row { flex-direction: column; gap: 10px; }
+        }
+
+        /* ======================== RESULTS ======================== */
+        #app {
+            display: none;
+            position: relative;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        #app.visible { display: block; }
+
+        #particleCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .results-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-to-landing-btn {
+            background: transparent;
+            border: 1px solid rgba(124,58,237,0.35);
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 14px; font-family: 'Quicksand', sans-serif;
+            font-weight: 600; color: #9370cc;
+            cursor: pointer; transition: all 0.3s;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .back-to-landing-btn:hover { border-color: #a855f7; color: #c4a8ff; }
+
+        .main-content { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; }
+
+        /* Cards grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 2fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        .cards-sidebar { display: flex; flex-direction: column; gap: 12px; }
+        .num-card {
+            --card-color: #7c3aed;
+            --card-glow: rgba(124,58,237,0.12);
+            --card-glow2: rgba(124,58,237,0.06);
+            display: flex; align-items: center; gap: 16px;
+            width: 100%; text-align: left;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(124,58,237,0.25);
+            background: rgba(12,5,28,0.7);
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+            overflow: hidden;
+        }
+        .num-card:hover { border-color: rgba(124,58,237,0.5); }
+        .num-card.active {
+            background: linear-gradient(135deg, rgba(18,8,40,0.95), rgba(30,10,60,0.98));
+            border-color: var(--card-color);
+            box-shadow: 0 0 32px var(--card-glow), 0 0 8px var(--card-glow2);
+        }
+        .num-card .accent-line {
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--card-color), transparent);
+            opacity: 0.4; transition: opacity 0.3s;
+        }
+        .num-card.active .accent-line { opacity: 1; }
+        .num-card .circle {
+            flex-shrink: 0;
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; font-weight: 700;
+            border: 2px solid rgba(124,58,237,0.3);
+            color: #7c3aed;
+            background: transparent;
+            transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+            font-family: 'Quicksand', sans-serif;
+        }
+        .num-card.active .circle {
+            border-color: var(--card-color);
+            color: var(--card-color);
+            background: var(--card-glow);
+            box-shadow: 0 0 20px var(--card-glow);
+        }
+        .num-card .info { flex: 1; min-width: 0; }
+        .num-card .info .type-label {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+            color: #9370cc; margin-bottom: 2px;
+        }
+        .num-card .info .num-title {
+            font-size: 15px; font-weight: 600; color: #c4a8ff;
+        }
+        .num-card.active .info .num-title { color: #e8d8ff; }
+        .num-card .arrow {
+            flex-shrink: 0; width: 24px; height: 24px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(124,58,237,0.5); transition: all 0.3s;
+        }
+        .num-card.active .arrow { color: var(--card-color); }
+
+        /* Detail card (right panel) */
+        .card-detail {
+            border-radius: 24px;
+            border: 1px solid rgba(124,58,237,0.25);
+            background: linear-gradient(135deg, rgba(12,5,28,0.98), rgba(20,8,50,0.98));
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-detail .glow {
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 256px; height: 256px;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            transition: background 0.5s;
+        }
+        .card-detail-content { position: relative; }
+        .card-detail .type-label {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+            color: #9370cc; margin-bottom: 8px;
+        }
+        .card-detail .big-number {
+            font-size: 72px; font-weight: 900; line-height: 1;
+            margin-bottom: 4px;
+            font-family: 'Quicksand', sans-serif;
+            color: var(--card-color);
+            text-shadow: 0 0 20px var(--card-color), 0 0 60px var(--card-color);
+        }
+        .card-detail .num-title {
+            font-size: 22px; font-weight: 700;
+            color: #e8d8ff; margin-bottom: 4px;
+        }
+        .card-detail .tagline {
+            font-size: 13px; color: #9370cc;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        .card-detail .divider {
+            height: 1px; margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--card-color) 0%, transparent 70%);
+        }
+        .card-detail .desc p {
+            font-size: 14px; line-height: 1.8; color: #c4a8ff;
+            font-weight: 300;
+        }
+        .card-detail .traits {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+            margin-top: 24px;
+        }
+        .card-detail .traits h4 {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+            color: #9370cc; margin-bottom: 10px;
+        }
+        .card-detail .traits ul { list-style: none; padding: 0; }
+        .card-detail .traits li {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 14px; color: #e8d8ff; margin-bottom: 6px;
+            font-family: 'Lato', 'Quicksand', sans-serif;
+        }
+        .card-detail .traits li .dot {
+            width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+            background: #9370cc;
+        }
+
+        /* Profile container */
+        .profile-container {
+            border-radius: 24px;
+            border: 1px solid rgba(124,58,237,0.15);
+            background: rgba(8,3,20,0.5);
+            backdrop-filter: blur(12px);
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+        .profile-container .profile { padding: 0; }
+        .profile-container .profile h1 {
+            font-size: 28px; font-weight: 700; color: #e8d8ff;
+            text-align: center; font-family: 'Quicksand', sans-serif;
+        }
+        .profile-container .profile h1 small {
+            display: block; font-size: 14px; font-weight: 400;
+            color: #9370cc; margin-top: 4px;
+        }
+        .profile-container .profile .subhead {
+            text-align: center; font-size: 16px; font-style: italic;
+            color: #9370cc; margin: 8px 0 20px;
+            border-bottom: 1px solid rgba(124,58,237,0.2); padding-bottom: 16px;
+        }
+        .profile-container .info-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px 30px;
+            background: rgba(12,5,28,0.5); padding: 18px 25px;
+            border-radius: 14px; margin: 16px 0 25px;
+        }
+        .profile-container .info-grid .item {
+            display: flex; justify-content: space-between;
+            border-bottom: 1px solid rgba(124,58,237,0.15); padding: 6px 0;
+        }
+        .profile-container .info-grid .item .label { font-weight: 600; color: #9370cc; }
+        .profile-container .info-grid .item .value { font-weight: 600; color: #e8d8ff; }
+        .profile-container .info-grid .item-full { grid-column: 1 / -1; }
+        .profile-container .section-title {
+            font-size: 22px; font-weight: 700; margin: 28px 0 12px;
+            color: #e8d8ff;
+            border-left: 4px solid #a855f7; padding-left: 16px;
+        }
+        .profile-container .section-title.sub { font-size: 18px; margin-top: 20px; border-left-width: 3px; }
+        .profile-container p, .profile-container li {
+            font-size: 15px; line-height: 1.8; color: #c4a8ff;
+        }
+        .profile-container ul, .profile-container ol { padding-left: 24px; margin: 8px 0 12px; }
+        .profile-container .badge {
+            display: inline-block; background: rgba(168,85,247,0.3);
+            color: #c4a8ff; font-weight: 700; padding: 2px 16px;
+            border-radius: 30px; font-size: 13px;
+        }
+        .profile-container .quote {
+            font-style: italic; font-size: 17px; color: #c4a8ff;
+            border-left: 4px solid rgba(168,85,247,0.4); padding-left: 24px;
+            margin: 20px 0; background: rgba(168,85,247,0.06);
+            padding: 14px 24px; border-radius: 0 10px 10px 0;
+        }
+        .profile-container table.profile-table {
+            width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px;
+        }
+        .profile-container table.profile-table th {
+            background: rgba(12,5,28,0.8); color: #c4a8ff;
+            font-weight: 600; padding: 10px 14px; text-align: left;
+            border: 1px solid rgba(124,58,237,0.2);
+        }
+        .profile-container table.profile-table td {
+            padding: 10px 14px; border: 1px solid rgba(124,58,237,0.15);
+            color: #c4a8ff;
+        }
+        .profile-container .num-tooltip {
+            position: relative; cursor: pointer; font-weight: 600;
+            color: #c9a227; border-bottom: 1px dashed rgba(201,162,39,0.3);
+        }
+        .profile-container .num-tooltip .tooltip-text {
+            visibility: hidden; opacity: 0;
+            position: absolute; bottom: calc(100% + 6px); left: 50%;
+            transform: translateX(-50%);
+            background: #1a0a2e; color: #e8d8ff;
+            padding: 8px 14px; border-radius: 8px;
+            font-size: 13px; line-height: 1.5; white-space: normal;
+            max-width: 300px; width: max-content; z-index: 999;
+            transition: opacity 0.15s; pointer-events: none;
+            border: 1px solid rgba(124,58,237,0.3);
+        }
+        @media (hover: hover) {
+            .profile-container .num-tooltip:hover .tooltip-text {
+                visibility: visible; opacity: 1;
             }
         }
+        .profile-container .affirmation-box {
+            background: rgba(168,85,247,0.1);
+            border: 1px solid rgba(168,85,247,0.2);
+            padding: 20px 30px; border-radius: 16px;
+            font-size: 18px; font-style: italic; text-align: center;
+            color: #e8d8ff; margin: 20px 0;
+        }
+        .profile-container .example-box {
+            background: rgba(12,5,28,0.5);
+            border: 1px solid rgba(124,58,237,0.15);
+            padding: 18px 22px; border-radius: 14px; line-height: 1.8;
+        }
+        .profile-container .two-col-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px; margin: 12px 0;
+        }
+        .profile-container .two-col-grid ul { margin: 4px 0; }
+        .profile-container .famous-person { padding: 4px 0; }
+        .profile-container .footer-note {
+            margin-top: 40px; text-align: center; font-size: 14px;
+            color: #9370cc; border-top: 1px solid rgba(124,58,237,0.2);
+            padding-top: 25px; font-style: italic;
+        }
+        .profile-container .loading { text-align: center; padding: 40px; font-size: 18px; color: #9370cc; }
+        .profile-container .error { color: #f77; background: rgba(255,0,0,0.1); padding: 16px; border-radius: 12px; margin: 20px 0; }
+
+        .profile-container .name-chart-svg-container,
+        .profile-container .pyramid-svg-container {
+            display: flex; justify-content: center;
+            overflow-x: auto; padding: 20px 10px;
+            background: rgba(12,5,28,0.5);
+            border-radius: 12px; border: 1px solid rgba(124,58,237,0.15);
+        }
+        .charts-row {
+            display: flex; gap: 16px; margin: 16px 0;
+        }
+        .chart-col { flex: 1; min-width: 0; }
+        .chart-col > p { height: 48px; overflow: hidden; margin-bottom: 8px; font-size: 13px; line-height: 1.5; }
+        .chart-col .name-chart-svg-container { margin: 0; padding: 12px 8px; }
+        .profile-container .name-chart-svg-container svg,
+        .profile-container .pyramid-svg-container svg {
+            display: block; max-width: 100%; height: auto; overflow: visible;
+        }
+        .profile-container .name-chart-svg-container .cell-box {
+            fill: rgba(12,5,28,0.8); stroke: #a855f7; stroke-width: 2; rx: 8; ry: 8;
+        }
+        .profile-container .name-chart-svg-container .cell-box.empty {
+            fill: rgba(12,5,28,0.3); stroke: rgba(124,58,237,0.3); stroke-width: 1.5;
+        }
+        .profile-container .name-chart-svg-container .cell-text {
+            font-family: 'Quicksand', sans-serif; font-weight: 700;
+            fill: #e8d8ff; text-anchor: middle; dominant-baseline: central; font-size: 20px;
+        }
+        .profile-container .name-chart-svg-container .dot { fill: #c9a227; r: 4; }
+        .profile-container .name-chart-svg-container .line-connect {
+            stroke: #a855f7; stroke-width: 2.5; fill: none;
+        }
+        .profile-container .name-chart-svg-container .line-connect.dashed { stroke-dasharray: 6,4; }
+        .profile-container .name-chart-svg-container .arrow-head { fill: #a855f7; }
+
+        .profile-container .pyramid-svg-container .cell-box {
+            fill: rgba(12,5,28,0.8); stroke: #a855f7; stroke-width: 2; rx: 8; ry: 8;
+        }
+        .profile-container .pyramid-svg-container .cell-box.peak {
+            fill: rgba(18,8,40,0.9); stroke: #c9a227; stroke-width: 2.5;
+        }
+        .profile-container .pyramid-svg-container .cell-box.peak-highlight {
+            fill: rgba(30,10,60,0.9); stroke: #c9a227; stroke-width: 3;
+        }
+        .profile-container .pyramid-svg-container .cell-box.challenge {
+            fill: rgba(12,5,28,0.6); stroke: rgba(124,58,237,0.5); stroke-width: 2;
+        }
+        .profile-container .pyramid-svg-container .cell-box.challenge-highlight {
+            fill: rgba(18,8,40,0.8); stroke: #a855f7; stroke-width: 3;
+        }
+        .profile-container .pyramid-svg-container .cell-text {
+            font-family: 'Quicksand', sans-serif; font-weight: 700;
+            fill: #e8d8ff; text-anchor: middle; dominant-baseline: central;
+        }
+        .profile-container .pyramid-svg-container .cell-text.small { font-size: 12px; fill: #9370cc; }
+        .profile-container .pyramid-svg-container .cell-text.age { font-size: 13px; fill: #9370cc; }
+        .profile-container .pyramid-svg-container .connector { stroke: #a855f7; stroke-width: 2.5; fill: none; }
+        .profile-container .pyramid-svg-container .connector.challenge { stroke: #7c3aed; }
+        .profile-container .pyramid-svg-container .label-side {
+            font-family: 'Quicksand', sans-serif; font-size: 16px;
+            fill: #e8d8ff; text-anchor: middle; font-weight: 700;
+        }
+        .profile-container .pyramid-svg-container .operator {
+            font-family: 'Quicksand', sans-serif; font-size: 20px;
+            fill: #c9a227; text-anchor: middle; dominant-baseline: central; font-weight: 700;
+        }
+        .profile-container .pyramid-svg-container .operator.challenge { fill: #7c3aed; }
+
+        .print-list { display: none; }
+        .cover-page { display: none; }
+        .no-print { }
+
+        @media (max-width: 768px) {
+            .cards-grid { grid-template-columns: 1fr; }
+            .card-detail .traits { grid-template-columns: 1fr; }
+            .profile-container .info-grid { grid-template-columns: 1fr; }
+            .profile-container .two-col-grid { grid-template-columns: 1fr; }
+            #app { padding: 16px; }
+            .card-detail, .profile-container { padding: 20px; }
+        }
+        @media (max-width: 500px) {
+            .num-card { padding: 14px; }
+            .num-card .circle { width: 52px; height: 52px; font-size: 20px; }
+        }
+
+        /* ======================== MODAL ======================== */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(6,3,15,0.85);
+            backdrop-filter: blur(6px);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: #120626; border: 1px solid rgba(168,85,247,0.25);
+            border-radius: 20px; padding: 28px; max-width: 520px; width: 90%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .modal-title { font-size: 20px; font-weight: 700; color: #e8d8ff; }
+        .modal-close {
+            background: none; border: none; color: #9370cc; font-size: 28px;
+            cursor: pointer; line-height: 1; padding: 0 4px; transition: color 0.2s;
+        }
+        .modal-close:hover { color: #a855f7; }
+        .modal-body p { font-size: 15px; color: #c4b5d8; line-height: 1.7; }
+        @media print { .no-print { display: none !important; } }
     </style>
 </head>
 <body>
-<div class="app-layout" id="app">
-    <div class="tab-bar no-print">
-        <button class="tab-btn active" data-tab="numer">
-            <span class="tab-icon">🔢</span>
-            <span class="tab-label">Numer</span>
-        </button>
-        <button class="tab-btn" data-tab="babyname" style="display:none;">
-            <span class="tab-icon">👶</span>
-            <span class="tab-label">Baby</span>
-        </button>
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- ========== LANDING ========== -->
+    <div id="landing">
+        <div class="landing-inner">
+            <div class="landing-header">
+                <div class="landing-icon">
+                    <svg viewBox="0 0 32 32" fill="none" width="40" height="40">
+                        <circle cx="16" cy="16" r="12" stroke="#c9a227" stroke-width="1.5" stroke-dasharray="3 2"/>
+                        <path d="M16 8v16M8 16h16M10 10l12 12M22 10L10 22" stroke="#c9a227" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+                        <circle cx="16" cy="16" r="3" fill="#c9a227"/>
+                    </svg>
+                </div>
+                <h1 class="landing-title">Numerology</h1>
+                <p class="landing-subtitle">Giải mã con số vũ trụ ẩn chứa trong tên và ngày sinh của bạn</p>
+            </div>
+            <div class="landing-card">
+                <div class="landing-card-glow"></div>
+                <div class="landing-card-inner">
+                    <div class="landing-form-header">
+                        <h2>Nhập Thông Tin Của Bạn</h2>
+                        <p>Vũ trụ đang lắng nghe...</p>
+                    </div>
+                    <div class="landing-row">
+                        <div class="field">
+                            <label>Họ</label>
+                            <input type="text" id="landingLast" value="Vũ">
+                        </div>
+                        <div class="field">
+                            <label>Tên đệm</label>
+                            <input type="text" id="landingMiddle" value="Hạnh">
+                        </div>
+                        <div class="field">
+                            <label>Tên</label>
+                            <input type="text" id="landingFirst" value="Trâm An">
+                        </div>
+                    </div>
+                    <div class="landing-row">
+                        <div class="field">
+                            <label>Ngày sinh</label>
+                            <input type="date" id="landingDob" value="1993-05-29">
+                        </div>
+                        <div class="field">
+                            <label>Giới tính</label>
+                            <select id="landingGender">
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ" selected>Nữ</option>
+                                <option value="Khác">Khác</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="landing-btn" id="landingBtn" disabled>Giải Mã Vận Mệnh</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <aside class="sidebar no-print" id="sidebar">
-        <div class="sidebar-header">
-            <h2 id="sidebarTitle">📝 Thông tin khách hàng</h2>
-            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">✕</button>
-        </div>
-        <div class="sidebar-content" id="sidebarNumer">
-        <div class="form-section">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Họ</label>
-                    <input type="text" id="lastName" value="Vũ">
-                </div>
-                <div class="form-group">
-                    <label>Tên đệm</label>
-                    <input type="text" id="middleName" value="Hạnh Trâm">
-                </div>
-                <div class="form-group">
-                    <label>Tên</label>
-                    <input type="text" id="firstName" value="An">
+
+    <!-- ========== RESULTS ========== -->
+    <div id="app">
+        <button class="back-to-landing-btn no-print" id="backToLandingBtn">← Quay lại</button>
+        <main class="main-content">
+            <div class="cards-grid">
+                <div class="cards-sidebar" id="cardsSidebar"></div>
+                <div class="card-detail" id="cardDetail">
+                    <div class="glow" id="detailGlow"></div>
+                    <div class="card-detail-content" id="detailContent"></div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Ngày sinh (DD)</label>
-                    <input type="number" id="day" min="1" max="31" value="29">
-                </div>
-                <div class="form-group">
-                    <label>Tháng sinh (MM)</label>
-                    <input type="number" id="month" min="1" max="12" value="5">
-                </div>
-                <div class="form-group">
-                    <label>Năm sinh (YYYY)</label>
-                    <input type="number" id="year" min="1900" max="2100" value="1997">
-                </div>
-                <div class="form-group">
-                    <label>Giới tính</label>
-                    <select id="gender">
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ" selected>Nữ</option>
-                        <option value="Khác">Khác</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group" style="flex:1;">
-                    <label>Số chủ đạo</label>
-                    <input type="text" id="lifePathDisplay" readonly>
-                </div>
-            </div>
-            <div class="form-row" id="personalYearRow">
-                <div class="form-group" style="flex:1;">
-                    <label>Năm cá nhân 2026</label>
-                    <input type="text" id="personalYearDisplay" readonly>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn" id="calculateBtn">🔄 Cập nhật hồ sơ</button>
-                <button class="btn btn-edit" id="editBtn">✏️ Chỉnh sửa nội dung</button>
-                <button class="btn btn-print" id="printBtn">📄 Xuất PDF</button>
-                <button class="btn btn-secondary" id="resetBtn">⟲ Đặt lại mẫu</button>
-            </div>
-            <p style="font-size:14px; color:#8f7b6a; margin-top:12px;">
-                * Nhập thông tin, bấm "Cập nhật hồ sơ" → "Chỉnh sửa nội dung" để thay đổi văn bản theo ý muốn.
-            </p>
-            <button class="btn no-print" id="eventTableBtn" style="margin-top:12px; display:none;">📊 Bảng sự kiện</button>
-            <button class="btn no-print" id="chartBtn" style="margin-top:12px; display:none;">📈 Biểu đồ</button>
-            <button class="btn no-print" id="pyramidBtn" style="margin-top:12px; display:none;">🔺 Kim tự tháp</button>
-        </div>
-        </div>
-        <div class="sidebar-content hidden" id="sidebarBabyname">
-            <div class="form-section">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Họ của bé</label>
-                        <input type="text" id="babySurname" value="Nguyễn">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Ngày sinh (dự sinh)</label>
-                        <input type="date" id="babyBirth">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Con số mong muốn</label>
-                        <select id="babyDesiredNumber">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="11">11</option>
-                            <option value="22">22</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Giới tính</label>
-                        <select id="babyGender">
-                            <option value="female">Nữ</option>
-                            <option value="">Không xác định</option>
-                            <option value="male">Nam</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="btn-group">
-                    <button class="btn" id="babyFindBtn">🔍 Baby</button>
-                </div>
-            </div>
-            <hr class="section-divider">
-            <div class="form-section">
-                <h3 style="font-size:17px;font-weight:700;color:#4d3425;margin:0 0 8px;">📖 Ý nghĩa tên Con số</h3>
-                <div id="numMeaningResult" class="result-inline"></div>
-            </div>
-            <hr class="section-divider">
-            <div class="form-section">
-                <h3 style="font-size:17px;font-weight:700;color:#4d3425;margin:0 0 8px;">🌱 Cách nuôi dạy Con số</h3>
-                <div id="numParentingResult" class="result-inline"></div>
-            </div>
-        </div>
-    </aside>
-    <button class="sidebar-open-btn no-print" id="sidebarOpenBtn" aria-label="Mở menu">☰</button>
-    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-    <main class="main-content">
-        <div class="a4-container" id="profileContainer">
-            <div class="result-section" id="resultSection">
+
+            <div class="profile-container" id="profileContainer">
                 <div class="profile" id="profileContent">
-                    <div class="loading">⏳ Đang tải dữ liệu...</div>
+                    <div class="loading">⏳ Đang tải dữ liệu chi tiết...</div>
                 </div>
             </div>
-        </div>
-        <div class="a4-container" id="babyNameContainer" style="display:none;">
-            <div class="result-section">
-                <div class="profile" id="babyNameResult">
-                    <div class="loading">🔍 Nhập họ, chọn số mong muốn và bấm "Tìm tên"</div>
-                </div>
+        </main>
+    </div>
+
+    <div id="numDetailModal" class="modal-overlay no-print" style="display:none;">
+        <div class="modal-content" style="max-width:520px;">
+            <div class="modal-header">
+                <span class="modal-title" id="numDetailTitle">Chi tiết</span>
+                <button class="modal-close" id="numDetailClose">&times;</button>
             </div>
+            <div class="modal-body" id="numDetailBody"></div>
         </div>
-    </main>
-</div>
-
-<div id="eventModal" class="modal-overlay no-print" style="display:none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="modal-title">📊 Bảng sự kiện</span>
-            <button class="modal-close" id="eventModalClose">&times;</button>
-        </div>
-        <div class="modal-body" id="eventModalBody"></div>
     </div>
-</div>
-
-<div id="chartModal" class="modal-overlay no-print" style="display:none;">
-    <div class="modal-content" style="max-width:800px;">
-        <div class="modal-header">
-            <span class="modal-title">📈 Biểu đồ thần số học</span>
-            <button class="modal-close" id="chartModalClose">&times;</button>
-        </div>
-        <div class="modal-body" id="chartModalBody"></div>
-    </div>
-</div>
-
-<div id="pyramidModal" class="modal-overlay no-print" style="display:none;">
-    <div class="modal-content" style="max-width:900px;">
-        <div class="modal-header">
-            <span class="modal-title">🔺 Kim tự tháp đỉnh cao & thử thách</span>
-            <button class="modal-close" id="pyramidModalClose">&times;</button>
-        </div>
-        <div class="modal-body" id="pyramidModalBody" style="text-align:center;"></div>
-    </div>
-</div>
-
-<div id="numDetailModal" class="modal-overlay no-print" style="display:none;">
-    <div class="modal-content" style="max-width:520px;">
-        <div class="modal-header">
-            <span class="modal-title" id="numDetailTitle">Chi tiết</span>
-            <button class="modal-close" id="numDetailClose">&times;</button>
-        </div>
-        <div class="modal-body" id="numDetailBody"></div>
-    </div>
-</div>
-<div id="babyNameModal" class="modal-overlay no-print" style="display:none;">
-    <div class="modal-content" style="max-width:400px;">
-        <div class="modal-header">
-            <span class="modal-title" id="babyNameModalTitle">Tên</span>
-            <button class="modal-close" id="babyNameModalClose">&times;</button>
-        </div>
-        <div class="modal-body" id="babyNameModalBody"></div>
-    </div>
-</div>
 
 <script>
+    // ============================================================
+    // 0. PARTICLE BACKGROUND
+    // ============================================================
+    const particleCanvas = document.getElementById('particleCanvas');
+    let particleCtx = particleCanvas.getContext('2d');
+    let particles = [];
+    let particleFrame;
+
+    function resizeParticleCanvas() {
+        particleCanvas.width = window.innerWidth;
+        particleCanvas.height = window.innerHeight;
+    }
+
+    class Star {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * particleCanvas.width;
+            this.y = Math.random() * particleCanvas.height;
+            this.baseSize = Math.random() * 2 + 0.5;
+            this.size = this.baseSize;
+            this.speedX = (Math.random() - 0.5) * 0.2;
+            this.speedY = (Math.random() - 0.5) * 0.2;
+            this.baseOpacity = Math.random() * 0.5 + 0.1;
+            this.opacity = this.baseOpacity;
+            this.glowing = false;
+            this.glowPhase = 0;
+            this.glowDuration = 0;
+            this.glowMaxSize = 0;
+        }
+        startGlow() {
+            this.glowing = true;
+            this.glowPhase = 0;
+            this.glowDuration = 30 + Math.floor(Math.random() * 40);
+            this.glowMaxSize = this.baseSize * (2 + Math.random() * 3);
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < -20 || this.x > particleCanvas.width + 20 || this.y < -20 || this.y > particleCanvas.height + 20) this.reset();
+
+            if (this.glowing) {
+                this.glowPhase++;
+                const progress = this.glowPhase / this.glowDuration;
+                if (progress >= 1) {
+                    this.glowing = false;
+                    this.size = this.baseSize;
+                    this.opacity = this.baseOpacity;
+                } else {
+                    const ease = Math.sin(progress * Math.PI);
+                    this.size = this.baseSize + (this.glowMaxSize - this.baseSize) * ease;
+                    this.opacity = this.baseOpacity + (0.9 - this.baseOpacity) * ease;
+                }
+            }
+        }
+        draw() {
+            if (this.glowing) {
+                particleCtx.save();
+                const gx = this.x, gy = this.y, s = this.size;
+                // outer soft glow
+                const g1 = particleCtx.createRadialGradient(gx, gy, 0, gx, gy, s * 4);
+                g1.addColorStop(0, `rgba(255, 240, 200, ${this.opacity * 0.15})`);
+                g1.addColorStop(1, 'rgba(255, 240, 200, 0)');
+                particleCtx.fillStyle = g1;
+                particleCtx.beginPath();
+                particleCtx.arc(gx, gy, s * 4, 0, Math.PI * 2);
+                particleCtx.fill();
+                // inner bright glow
+                const g2 = particleCtx.createRadialGradient(gx, gy, 0, gx, gy, s * 1.5);
+                g2.addColorStop(0, `rgba(255, 250, 230, ${this.opacity * 0.6})`);
+                g2.addColorStop(1, 'rgba(255, 250, 230, 0)');
+                particleCtx.fillStyle = g2;
+                particleCtx.beginPath();
+                particleCtx.arc(gx, gy, s * 1.5, 0, Math.PI * 2);
+                particleCtx.fill();
+                // core (white hot center)
+                particleCtx.beginPath();
+                particleCtx.arc(gx, gy, s * 0.4, 0, Math.PI * 2);
+                particleCtx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, this.opacity * 1.2)})`;
+                particleCtx.fill();
+                // diffraction spikes (8-point star)
+                const spikeLen = s * 2.5;
+                const spikeAlpha = this.opacity * 0.18;
+                particleCtx.strokeStyle = `rgba(255, 255, 255, ${spikeAlpha})`;
+                particleCtx.lineWidth = 0.5;
+                for (let a = 0; a < 4; a++) {
+                    const angle = a * Math.PI / 4 + Math.PI / 8;
+                    particleCtx.beginPath();
+                    particleCtx.moveTo(gx - Math.cos(angle) * spikeLen, gy - Math.sin(angle) * spikeLen);
+                    particleCtx.lineTo(gx + Math.cos(angle) * spikeLen, gy + Math.sin(angle) * spikeLen);
+                    particleCtx.stroke();
+                }
+                particleCtx.restore();
+            } else {
+                particleCtx.beginPath();
+                particleCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                particleCtx.fillStyle = `rgba(201, 162, 39, ${this.opacity})`;
+                particleCtx.fill();
+            }
+        }
+    }
+
+    function initStars(count) {
+        particles = [];
+        for (let i = 0; i < count; i++) particles.push(new Star());
+    }
+
+    let glowTimer = 0;
+    function animateStars() {
+        particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+
+        glowTimer++;
+        if (glowTimer > 120 + Math.floor(Math.random() * 120)) {
+            glowTimer = 0;
+            const nonGlowing = particles.filter(p => !p.glowing);
+            if (nonGlowing.length > 0) {
+                const count = 1 + Math.floor(Math.random() * 3);
+                for (let k = 0; k < Math.min(count, nonGlowing.length); k++) {
+                    const idx = Math.floor(Math.random() * nonGlowing.length);
+                    nonGlowing[idx].startGlow();
+                    nonGlowing.splice(idx, 1);
+                }
+            }
+        }
+
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120) {
+                    particleCtx.beginPath();
+                    particleCtx.moveTo(particles[i].x, particles[i].y);
+                    particleCtx.lineTo(particles[j].x, particles[j].y);
+                    particleCtx.strokeStyle = `rgba(201, 162, 39, ${0.06 * (1 - dist / 120)})`;
+                    particleCtx.lineWidth = 0.5;
+                    particleCtx.stroke();
+                }
+            }
+        }
+        particleFrame = requestAnimationFrame(animateStars);
+    }
+
+    function startParticles() {
+        resizeParticleCanvas();
+        initStars(70);
+        animateStars();
+        window.addEventListener('resize', resizeParticleCanvas);
+    }
+    startParticles();
+
+    // ============================================================
+    // FIGMA-STYLE NUMBER CARDS DATA
+    // ============================================================
+    const numCards = [
+        { key: 'lifePath', label: 'Số Đường Đời' },
+        { key: 'destiny', label: 'Số Sứ Mệnh' },
+        { key: 'soul', label: 'Số Linh Hồn' },
+        { key: 'personality', label: 'Số Nuôi Dưỡng' }
+    ];
+
+    const numData = {
+        1: { title: 'Người Tiên Phong', tagline: 'Lãnh đạo — Độc lập — Sáng tạo', description: 'Số 1 là khởi đầu của mọi thứ. Bạn sinh ra để dẫn đường, không phải để đi theo. Năng lượng của bạn bùng cháy như ngọn lửa đầu tiên trong bóng tối.', strengths: ['Ý chí mạnh mẽ', 'Tư duy đổi mới', 'Quyết đoán'], challenges: ['Cứng đầu', 'Cô đơn', 'Cái tôi cao'] },
+        2: { title: 'Người Hòa Giải', tagline: 'Hợp tác — Nhạy cảm — Cân bằng', description: 'Số 2 là nhịp cầu kết nối tâm hồn. Bạn cảm nhận được những điều người khác không nói ra, và chữa lành bằng sự hiện diện yên tĩnh của mình.', strengths: ['Thấu cảm sâu sắc', 'Ngoại giao tinh tế', 'Kiên nhẫn'], challenges: ['Thiếu quyết đoán', 'Phụ thuộc', 'Dễ tổn thương'] },
+        3: { title: 'Người Nghệ Sĩ', tagline: 'Sáng tạo — Biểu đạt — Niềm vui', description: 'Số 3 là nghệ sĩ của vũ trụ. Ngôn từ, màu sắc, âm nhạc — bất cứ điều gì bạn chạm vào đều trở thành nghệ thuật. Niềm vui của bạn là món quà cho thế giới.', strengths: ['Tài năng nghệ thuật', 'Truyền cảm hứng', 'Lạc quan'], challenges: ['Thiếu tập trung', 'Hời hợt', 'Hay thay đổi'] },
+        4: { title: 'Người Xây Dựng', tagline: 'Kỷ luật — Ổn định — Thực tế', description: 'Số 4 là nền tảng của mọi công trình lớn. Bạn xây nên những thứ trường tồn. Đất đai, trật tự, và sự bền vững là ngôn ngữ của linh hồn bạn.', strengths: ['Đáng tin cậy', 'Kiên trì', 'Có tổ chức'], challenges: ['Cứng nhắc', 'Bảo thủ', 'Quá cẩn thận'] },
+        5: { title: 'Người Tự Do', tagline: 'Phiêu lưu — Thay đổi — Đa năng', description: 'Số 5 là linh hồn của gió. Bạn không thể bị giam cầm — không bởi biên giới, không bởi thói quen. Mỗi ngày mới là một cánh cửa bạn phải mở.', strengths: ['Thích nghi nhanh', 'Hấp dẫn', 'Dũng cảm'], challenges: ['Thiếu kiên định', 'Bốc đồng', 'Sợ cam kết'] },
+        6: { title: 'Người Nuôi Dưỡng', tagline: 'Tình yêu — Trách nhiệm — Hòa hợp', description: 'Số 6 là trái tim của gia đình và cộng đồng. Bạn yêu thương một cách vô điều kiện và tìm thấy ý nghĩa sống trong việc chăm sóc người khác.', strengths: ['Tận tâm', 'Chữa lành', 'Hào phóng'], challenges: ['Hy sinh thái quá', 'Kiểm soát', 'Lo lắng'] },
+        7: { title: 'Người Huyền Bí', tagline: 'Trí tuệ — Tâm linh — Chiều sâu', description: 'Số 7 là nhà thần bí của vũ trụ. Bạn không chỉ muốn biết — bạn muốn hiểu bản chất thực sự của vạn vật. Sự thật ẩn sau màn sương là đích đến của bạn.', strengths: ['Trí tuệ sâu sắc', 'Trực giác nhạy bén', 'Độc lập tinh thần'], challenges: ['Xa cách', 'Hoài nghi', 'Cô lập'] },
+        8: { title: 'Người Quyền Năng', tagline: 'Thịnh vượng — Tham vọng — Quyền lực', description: 'Số 8 là biểu tượng của vô cực — năng lượng lưu chuyển không ngừng giữa vật chất và tâm linh. Bạn có khả năng biến tầm nhìn thành hiện thực.', strengths: ['Tầm nhìn chiến lược', 'Ý chí thép', 'Thu hút thịnh vượng'], challenges: ['Tham lam', 'Độc đoán', 'Vật chất hóa'] },
+        9: { title: 'Người Nhân Đạo', tagline: 'Từ bi — Trí tuệ — Viên mãn', description: 'Số 9 là con số của sự hoàn thành. Bạn đã trải qua mọi kinh nghiệm của tâm hồn và quay trở về để phục vụ nhân loại bằng tình thương vô biên.', strengths: ['Từ bi sâu sắc', 'Trí tuệ toàn diện', 'Cảm hứng tinh thần'], challenges: ['Lý tưởng hóa', 'Khó buông bỏ', 'Mất phương hướng'] },
+        11: { title: 'Bậc Thầy Trực Giác', tagline: 'Soi sáng — Truyền cảm hứng — Tâm linh cao', description: '11 là số chủ — một kênh liên lạc với những tầng thực tại cao hơn. Bạn cảm nhận được những làn sóng vô hình và có sứ mệnh đánh thức ý thức nhân loại.', strengths: ['Trực giác huyền diệu', 'Sứ mệnh tâm linh', 'Sức hút đặc biệt'], challenges: ['Áp lực tinh thần', 'Lo âu cao', 'Đòi hỏi cao với bản thân'] },
+        22: { title: 'Kiến Trúc Sư Vũ Trụ', tagline: 'Tầm nhìn — Biểu hiện — Đế chế', description: '22 là số chủ mạnh nhất — người biến giấc mơ lớn nhất thành thực tế. Bạn không chỉ xây nhà; bạn xây nền văn minh.', strengths: ['Tầm nhìn vĩ đại', 'Năng lực thực tế', 'Lãnh đạo bậc cao'], challenges: ['Áp lực khổng lồ', 'Hoàn hảo chủ nghĩa', 'Kiệt sức'] }
+    };
+
+    function getNumData(num) {
+        return numData[num] || numData[((num % 9 === 0) ? 9 : (num % 9))] || { title: 'Số ' + num, tagline: '', description: '', strengths: [], challenges: [] };
+    }
+
+    function renderCards(data) {
+        const sidebar = document.getElementById('cardsSidebar');
+        const nameNoAccent = removeVietnameseAccents(data.last + data.middle + data.first).replace(/\s/g, '');
+        const lifePath = getLifePath(data.day, data.month, data.year);
+        const destiny = getNumberFromName(nameNoAccent);
+        const soul = getVowels(nameNoAccent);
+        const personality = getConsonants(nameNoAccent);
+        const values = { lifePath, destiny, soul, personality };
+
+        sidebar.innerHTML = '';
+        numCards.forEach(card => {
+            const num = values[card.key];
+            const data = getNumData(num);
+            const div = document.createElement('div');
+            div.className = 'num-card';
+            div.dataset.key = card.key;
+            div.dataset.num = num;
+            div.innerHTML = `
+                <div class="accent-line"></div>
+                <div class="circle">${num}</div>
+                <div class="info">
+                    <div class="type-label">${card.label}</div>
+                    <div class="num-title">${data.title}</div>
+                </div>
+                <div class="arrow">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+            `;
+            div.addEventListener('click', () => showDetail(card.key, values[card.key], data));
+            sidebar.appendChild(div);
+        });
+        showDetail('lifePath', values.lifePath, data);
+    }
+
+    function getNumColor(num) {
+        const map = {
+            1: { c: '#c9a227', g: 'rgba(201,162,39,0.15)', gg: 'rgba(201,162,39,0.25)' },
+            2: { c: '#a855f7', g: 'rgba(168,85,247,0.15)', gg: 'rgba(168,85,247,0.25)' },
+            3: { c: '#e879f9', g: 'rgba(232,121,249,0.15)', gg: 'rgba(232,121,249,0.25)' },
+            4: { c: '#38bdf8', g: 'rgba(56,189,248,0.15)', gg: 'rgba(56,189,248,0.25)' },
+            5: { c: '#f97316', g: 'rgba(249,115,22,0.15)', gg: 'rgba(249,115,22,0.25)' },
+            6: { c: '#10b981', g: 'rgba(16,185,129,0.15)', gg: 'rgba(16,185,129,0.25)' },
+            7: { c: '#6366f1', g: 'rgba(99,102,241,0.15)', gg: 'rgba(99,102,241,0.25)' },
+            8: { c: '#ef4444', g: 'rgba(239,68,68,0.15)', gg: 'rgba(239,68,68,0.25)' },
+            9: { c: '#ec4899', g: 'rgba(236,72,153,0.15)', gg: 'rgba(236,72,153,0.25)' },
+            11: { c: '#c084fc', g: 'rgba(192,132,252,0.15)', gg: 'rgba(192,132,252,0.25)' },
+            22: { c: '#fbbf24', g: 'rgba(251,191,36,0.15)', gg: 'rgba(251,191,36,0.25)' }
+        };
+        return map[num] || map[(num % 9 === 0) ? 9 : (num % 9)];
+    }
+
+    function showDetail(key, num, data) {
+        const detail = document.getElementById('detailContent');
+        const cardDetail = document.getElementById('cardDetail');
+        const glow = document.getElementById('detailGlow');
+        const card = numCards.find(c => c.key === key);
+        const numInfo = getNumData(num);
+        const co = getNumColor(num);
+        cardDetail.style.setProperty('--card-color', co.c);
+        cardDetail.style.borderColor = co.c + '44';
+        glow.style.background = co.gg;
+
+        document.querySelectorAll('.num-card').forEach(c => {
+            c.classList.remove('active');
+            c.style.removeProperty('--card-color');
+            c.style.removeProperty('--card-glow');
+            c.style.removeProperty('--card-glow2');
+        });
+        const activeCard = document.querySelector(`.num-card[data-key="${key}"]`);
+        if (activeCard) {
+            activeCard.classList.add('active');
+            activeCard.style.setProperty('--card-color', co.c);
+            activeCard.style.setProperty('--card-glow', co.g);
+            activeCard.style.setProperty('--card-glow2', 'transparent');
+        }
+
+        let detailHTML = `
+            <div class="type-label">${card.label}</div>
+            <div class="big-number">${num}</div>
+            <div class="num-title">${numInfo.title}</div>
+            <div class="tagline">${numInfo.tagline}</div>
+            <div class="divider"></div>
+            <div class="desc">
+                <p>${numInfo.description}</p>
+            </div>`;
+
+        if (numInfo.strengths.length > 0 || numInfo.challenges.length > 0) {
+            detailHTML += `<div class="traits"><div><h4>✨ Điểm mạnh</h4><ul>`;
+            numInfo.strengths.forEach(t => { detailHTML += `<li><span class="dot" style="background:${co.c}"></span>${t}</li>`; });
+            detailHTML += `</ul></div><div class="challenge"><h4>⚠️ Thách thức</h4><ul>`;
+            numInfo.challenges.forEach(t => { detailHTML += `<li><span class="dot" style="background:${co.c}"></span>${t}</li>`; });
+            detailHTML += `</ul></div></div>`;
+        }
+
+        detail.innerHTML = detailHTML;
+    }
+
+    function renderCosmicMap(data) {
+        const grid = document.getElementById('cosmicGrid');
+        const nameNoAccent = removeVietnameseAccents(data.last + data.middle + data.first).replace(/\s/g, '');
+        const lifePath = getLifePath(data.day, data.month, data.year);
+        const destiny = getNumberFromName(nameNoAccent);
+        const soul = getVowels(nameNoAccent);
+        const personality = getConsonants(nameNoAccent);
+        const coreNums = [lifePath, destiny, soul, personality];
+
+        const dateStr = String(data.day) + String(data.month) + String(data.year);
+        const dateDigits = dateStr.split('').map(Number);
+
+        const nameMap = { a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8,i:9,j:1,k:2,l:3,m:4,n:5,o:6,p:7,q:8,r:9,s:1,t:2,u:3,v:4,w:5,x:6,y:7,z:8 };
+        const nameCounts = {};
+        nameNoAccent.toLowerCase().split('').forEach(ch => {
+            if (nameMap[ch]) nameCounts[nameMap[ch]] = (nameCounts[nameMap[ch]] || 0) + 1;
+        });
+
+        grid.innerHTML = '';
+        for (let i = 1; i <= 9; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'cosmic-cell';
+
+            const appearsInDate = dateDigits.includes(i);
+            const appearsInName = nameCounts[i] > 0;
+            const isCore = coreNums.some(c => c === i || (c !== 11 && c !== 22 && reduceToSingle(c) === i));
+            const hasMaster = coreNums.some(c => c === i && (c === 11 || c === 22));
+
+            if (hasMaster) cell.classList.add('master');
+            else if (isCore) cell.classList.add('active');
+            else if (appearsInDate || appearsInName) cell.classList.add('present');
+
+            cell.innerHTML = `<span class="cosmic-num">${i}</span>`;
+            grid.appendChild(cell);
+        }
+    }
+
     // ============================================================
     // 1. HÀM TIỆN ÍCH
     // ============================================================
@@ -1426,7 +1173,7 @@
         const offsetX = -minX;
         const offsetY = -minY;
 
-        let svg = `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; max-width:500px; overflow:visible;">
+        let svg = `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; max-width:100%; overflow:visible;">
             <defs>
                 <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
                     <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.1"/>
@@ -1976,27 +1723,28 @@
         }
 
         // ========== CHƯƠNG I: Biểu đồ ngày sinh & Họ Tên ==========
-        let chapter1a = `
+        let chapter1 = `
             <div class="print-chapter">
             <div class="section-title">📊 Chương I: Biểu đồ ngày sinh & Họ Tên</div>
             <div class="info-grid">
                 ${infoItems}
             </div>
 
-            <div class="section-title sub">📝 Biểu đồ họ và tên</div>
-            <p><em>Mỗi chấm tròn thể hiện số lần xuất hiện của chữ cái ứng với con số đó. Các đường kết nối (nét liền hoặc đứt) và mũi tên thể hiện mối liên kết khi cả 3 ô trong hàng/cột/đường chéo đều có số hoặc đều trống.</em></p>
-            <div class="name-chart-svg-container">
-                ${nameChartHtml}
-            </div>
-            </div>
-        `;
-
-        let chapter1b = `
-            <div class="print-chapter">
-            <div class="section-title sub" style="margin-top:30px;">📅 Biểu đồ ngày sinh</div>
-            <p><em>Mỗi chấm tròn thể hiện số lần xuất hiện của chữ số (từ 1-9) trong ngày/tháng/năm (bỏ qua số 0).</em></p>
-            <div class="name-chart-svg-container">
-                ${birthChartHtml}
+            <div class="charts-row">
+                <div class="chart-col">
+                    <div class="section-title sub">📝 Biểu đồ họ và tên</div>
+                    <p><em>Chấm tròn: số lần chữ cái xuất hiện theo con số tương ứng. Đường nối: liên kết khi cả 3 ô trong hàng, cột hoặc chéo đều có số hoặc đều trống.</em></p>
+                    <div class="name-chart-svg-container">
+                        ${nameChartHtml}
+                    </div>
+                </div>
+                <div class="chart-col">
+                    <div class="section-title sub">📅 Biểu đồ ngày sinh</div>
+                    <p><em>Mỗi chấm tròn thể hiện số lần xuất hiện của chữ số (từ 1-9) trong ngày/tháng/năm (bỏ qua số 0).</em></p>
+                    <div class="name-chart-svg-container">
+                        ${birthChartHtml}
+                    </div>
+                </div>
             </div>
             </div>
         `;
@@ -2245,8 +1993,7 @@
                     </div>
                 </div>
 
-            ${chapter1a}
-            ${chapter1b}
+            ${chapter1}
             ${chapter2}
             ${chapter3}
             ${chapter4}
@@ -2280,44 +2027,20 @@
     // ============================================================
     // 8. KẾT NỐI GIAO DIỆN
     // ============================================================
-    const lastInput = document.getElementById('lastName');
-    const middleInput = document.getElementById('middleName');
-    const firstInput = document.getElementById('firstName');
-    const dayInput = document.getElementById('day');
-    const monthInput = document.getElementById('month');
-    const yearInput = document.getElementById('year');
-    const genderSelect = document.getElementById('gender');
-    const lifePathDisplay = document.getElementById('lifePathDisplay');
-    const personalYearDisplay = document.getElementById('personalYearDisplay');
     const profileContent = document.getElementById('profileContent');
-    const editBtn = document.getElementById('editBtn');
 
-    let isEditing = false;
+    var profileData = null;
     let dataDicts = {};
 
-    function updateDisplay() {
-        const day = parseInt(dayInput.value) || 1;
-        const month = parseInt(monthInput.value) || 1;
-        const year = parseInt(yearInput.value) || 2000;
-        const lifePath = getLifePath(day, month, year);
-        const pYear = getPersonalYear(day, month, year);
-        const lifeName = (dataDicts[String(lifePath)] && dataDicts[String(lifePath)].name) || `Số ${lifePath}`;
-        const yearName = (dataDicts[String(pYear)] && dataDicts[String(pYear)].name) || `Số ${pYear}`;
-        lifePathDisplay.value = `${lifeName}`;
-        personalYearDisplay.value = `${yearName}`;
-        document.getElementById('personalYearRow').style.display = (new Date().getFullYear() - year <= 15) ? 'none' : '';
-    }
-
     async function renderProfile() {
-        if (isEditing) toggleEdit();
-        const data = {
-            last: lastInput.value.trim() || 'Vũ',
-            middle: middleInput.value.trim() || 'Hạnh Trâm',
-            first: firstInput.value.trim() || 'An',
-            day: Math.min(31, Math.max(1, parseInt(dayInput.value) || 1)),
-            month: Math.min(12, Math.max(1, parseInt(monthInput.value) || 1)),
-            year: Math.min(2100, Math.max(1900, parseInt(yearInput.value) || 2000)),
-            gender: genderSelect.value || 'Nữ'
+        const data = profileData || {
+            last: 'Vũ',
+            middle: 'Hạnh Trâm',
+            first: 'An',
+            day: 29,
+            month: 5,
+            year: 1997,
+            gender: 'Nữ'
         };
 
         const nameNoAccent = removeVietnameseAccents(data.last + data.middle + data.first).replace(/\s/g, '');
@@ -2362,54 +2085,6 @@
             });
             const html = await generateProfileAsync(data, dataDicts);
             profileContent.innerHTML = html;
-            updateDisplay();
-
-            // Build event table modal
-            const eventBtn = document.getElementById('eventTableBtn');
-            const eventModal = document.getElementById('eventModal');
-            const eventModalBody = document.getElementById('eventModalBody');
-            eventBtn.style.display = 'inline-block';
-            eventModalBody.innerHTML = buildEventTableHTML(data.last, data.middle, data.first, data.year, 2026);
-            eventBtn.onclick = function() { eventModal.style.display = 'flex'; };
-            document.getElementById('eventModalClose').onclick = function() { eventModal.style.display = 'none'; };
-            eventModal.onclick = function(e) { if (e.target === eventModal) eventModal.style.display = 'none'; };
-
-            // Build chart modal
-            const chartBtn = document.getElementById('chartBtn');
-            const chartModal = document.getElementById('chartModal');
-            const chartModalBody = document.getElementById('chartModalBody');
-            const fullName = (data.last + ' ' + data.middle + ' ' + data.first).trim().replace(/\s+/g, ' ');
-            const nameChartSvg = buildNameChartSVG(fullName);
-            const birthChartSvg = buildBirthChartSVG(data.day, data.month, data.year);
-            chartModalBody.innerHTML = `
-                <div class="chart-modal-wrap">
-                    <div class="chart-section">
-                        <h3>📝 Biểu đồ họ và tên</h3>
-                        <div class="name-chart-svg-container">${nameChartSvg}</div>
-                    </div>
-                    <div class="chart-section">
-                        <h3>📅 Biểu đồ ngày sinh</h3>
-                        <div class="name-chart-svg-container">${birthChartSvg}</div>
-                    </div>
-                </div>
-            `;
-            chartBtn.style.display = 'inline-block';
-            chartBtn.onclick = function() { chartModal.style.display = 'flex'; };
-            document.getElementById('chartModalClose').onclick = function() { chartModal.style.display = 'none'; };
-            chartModal.onclick = function(e) { if (e.target === chartModal) chartModal.style.display = 'none'; };
-
-            // Build pyramid modal
-            const pyramidBtn = document.getElementById('pyramidBtn');
-            const pyramidModal = document.getElementById('pyramidModal');
-            const pyramidModalBody = document.getElementById('pyramidModalBody');
-            const peakAges = getPeakAges(lifePath);
-            const challengeAges = peakAges;
-            const pyramidSvg = buildPyramidSVG(data.month, data.day, data.year, peaks, peakAges, challenges, challengeAges, dataDicts);
-            pyramidModalBody.innerHTML = `<div class="pyramid-svg-container">${pyramidSvg}</div>`;
-            pyramidBtn.style.display = 'inline-block';
-            pyramidBtn.onclick = function() { pyramidModal.style.display = 'flex'; };
-            document.getElementById('pyramidModalClose').onclick = function() { pyramidModal.style.display = 'none'; };
-            pyramidModal.onclick = function(e) { if (e.target === pyramidModal) pyramidModal.style.display = 'none'; };
 
             // Num detail modal (click on .num-tooltip)
             const numDetailModal = document.getElementById('numDetailModal');
@@ -2431,309 +2106,66 @@
         }
     }
 
-    function toggleEdit() {
-        isEditing = !isEditing;
-        if (isEditing) {
-            profileContent.setAttribute('contenteditable', 'true');
-            profileContent.classList.add('editing');
-            editBtn.textContent = '💾 Lưu lại';
-            editBtn.classList.add('active');
-        } else {
-            profileContent.removeAttribute('contenteditable');
-            profileContent.classList.remove('editing');
-            editBtn.textContent = '✏️ Chỉnh sửa nội dung';
-            editBtn.classList.remove('active');
-        }
-    }
 
-    function openPrintPreview() {
-        var profileHtml = profileContent.innerHTML;
-        if (!profileHtml || profileHtml.indexOf('Đang tải') !== -1) {
-            alert('Vui lòng cập nhật hồ sơ trước.');
-            return;
-        }
-        var styleText = document.querySelector('style').textContent;
-        var w = window.open('', '_blank');
-        var cs = '</' + 'script>';
-        w.document.write(
-            '<!DOCTYPE html>' +
-            '<html lang="vi"><head>' +
-            '<meta charset="UTF-8">' +
-            '<title>Hồ sơ Nhân số học Vivian</title>' +
-            '<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">' +
-            '<style>' + styleText + '</style>' +
-            '<style>' +
-            '.sidebar,.sidebar-backdrop{display:none!important}.main-content{padding:0!important;display:block!important}' +
-            '.a4-container{box-shadow:none!important;padding:0!important;max-width:100%!important;border-radius:0!important;background:white!important}' +
-            '.cover-page{display:flex!important}' +
-            '.form-section,.btn-group,.no-print,#eventTableBtn,#chartBtn,#pyramidBtn{display:none!important}' +
-            '.result-section{border-top:none;margin-top:0;padding-top:0}' +
-            '.profile-table{display:none!important}.print-list{display:block!important}' +
-            '.print-list-label{font-weight:700;font-size:11pt;color:#4d3425;margin:10px 0 4px;border-left:3px solid #999;padding-left:8px}' +
-            '.print-list-item{margin:6px 0 10px;font-size:11pt;line-height:1.6}.print-list-item .item-desc{margin-top:2px;color:#555;font-style:italic}' +
-            '.print-chapter{break-before:page}' +
-            '.print-chapter:first-of-type{break-before:auto}' +
-            '@page{size:A4;margin:2.5cm 2cm;@bottom-center{content:counter(page);font-family:\'Quicksand\',sans-serif;font-size:9pt;color:#7c6352}}' +
-            '@page:first{margin:0;@bottom-center{content:none}}' +
-            '</style></head>' +
-            '<body><div class="a4-container">' + profileHtml + '</div>' +
-            '<script>document.fonts.ready.then(function(){setTimeout(function(){window.print()},500)})' + cs +
-            '</body></html>'
-        );
-        w.document.close();
-    }
+    // ========== GO TO PROFILE ==========
+    var landing = document.getElementById('landing');
+    var appLayout = document.getElementById('app');
+    function goToProfile() {
+        var lastName = document.getElementById('landingLast').value.trim();
+        var middleName = document.getElementById('landingMiddle').value.trim();
+        var firstName = document.getElementById('landingFirst').value.trim();
+        var dob = document.getElementById('landingDob').value;
+        var gender = document.getElementById('landingGender').value;
 
-    document.getElementById('calculateBtn').addEventListener('click', renderProfile);
-    document.getElementById('printBtn').addEventListener('click', openPrintPreview);
-    document.getElementById('resetBtn').addEventListener('click', function() {
-        lastInput.value = 'Vũ';
-        middleInput.value = 'Hạnh Trâm';
-        firstInput.value = 'An';
-        dayInput.value = '29';
-        monthInput.value = '5';
-        yearInput.value = '1997';
-        genderSelect.value = 'Nữ';
+        if (!lastName || !firstName || !dob) {
+            alert('Vui lòng nhập đầy đủ Họ, Tên và Ngày sinh.');
+            return false;
+        }
+
+        var parts = dob.split('-');
+        var year = parseInt(parts[0]);
+        var month = parseInt(parts[1]);
+        var day = parseInt(parts[2]);
+
+        profileData = {
+            last: lastName,
+            middle: middleName || '',
+            first: firstName,
+            day: day,
+            month: month,
+            year: year,
+            gender: gender
+        };
+
+        landing.classList.add('hidden');
+        appLayout.style.display = 'block';
+
+        renderCards(profileData);
         renderProfile();
-    });
-    editBtn.addEventListener('click', toggleEdit);
-
-    // Sidebar toggle
-    document.getElementById('sidebarToggle').addEventListener('click', function() {
-        document.getElementById('sidebar').classList.toggle('open');
-        document.getElementById('sidebarBackdrop').classList.toggle('open');
-    });
-    document.getElementById('sidebarOpenBtn').addEventListener('click', function() {
-        document.getElementById('sidebar').classList.add('open');
-        document.getElementById('sidebarBackdrop').classList.add('open');
-    });
-    document.getElementById('sidebarBackdrop').addEventListener('click', function() {
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('sidebarBackdrop').classList.remove('open');
-    });
-
-    const inputs = [lastInput, middleInput, firstInput, dayInput, monthInput, yearInput, genderSelect];
-    inputs.forEach(inp => inp.addEventListener('input', updateDisplay));
-
-    // ========== TAB SWITCHING ==========
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const sidebarTitle = document.getElementById('sidebarTitle');
-    const sidebarNumer = document.getElementById('sidebarNumer');
-    const sidebarBabyname = document.getElementById('sidebarBabyname');
-    const profileContainer = document.getElementById('profileContainer');
-    const babyNameContainer = document.getElementById('babyNameContainer');
-
-    tabBtns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            tabBtns.forEach(function(b) { b.classList.remove('active'); });
-            btn.classList.add('active');
-            const tab = btn.getAttribute('data-tab');
-            if (tab === 'numer') {
-                sidebarTitle.textContent = '📝 Thông tin khách hàng';
-                sidebarNumer.classList.remove('hidden');
-                sidebarBabyname.classList.add('hidden');
-                profileContainer.style.display = '';
-                babyNameContainer.style.display = 'none';
-            } else {
-                sidebarTitle.textContent = '👶 Đặt tên con';
-                sidebarNumer.classList.add('hidden');
-                sidebarBabyname.classList.remove('hidden');
-                profileContainer.style.display = 'none';
-                babyNameContainer.style.display = '';
-            }
-        });
-    });
-
-    // ========== BABY NAME SEARCH ==========
-    var babyNamesData = [];
-    var babyMeanings = {};
-    fetch('data/babynames.json')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            babyNamesData = data;
-        })
-        .catch(function() {
-            console.warn('Không tải được data/babynames.json');
-        });
-    fetch('data/name_meanings.json')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            babyMeanings = data;
-        })
-        .catch(function() {});
-
-    function getPythagoreanSum(str) {
-        var map = { a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8,i:9,j:1,k:2,l:3,m:4,n:5,o:6,p:7,q:8,r:9,s:1,t:2,u:3,v:4,w:5,x:6,y:7,z:8 };
-        var cleaned = removeVietnameseAccents(str).replace(/\s/g, '').toLowerCase();
-        var sum = 0;
-        for (var ci = 0; ci < cleaned.length; ci++) {
-            sum += map[cleaned[ci]] || 0;
-        }
-        return sum;
+        return true;
     }
 
-    document.getElementById('babyFindBtn').addEventListener('click', function() {
-        var surname = document.getElementById('babySurname').value.trim();
-        var desiredNum = parseInt(document.getElementById('babyDesiredNumber').value);
-        var gender = document.getElementById('babyGender').value;
+    document.getElementById('landingBtn').addEventListener('click', goToProfile);
 
-        if (!surname) { alert('Vui lòng nhập họ của bé.'); return; }
-        if (!desiredNum) { alert('Vui lòng chọn con số mong muốn.'); return; }
-
-        var surnameRaw = getPythagoreanSum(surname);
-        var resultDiv = document.getElementById('babyNameResult');
-
-        if (babyNamesData.length === 0) {
-            resultDiv.innerHTML = '<div class="loading">⏳ Dữ liệu tên đang được cập nhật. Vui lòng quay lại sau.</div>';
-            return;
-        }
-
-        var matches = [];
-        for (var ni = 0; ni < babyNamesData.length; ni++) {
-            var name = babyNamesData[ni];
-            if (gender && name.gender !== gender && name.gender !== 'unisex') continue;
-            var total = surnameRaw + name.raw_value;
-            var totalNum = reduceToMaster(total);
-            if (totalNum === desiredNum) {
-                matches.push(name);
-            }
-        }
-
-        if (matches.length === 0) {
-            resultDiv.innerHTML = '<div class="loading">😔 Không tìm thấy tên phù hợp. Thử thay đổi số mong muốn hoặc họ.</div>';
-            return;
-        }
-
-        const PER_PAGE = 30;
-        var totalPages = Math.ceil(matches.length / PER_PAGE);
-        var babyState = { page: 1, matches: matches };
-
-        function renderBabyList(state) {
-            var start = (state.page - 1) * PER_PAGE;
-            var end = Math.min(start + PER_PAGE, state.matches.length);
-            var pageNames = state.matches.slice(start, end);
-
-            var html = '<div class="section-title">👶 Gợi ý tên cho bé</div>';
-            html += '<div class="baby-grid">';
-            for (var r = 0; r < 10; r++) {
-                for (var c = 0; c < 3; c++) {
-                    var idx = r * 3 + c;
-                    if (idx < pageNames.length) {
-                        var n = pageNames[idx].name;
-                        var meaningWords = [];
-                        var words = n.split(' ');
-                        for (var wi = 0; wi < words.length; wi++) {
-                            if (babyMeanings[words[wi]]) {
-                                meaningWords.push(words[wi] + ': ' + babyMeanings[words[wi]]);
-                            }
-                        }
-                        if (meaningWords.length) {
-                            html += '<div><span class="num-tooltip" style="font-weight:600;">' + n + '<span class="tooltip-text">' + meaningWords.join('<br>') + '</span></span></div>';
-                        } else {
-                            html += '<div style="font-weight:600;">' + n + '</div>';
-                        }
-                    }
-                }
-            }
-            html += '</div>';
-
-            if (totalPages > 1) {
-                html += '<div style="display:flex;gap:6px;justify-content:center;margin-top:14px;">';
-                for (var p = 1; p <= totalPages; p++) {
-                    var active = p === state.page ? 'background:#d4b38c;color:#fff;' : 'background:#f5f0eb;color:#4d3425;';
-                    html += '<button class="page-btn" data-page="' + p + '" style="border:none;' + active + 'padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:15px;font-family:Quicksand,sans-serif;">' + p + '</button>';
-                }
-                html += '</div>';
-            }
-            resultDiv.innerHTML = html;
-        }
-
-        resultDiv.addEventListener('click', function(e) {
-            var btn = e.target.closest('.page-btn');
-            if (btn) {
-                babyState.page = parseInt(btn.getAttribute('data-page'));
-                renderBabyList(babyState);
-            }
-        });
-
-        renderBabyList(babyState);
-    });
-
-    // ========== NUMBER MEANING (BABY NAME) ==========
-    var numMeanings = {
-        1: 'Số 1 — Cá nhân, độc lập, lãnh đạo.\nCon mang số 1 là người tiên phong, tự tin và quyết đoán. Tên nên thể hiện sự mạnh mẽ, độc đáo và khả năng dẫn dắt. Con sẽ phát triển tốt trong môi trường khuyến khích tự lập và sáng tạo.',
-        2: 'Số 2 — Hợp tác, nhạy cảm, ngoại giao.\nCon mang số 2 có tâm hồn nhạy cảm, tinh tế và yêu hòa bình. Tên nên mang âm hưởng dịu dàng, hài hòa. Con cần sự yêu thương, ấm áp và môi trường gia đình ổn định để phát triển.',
-        3: 'Số 3 — Sáng tạo, vui vẻ, giao tiếp.\nCon mang số 3 tràn đầy năng lượng, yêu nghệ thuật và thích thể hiện bản thân. Tên nên vui tươi, bay bổng. Con phát triển tốt nhất khi được khuyến khích sáng tạo và giao tiếp tự do.',
-        4: 'Số 4 — Kỷ luật, thực tế, đáng tin cậy.\nCon mang số 4 có tính cách vững vàng, chăm chỉ và có trách nhiệm. Tên nên vững chãi, ổn định. Con cần nề nếp, kỷ luật rõ ràng và môi trường học tập có cấu trúc.',
-        5: 'Số 5 — Tự do, phiêu lưu, linh hoạt.\nCon mang số 5 yêu thích sự khám phá, thay đổi và mới mẻ. Tên nên thể hiện sự năng động và phóng khoáng. Con cần không gian tự do, ít gò bó để phát huy tiềm năng.',
-        6: 'Số 6 — Yêu thương, gia đình, trách nhiệm.\nCon mang số 6 giàu tình cảm, quan tâm đến mọi người và yêu mái ấm. Tên nên ấm áp, gần gũi. Con phát triển tốt trong môi trường gia đình đầm ấm, nhiều yêu thương.',
-        7: 'Số 7 — Trí tuệ, phân tích, tâm linh.\nCon mang số 7 thông thái, thích suy tư và tìm hiểu sâu sắc. Tên nên mang tính tri thức, huyền bí. Con cần không gian yên tĩnh để đọc sách, suy ngẫm và phát triển nội tâm.',
-        8: 'Số 8 — Quyền lực, tham vọng, thành công.\nCon mang số 8 có tố chất lãnh đạo, tham vọng và hướng đến thành tựu. Tên nên mạnh mẽ, uy nghi. Con cần được định hướng rõ ràng, học cách quản lý và sử dụng quyền lực đúng đắn.',
-        9: 'Số 9 — Nhân đạo, bao dung, lý tưởng.\nCon mang số 9 có trái tim nhân hậu, vị tha và tầm nhìn xa. Tên nên mang ý nghĩa cao cả, nhân văn. Con sẽ phát triển tốt khi được dạy về lòng nhân ái và trách nhiệm với cộng đồng.',
-        11: 'Số 11 — Trực giác, khai sáng, cảm hứng.\nCon mang số 11 có trực giác mạnh mẽ, nhạy cảm và giàu cảm hứng. Tên nên thanh cao, mang năng lượng tâm linh. Con cần môi trường giàu cảm xúc, được khuyến khích theo đuổi lý tưởng.',
-        22: 'Số 22 — Kiến tạo, tầm nhìn, vĩ đại.\nCon mang số 22 có khả năng biến ước mơ thành hiện thực. Tên nên thể hiện sức mạnh và tầm vóc. Con cần được dạy về tính kỷ luật, kiên trì và tầm nhìn dài hạn để phát huy hết tiềm năng.'
-    };
-
-    var parentingAdvice = {
-        1: 'Cách nuôi dạy Con số 1:\n• Khuyến khích tính tự lập từ sớm\n• Giao cho Con những nhiệm vụ nhỏ để tự hoàn thành\n• Dạy Con cách chấp nhận thất bại và học từ sai lầm\n• Không áp đặt quá mức, cho Con không gian thể hiện ý kiến\n• Khen ngợi nỗ lực hơn là kết quả\n• Hướng dẫn Con cách hợp tác và chia sẻ với người khác',
-        2: 'Cách nuôi dạy Con số 2:\n• Tạo môi trường gia đình ấm áp, an toàn\n• Lắng nghe và thấu hiểu cảm xúc của Con\n• Khuyến khích Con tham gia các hoạt động nhóm\n• Dạy Con cách nói "không" và bảo vệ bản thân\n• Tránh chỉ trích nặng lời, Con rất dễ tổn thương\n• Phát triển năng khiếu nghệ thuật và âm nhạc',
-        3: 'Cách nuôi dạy Con số 3:\n• Khuyến khích sự sáng tạo qua vẽ, hát, kể chuyện\n• Cho Con tham gia các lớp năng khiếu nghệ thuật\n• Dạy Con tập trung và kiên nhẫn hoàn thành việc\n• Tạo cơ hội cho Con giao lưu, kết bạn\n• Đặt giới hạn rõ ràng để Con không quá hiếu động\n• Khen ngợi sự nỗ lực sáng tạo của Con',
-        4: 'Cách nuôi dạy Con số 4:\n• Thiết lập thói quen và lịch trình cố định\n• Dạy Con tính kỷ luật qua các công việc nhà đơn giản\n• Khuyến khích Con tham gia thể thao để rèn luyện sức khỏe\n• Giúp Con linh hoạt hơn khi đối mặt với thay đổi\n• Dạy Con cách thư giãn, không quá căng thẳng\n• Làm gương về sự chăm chỉ và kiên trì',
-        5: 'Cách nuôi dạy Con số 5:\n• Cho Con nhiều trải nghiệm mới mẻ và đa dạng\n• Khuyến khích Con khám phá thiên nhiên và thế giới xung quanh\n• Dạy Con tính kỷ luật nhưng không quá gò bó\n• Cho Con tham gia các hoạt động ngoài trời, thể thao\n• Dạy Con về an toàn khi khám phá những điều mới\n• Kiên nhẫn với sự hiếu động và hay thay đổi của Con',
-        6: 'Cách nuôi dạy Con số 6:\n• Tạo bầu không khí gia đình đầm ấm, yêu thương\n• Dạy Con cách quan tâm và chia sẻ với mọi người\n• Cho Con tham gia các hoạt động gia đình thường xuyên\n• Không để Con lo lắng quá nhiều về người khác\n• Dạy Con cân bằng giữa cho và nhận\n• Phát triển năng khiếu nấu ăn, làm vườn, chăm sóc',
-        7: 'Cách nuôi dạy Con số 7:\n• Cung cấp sách vở và tài liệu học tập phong phú\n• Tạo không gian yên tĩnh cho Con học tập và suy nghĩ\n• Khuyến khích Con đặt câu hỏi và tìm tòi kiến thức\n• Dạy Con kỹ năng xã hội và giao tiếp\n• Cho Con thời gian ở một mình để phát triển nội tâm\n• Đưa Con đến thư viện, bảo tàng, các buổi triển lãm',
-        8: 'Cách nuôi dạy Con số 8:\n• Dạy Con về giá trị của tiền bạc và quản lý tài chính\n• Khuyến khích Con tham gia các hoạt động lãnh đạo\n• Dạy Con tính trung thực và trách nhiệm\n• Giúp Con cân bằng giữa công việc và cuộc sống\n• Không tạo áp lực thành công quá lớn\n• Dạy Con cách sử dụng quyền lực một cách tích cực',
-        9: 'Cách nuôi dạy Con số 9:\n• Dạy Con về lòng nhân ái và sự sẻ chia\n• Cho Con tham gia các hoạt động thiện nguyện\n• Khuyến khích Con theo đuổi lý tưởng và ước mơ\n• Dạy Con tha thứ và buông bỏ\n• Giúp Con kết nối với thiên nhiên và động vật\n• Định hướng cho Con những mục tiêu nhân văn, cao cả',
-        11: 'Cách nuôi dạy Con số 11:\n• Tạo môi trường giàu cảm hứng và sáng tạo\n• Khuyến khích Con phát triển trực giác và cảm xúc\n• Dạy Con kiểm soát cảm xúc và giữ bình tĩnh\n• Cho Con tiếp xúc với nghệ thuật, âm nhạc, thiền định\n• Bảo vệ Con khỏi những tác động tiêu cực\n• Giúp Con kết nối với thế giới tâm linh một cách lành mạnh',
-        22: 'Cách nuôi dạy Con số 22:\n• Dạy Con cách đặt mục tiêu lớn và chia nhỏ thành hành động\n• Khuyến khích tư duy thực tế và khả năng tổ chức\n• Cho Con tham gia các dự án nhóm để rèn kỹ năng lãnh đạo\n• Dạy Con kiên nhẫn theo đuổi mục tiêu dài hạn\n• Giúp Con cân bằng giữa lý tưởng và thực tế\n• Tạo môi trường ổn định để Con phát triển tầm nhìn'
-    };
-
-    function showNumMeaning() {
-        var val = parseInt(document.getElementById('babyDesiredNumber').value);
-        var div = document.getElementById('numMeaningResult');
-        var content = numMeanings[val];
-        if (content) {
-            div.innerHTML = '<strong>Con số ' + val + '</strong><br><br>' + content.replace(/\n/g, '<br>');
-        } else {
-            div.innerHTML = 'Chưa có dữ liệu';
-        }
-        div.classList.add('visible');
+    function checkLandingForm() {
+        const btn = document.getElementById('landingBtn');
+        const last = document.getElementById('landingLast').value.trim();
+        const first = document.getElementById('landingFirst').value.trim();
+        const dob = document.getElementById('landingDob').value;
+        const ready = last && first && dob;
+        btn.disabled = !ready;
+        btn.classList.toggle('enabled', ready);
     }
-    function showParenting() {
-        var val = parseInt(document.getElementById('babyDesiredNumber').value);
-        var div = document.getElementById('numParentingResult');
-        var content = parentingAdvice[val];
-        if (content) {
-            div.innerHTML = '<strong>Con số ' + val + '</strong><br><br>' + content.replace(/\n/g, '<br>');
-        } else {
-            div.innerHTML = 'Chưa có dữ liệu';
-        }
-        div.classList.add('visible');
-    }
-    document.getElementById('babyDesiredNumber').addEventListener('change', function() {
-        showNumMeaning();
-        showParenting();
+    ['landingLast','landingMiddle','landingFirst','landingDob','landingGender'].forEach(id => {
+        document.getElementById(id).addEventListener('input', checkLandingForm);
+        document.getElementById(id).addEventListener('change', checkLandingForm);
     });
-    showNumMeaning();
-    showParenting();
+    checkLandingForm();
 
-    // ========== BABY NAME MODAL (mobile) ==========
-    var babyNameModal = document.getElementById('babyNameModal');
-    var babyNameModalTitle = document.getElementById('babyNameModalTitle');
-    var babyNameModalBody = document.getElementById('babyNameModalBody');
-    babyNameContainer.addEventListener('click', function(e) {
-        var tooltip = e.target.closest('.num-tooltip');
-        if (tooltip) {
-            var name = tooltip.childNodes[0].nodeValue.trim();
-            var meaning = tooltip.querySelector('.tooltip-text').innerHTML;
-            babyNameModalTitle.textContent = name;
-            babyNameModalBody.innerHTML = '<strong>Ý nghĩa:</strong><br><br>' + meaning;
-            babyNameModal.style.display = 'flex';
-        }
+    document.getElementById('backToLandingBtn').addEventListener('click', function() {
+        appLayout.style.display = 'none';
+        landing.classList.remove('hidden');
     });
-    document.getElementById('babyNameModalClose').onclick = function() { babyNameModal.style.display = 'none'; };
-    babyNameModal.onclick = function(e) { if (e.target === babyNameModal) babyNameModal.style.display = 'none'; };
-
-    renderProfile();
 </script>
 </body>
 </html>
