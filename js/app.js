@@ -181,11 +181,13 @@ function drawConstellations() {
 }
 
 let glowTimer = 0;
+let showConstellations = true;
+
 function animateStars() {
     particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
     particles.forEach(p => { p.update(); p.draw(); });
 
-    drawConstellations();
+    if (showConstellations) drawConstellations();
 
     glowTimer++;
     if (glowTimer > 120 + Math.floor(Math.random() * 120)) {
@@ -336,6 +338,7 @@ function goToProfile() {
 
     landing.classList.add('hidden');
     appLayout.style.display = 'block';
+    showConstellations = false;
 
     renderCards(profileData);
     renderProfile();
@@ -362,6 +365,7 @@ checkLandingForm();
 document.getElementById('backToLandingBtn').addEventListener('click', function() {
     appLayout.style.display = 'none';
     landing.classList.remove('hidden');
+    showConstellations = true;
 });
 
 document.getElementById('exportPdfBtn').addEventListener('click', async function() {
