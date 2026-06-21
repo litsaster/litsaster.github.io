@@ -1,0 +1,8 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    margin: 0;
+    background: #06030f;
+    font-family: 'Quicksand', sans-serif;
+    color: #e8d8ff;
+    overflow-x: hidden;
+}
