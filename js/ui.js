@@ -76,14 +76,6 @@ function showDetail(key, num, data) {
             <p>${numInfo.description}</p>
         </div>`;
 
-    if (numInfo.strengths.length > 0 || numInfo.challenges.length > 0) {
-        detailHTML += `<div class="traits"><div><h4>✨ Điểm mạnh</h4><ul>`;
-        numInfo.strengths.forEach(t => { detailHTML += `<li><span class="dot" style="background:${co.c}"></span>${t}</li>`; });
-        detailHTML += `</ul></div><div class="challenge"><h4>⚠️ Thách thức</h4><ul>`;
-        numInfo.challenges.forEach(t => { detailHTML += `<li><span class="dot" style="background:${co.c}"></span>${t}</li>`; });
-        detailHTML += `</ul></div></div>`;
-    }
-
     detail.innerHTML = detailHTML;
 }
 

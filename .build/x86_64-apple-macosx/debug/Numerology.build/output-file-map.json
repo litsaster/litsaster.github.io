@@ -1,0 +1,107 @@
+{
+  "": {
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/master.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Extensions/Array+Safe.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/Array+Safe.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/Array+Safe.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/Array+Safe~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/Array+Safe.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Models/NumberData.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumberData.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumberData.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumberData~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumberData.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Models/NumerologyProfile.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyProfile.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyProfile.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyProfile~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyProfile.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Models/Person.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/Person.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/Person.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/Person~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/Person.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/NumerologyApp.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyApp.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyApp.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyApp.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Services/DataLoader.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/DataLoader.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/DataLoader.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/DataLoader~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/DataLoader.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Services/NumerologyCalculator.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyCalculator.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyCalculator.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyCalculator~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyCalculator.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Services/PDFExporter.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/PDFExporter.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/PDFExporter.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/PDFExporter~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/PDFExporter.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/ViewModels/NumerologyViewModel.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyViewModel.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyViewModel.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/NumerologyViewModel.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Components/ChartGridView.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ChartGridView.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ChartGridView.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ChartGridView~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ChartGridView.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Components/EventTableView.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/EventTableView.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/EventTableView.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/EventTableView~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/EventTableView.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Components/PyramidView.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/PyramidView.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/PyramidView.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/PyramidView~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/PyramidView.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/ContentView.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ContentView.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ContentView.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ContentView~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ContentView.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Profile/ProfileTabView.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ProfileTabView.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ProfileTabView.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ProfileTabView~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ProfileTabView.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Sidebar/HistoryView.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/HistoryView.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/HistoryView.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/HistoryView~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/HistoryView.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Sidebar/ProfileInputView.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ProfileInputView.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ProfileInputView.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ProfileInputView~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/ProfileInputView.swiftdeps"
+  },
+  "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/DerivedSources/resource_bundle_accessor.swift": {
+    "dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/resource_bundle_accessor.d",
+    "object": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/resource_bundle_accessor.swift.o",
+    "swiftmodule": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/resource_bundle_accessor~partial.swiftmodule",
+    "swift-dependencies": "/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/resource_bundle_accessor.swiftdeps"
+  }
+}

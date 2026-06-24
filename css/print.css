@@ -72,6 +72,7 @@
     .profile-container table.profile-table { font-size: 12px; }
     .profile-container table.profile-table th { background: #a855f7; color: #fff; border-color: #a855f7; }
     .profile-container table.profile-table td { color: #333; border-color: #ddd; }
+    .challenge-table th:nth-child(2), .challenge-table td:nth-child(2) { display: none; }
     .profile-container .num-tooltip { color: #a855f7; border-bottom-color: rgba(168,85,247,0.3); }
     .profile-container .num-tooltip .tooltip-text { display: none !important; }
 
@@ -147,6 +148,7 @@
 .pdf-export .profile-container table.profile-table { font-size: 14px; margin: 1.5mm 0 2mm; }
 .pdf-export .profile-container table.profile-table th { background: #a855f7; color: #fff; border-color: #a855f7; padding: 1.5mm 2.5mm; }
 .pdf-export .profile-container table.profile-table td { color: #333; border-color: #ddd; padding: 1.5mm 2.5mm; }
+.pdf-export .challenge-table th:nth-child(2), .pdf-export .challenge-table td:nth-child(2) { display: none; }
 .pdf-export .profile-container .num-tooltip { color: #a855f7; border-bottom-color: rgba(168,85,247,0.3); }
 .pdf-export .profile-container .num-tooltip .tooltip-text { display: none !important; }
 .pdf-export .print-list { display: block !important; margin: 1.5mm 0; }
@@ -231,3 +233,7 @@
 .pdf-export .cover-info .row .value { font-weight: 600; color: #5a3e1b; text-align: right; word-break: break-word; }
 .pdf-export .cover-footer { text-align: center; font-size: 12px; color: #a0886a; line-height: 1.7; margin-top: auto; padding-top: 30px; }
 .pdf-export .cover-footer .footer-line { width: 180px; height: 1px; background: rgba(201,162,39,0.3); margin: 0 auto 12px; }
+
+/* PDF spacing for Chương III + IV */
+@media print { .section-title.sub + p { margin-bottom: 28px; } }
+.pdf-export .section-title.sub + p { margin-bottom: 28px; }

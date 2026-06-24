@@ -1,0 +1,17 @@
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Extensions/Array+Safe.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Models/NumberData.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Models/NumerologyProfile.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Models/Person.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/NumerologyApp.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Services/DataLoader.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Services/NumerologyCalculator.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Services/PDFExporter.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/ViewModels/NumerologyViewModel.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Components/ChartGridView.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Components/EventTableView.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Components/PyramidView.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/ContentView.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Profile/ProfileTabView.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Sidebar/HistoryView.swift
+/Users/thehuy.nguyen/Desktop/numerology/Sources/Numerology/Views/Sidebar/ProfileInputView.swift
+/Users/thehuy.nguyen/Desktop/numerology/.build/x86_64-apple-macosx/debug/Numerology.build/DerivedSources/resource_bundle_accessor.swift

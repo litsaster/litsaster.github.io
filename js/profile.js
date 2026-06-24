@@ -110,7 +110,7 @@ async function generateProfileAsync(data, dicts) {
         `;
         challengePrint = `
             <div class="print-list-item">
-                <strong>Thử thách 3</strong> — ${challengeAges[i]} tuổi — <strong>Số ${cNum}</strong>
+                <strong>Thử thách 3</strong> — <strong>Số ${cNum}</strong>
                 <div class="item-desc">${cName}: ${cDesc}</div>
             </div>
         `;
@@ -183,11 +183,12 @@ async function generateProfileAsync(data, dicts) {
     let chapter3 = `
         <div class="print-chapter">
         <div class="section-title ch3">🧬 Chương III: Con số sứ mệnh / linh hồn / tính cách</div>
-        <ul>
-            <li><strong>${destTitle} (${destiny}):</strong> ${destDesc}</li>
-            <li><strong>${soulTitle} (${soul}):</strong> ${soulDesc}</li>
-            <li><strong>${personTitle} (${personality}):</strong> ${personDesc}</li>
-        </ul>
+        <div class="section-title sub">${destTitle} (${destiny})</div>
+        <p>${destDesc}</p>
+        <div class="section-title sub">${soulTitle} (${soul})</div>
+        <p>${soulDesc}</p>
+        <div class="section-title sub">${personTitle} (${personality})</div>
+        <p>${personDesc}</p>
         </div>
     `;
 
@@ -222,10 +223,6 @@ async function generateProfileAsync(data, dicts) {
         <div class="print-list">${peakPrint}</div>
         <div class="quote">“Hiện tại, bạn đang ở giai đoạn chuẩn bị cho đỉnh cao tiếp theo. Hãy sống trọn vẹn từng chặng đường, vì mỗi bước chân hôm nay đều là viên gạch cho ngôi đền vinh quang của ngày mai.”</div>
         <div class="section-title sub" style="margin-top:36px;">🔻 Thử thách</div>
-        <table class="profile-table">
-            <tr><th>Giai đoạn</th><th>Độ tuổi</th><th>Số</th></tr>
-            ${challengeRow}
-        </table>
         <div class="print-list">${challengePrint}</div>
         </div>
         <div class="print-chapter pyramid-chapter">
