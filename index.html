@@ -18,6 +18,7 @@
 
     <!-- ========== LANDING ========== -->
     <div id="landing">
+        <button class="login-btn" id="loginBtn">Đăng nhập</button>
         <div class="landing-inner">
             <div class="landing-header">
                 <div class="landing-icon">
@@ -65,9 +66,22 @@
                             </select>
                         </div>
                     </div>
-                    <button class="landing-btn" id="landingBtn" disabled>Giải Mã Vận Mệnh</button>
+                    <button class="landing-btn auth-hidden" id="landingBtn" disabled>Giải Mã Vận Mệnh</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- ========== LOGIN MODAL ========== -->
+    <div id="loginModal" class="login-modal no-print" style="display:none;">
+        <div class="login-modal-inner">
+            <button class="login-modal-close" id="loginModalClose">&times;</button>
+            <h3>Đăng nhập</h3>
+            <p>Nhập tài khoản để sử dụng công cụ</p>
+            <input type="text" id="loginUsername" placeholder="Tên đăng nhập" autocomplete="off">
+            <input type="password" id="loginPassword" placeholder="Mật khẩu">
+            <div id="loginError" class="login-error"></div>
+            <button class="login-submit" id="loginSubmit">Đăng nhập</button>
         </div>
     </div>
 

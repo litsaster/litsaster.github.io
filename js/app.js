@@ -363,6 +363,76 @@ function checkLandingForm() {
 });
 checkLandingForm();
 
+// ========== LOGIN ==========
+var LOGIN_USER = 'vivian';
+var LOGIN_PASS = 'Vivian@97';
+
+function isLoggedIn() {
+    return localStorage.getItem('numerology_logged_in') === 'true';
+}
+
+function updateAuthUI() {
+    var btn = document.getElementById('landingBtn');
+    var loginBtn = document.getElementById('loginBtn');
+    if (isLoggedIn()) {
+        btn.classList.remove('auth-hidden');
+        loginBtn.textContent = 'Đăng xuất';
+        loginBtn.classList.add('logged-in');
+    } else {
+        btn.classList.add('auth-hidden');
+        loginBtn.textContent = 'Đăng nhập';
+        loginBtn.classList.remove('logged-in');
+    }
+    checkLandingForm();
+}
+
+function handleLogin() {
+    var user = document.getElementById('loginUsername').value.trim();
+    var pass = document.getElementById('loginPassword').value.trim();
+    var errEl = document.getElementById('loginError');
+    if (user === LOGIN_USER && pass === LOGIN_PASS) {
+        localStorage.setItem('numerology_logged_in', 'true');
+        document.getElementById('loginModal').style.display = 'none';
+        errEl.textContent = '';
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+        updateAuthUI();
+    } else {
+        errEl.textContent = 'Sai tên đăng nhập hoặc mật khẩu!';
+    }
+}
+
+document.getElementById('loginBtn').addEventListener('click', function() {
+    if (isLoggedIn()) {
+        localStorage.removeItem('numerology_logged_in');
+        updateAuthUI();
+    } else {
+        document.getElementById('loginModal').style.display = 'flex';
+    }
+});
+
+document.getElementById('loginModalClose').addEventListener('click', function() {
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('loginError').textContent = '';
+});
+
+document.getElementById('loginModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+        document.getElementById('loginError').textContent = '';
+    }
+});
+
+document.getElementById('loginSubmit').addEventListener('click', handleLogin);
+
+['loginUsername', 'loginPassword'].forEach(function(id) {
+    document.getElementById(id).addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') handleLogin();
+    });
+});
+
+updateAuthUI();
+
 document.getElementById('backToLandingBtn').addEventListener('click', function() {
     appLayout.style.display = 'none';
     landing.classList.remove('hidden');
