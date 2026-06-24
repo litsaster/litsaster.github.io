@@ -371,19 +371,14 @@ function isLoggedIn() {
     return localStorage.getItem('numerology_logged_in') === 'true';
 }
 
-function updateAuthUI() {
-    var btn = document.getElementById('landingBtn');
-    var loginBtn = document.getElementById('loginBtn');
-    if (isLoggedIn()) {
-        btn.classList.remove('auth-hidden');
-        loginBtn.textContent = 'Đăng xuất';
-        loginBtn.classList.add('logged-in');
-    } else {
-        btn.classList.add('auth-hidden');
-        loginBtn.textContent = 'Đăng nhập';
-        loginBtn.classList.remove('logged-in');
-    }
-    checkLandingForm();
+function showLoginSection() {
+    document.getElementById('loginSection').style.display = 'block';
+    document.getElementById('formSection').style.display = 'none';
+}
+
+function showFormSection() {
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('formSection').style.display = 'block';
 }
 
 function handleLogin() {
@@ -392,36 +387,20 @@ function handleLogin() {
     var errEl = document.getElementById('loginError');
     if (user === LOGIN_USER && pass === LOGIN_PASS) {
         localStorage.setItem('numerology_logged_in', 'true');
-        document.getElementById('loginModal').style.display = 'none';
         errEl.textContent = '';
         document.getElementById('loginUsername').value = '';
         document.getElementById('loginPassword').value = '';
-        updateAuthUI();
+        showFormSection();
     } else {
         errEl.textContent = 'Sai tên đăng nhập hoặc mật khẩu!';
     }
 }
 
-document.getElementById('loginBtn').addEventListener('click', function() {
-    if (isLoggedIn()) {
-        localStorage.removeItem('numerology_logged_in');
-        updateAuthUI();
-    } else {
-        document.getElementById('loginModal').style.display = 'flex';
-    }
-});
-
-document.getElementById('loginModalClose').addEventListener('click', function() {
-    document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('loginError').textContent = '';
-});
-
-document.getElementById('loginModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.style.display = 'none';
-        document.getElementById('loginError').textContent = '';
-    }
-});
+function handleLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem('numerology_logged_in');
+    showLoginSection();
+}
 
 document.getElementById('loginSubmit').addEventListener('click', handleLogin);
 
@@ -431,12 +410,23 @@ document.getElementById('loginSubmit').addEventListener('click', handleLogin);
     });
 });
 
-updateAuthUI();
+document.getElementById('logoutLink').addEventListener('click', handleLogout);
+
+if (isLoggedIn()) {
+    showFormSection();
+} else {
+    showLoginSection();
+}
 
 document.getElementById('backToLandingBtn').addEventListener('click', function() {
     appLayout.style.display = 'none';
     landing.classList.remove('hidden');
     showConstellations = true;
+    if (isLoggedIn()) {
+        showFormSection();
+    } else {
+        showLoginSection();
+    }
 });
 
 document.getElementById('exportPdfBtn').addEventListener('click', async function() {

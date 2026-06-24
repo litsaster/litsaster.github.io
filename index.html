@@ -18,7 +18,6 @@
 
     <!-- ========== LANDING ========== -->
     <div id="landing">
-        <button class="login-btn" id="loginBtn">Đăng nhập</button>
         <div class="landing-inner">
             <div class="landing-header">
                 <div class="landing-icon">
@@ -34,54 +33,54 @@
             <div class="landing-card">
                 <div class="landing-card-glow"></div>
                 <div class="landing-card-inner">
-                    <div class="landing-form-header">
-                        <h2>Nhập Thông Tin Của Bạn</h2>
-                        <p>Vũ trụ đang lắng nghe...</p>
+                    <div id="loginSection">
+                        <div class="landing-form-header">
+                            <h2>Đăng nhập</h2>
+                            <p>Nhập tài khoản để sử dụng công cụ</p>
+                        </div>
+                        <input type="text" id="loginUsername" placeholder="Tên đăng nhập" autocomplete="off">
+                        <input type="password" id="loginPassword" placeholder="Mật khẩu">
+                        <div id="loginError" class="login-error"></div>
+                        <button class="login-section-btn" id="loginSubmit">Đăng nhập</button>
                     </div>
-                    <div class="landing-row">
-                        <div class="field">
-                            <label>Họ</label>
-                            <input type="text" id="landingLast" value="Vũ">
+                    <div id="formSection" style="display:none;">
+                        <div class="landing-form-header">
+                            <h2>Nhập Thông Tin Của Bạn</h2>
+                            <p>Vũ trụ đang lắng nghe...</p>
                         </div>
-                        <div class="field">
-                            <label>Tên đệm</label>
-                            <input type="text" id="landingMiddle" value="Hạnh">
+                        <div class="landing-row">
+                            <div class="field">
+                                <label>Họ</label>
+                                <input type="text" id="landingLast" value="Vũ">
+                            </div>
+                            <div class="field">
+                                <label>Tên đệm</label>
+                                <input type="text" id="landingMiddle" value="Hạnh">
+                            </div>
+                            <div class="field">
+                                <label>Tên</label>
+                                <input type="text" id="landingFirst" value="Trâm An">
+                            </div>
                         </div>
-                        <div class="field">
-                            <label>Tên</label>
-                            <input type="text" id="landingFirst" value="Trâm An">
+                        <div class="landing-row">
+                            <div class="field">
+                                <label>Ngày sinh</label>
+                                <input type="date" id="landingDob" value="1997-05-29">
+                            </div>
+                            <div class="field">
+                                <label>Giới tính</label>
+                                <select id="landingGender">
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ" selected>Nữ</option>
+                                    <option value="Khác">Khác</option>
+                                </select>
+                            </div>
                         </div>
+                        <button class="landing-btn" id="landingBtn" disabled>Giải Mã Vận Mệnh</button>
+                        <a href="#" class="landing-logout" id="logoutLink">Đổi tài khoản khác →</a>
                     </div>
-                    <div class="landing-row">
-                        <div class="field">
-                            <label>Ngày sinh</label>
-                            <input type="date" id="landingDob" value="1997-05-29">
-                        </div>
-                        <div class="field">
-                            <label>Giới tính</label>
-                            <select id="landingGender">
-                                <option value="Nam">Nam</option>
-                                <option value="Nữ" selected>Nữ</option>
-                                <option value="Khác">Khác</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="landing-btn auth-hidden" id="landingBtn" disabled>Giải Mã Vận Mệnh</button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- ========== LOGIN MODAL ========== -->
-    <div id="loginModal" class="login-modal no-print" style="display:none;">
-        <div class="login-modal-inner">
-            <button class="login-modal-close" id="loginModalClose">&times;</button>
-            <h3>Đăng nhập</h3>
-            <p>Nhập tài khoản để sử dụng công cụ</p>
-            <input type="text" id="loginUsername" placeholder="Tên đăng nhập" autocomplete="off">
-            <input type="password" id="loginPassword" placeholder="Mật khẩu">
-            <div id="loginError" class="login-error"></div>
-            <button class="login-submit" id="loginSubmit">Đăng nhập</button>
         </div>
     </div>
 
