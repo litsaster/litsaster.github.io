@@ -256,12 +256,13 @@ async function renderProfile() {
     const soul = getVowels(nameNoAccent);
     const personality = getConsonants(nameNoAccent);
     const destiny = getNumberFromName(nameNoAccent);
+    const maturityNum = reduceToMaster(lifePath + destiny);
 
     const neededNumbers = [lifePath, personalYear, soul, personality, destiny, ...peaks, ...challenges];
     const birthDayNumber = getBirthDayNumber(data.day);
     neededNumbers.push(birthDayNumber);
     const karmicLessonNumsForFetch = getKarmicLessonsFromName(nameNoAccent, [lifePath, birthDayNumber, destiny, soul, personality]);
-    neededNumbers.push(...karmicLessonNumsForFetch);
+    neededNumbers.push(...karmicLessonNumsForFetch, maturityNum);
     const physicalCycle = buildEventCycle(removeVietnameseAccents(data.first).replace(/\s/g, '').toLowerCase());
     const mentalCycle = buildEventCycle(removeVietnameseAccents(data.middle).replace(/\s/g, '').toLowerCase());
     const spiritualCycle = buildEventCycle(removeVietnameseAccents(data.last).replace(/\s/g, '').toLowerCase());
